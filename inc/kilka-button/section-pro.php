@@ -5,7 +5,7 @@
  * @since  1.0.0
  * @access public
  */
-class Doyel_Upgrade_Pro_Customize_Section_Pro extends WP_Customize_Section {
+class Kilka_Upgrade_Pro_Customize_Section_Pro extends WP_Customize_Section {
 
 	/**
 	 * The type of customize section being rendered.

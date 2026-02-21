@@ -4,14 +4,14 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @package Doyel
+ * @package Kilka
  */
 
-if ( ! function_exists( 'doyel_posted_on' ) ) :
+if ( ! function_exists( 'kilka_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time.
 	 */
-	function doyel_posted_on() {
+	function kilka_posted_on() {
 		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 		if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
 			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
@@ -27,7 +27,7 @@ if ( ! function_exists( 'doyel_posted_on' ) ) :
 
 		$posted_on = sprintf(
 			/* translators: %s: post date. */
-			esc_html_x( 'On %s', 'post date', 'doyel' ),
+			esc_html_x( 'On %s', 'post date', 'kilka' ),
 			'<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
 		);
 
@@ -36,14 +36,14 @@ if ( ! function_exists( 'doyel_posted_on' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'doyel_posted_by' ) ) :
+if ( ! function_exists( 'kilka_posted_by' ) ) :
 	/**
 	 * Prints HTML with meta information for the current author.
 	 */
-	function doyel_posted_by() {
+	function kilka_posted_by() {
 		$byline = sprintf(
 			/* translators: %s: post author. */
-			esc_html_x( 'By %s', 'post author', 'doyel' ),
+			esc_html_x( 'By %s', 'post author', 'kilka' ),
 			'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>'
 		);
 
@@ -52,25 +52,25 @@ if ( ! function_exists( 'doyel_posted_by' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'doyel_entry_footer' ) ) :
+if ( ! function_exists( 'kilka_entry_footer' ) ) :
 	/**
 	 * Prints HTML with meta information for the categories, tags and comments.
 	 */
-	function doyel_entry_footer() {
+	function kilka_entry_footer() {
 		// Hide category and tag text for pages.
 		if ( 'post' === get_post_type() ) {
 			/* translators: used between list items, there is a space after the comma */
-			$categories_list = get_the_category_list( esc_html__( ', ', 'doyel' ) );
+			$categories_list = get_the_category_list( esc_html__( ', ', 'kilka' ) );
 			if ( $categories_list ) {
 				/* translators: 1: list of categories. */
-				printf( '<span class="cat-links">' . esc_html__( 'Category %1$s', 'doyel' ) . '</span>', $categories_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				printf( '<span class="cat-links">' . esc_html__( 'Category %1$s', 'kilka' ) . '</span>', $categories_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 
 			/* translators: used between list items, there is a space after the comma */
-			$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'doyel' ) );
+			$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'kilka' ) );
 			if ( $tags_list ) {
 				/* translators: 1: list of tags. */
-				printf( '<span class="tags-links">' . esc_html__( 'Tagged %1$s', 'doyel' ) . '</span>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				printf( '<span class="tags-links">' . esc_html__( 'Tagged %1$s', 'kilka' ) . '</span>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 
@@ -80,7 +80,7 @@ if ( ! function_exists( 'doyel_entry_footer' ) ) :
 				sprintf(
 					wp_kses(
 						/* translators: %s: post title */
-						__( 'Leave a Comment<span class="screen-reader-text"> on %s</span>', 'doyel' ),
+						__( 'Leave a Comment<span class="screen-reader-text"> on %s</span>', 'kilka' ),
 						array(
 							'span' => array(
 								'class' => array(),
@@ -97,7 +97,7 @@ if ( ! function_exists( 'doyel_entry_footer' ) ) :
 			sprintf(
 				wp_kses(
 					/* translators: %s: Name of current post. Only visible to screen readers */
-					__( 'Edit <span class="screen-reader-text">%s</span>', 'doyel' ),
+					__( 'Edit <span class="screen-reader-text">%s</span>', 'kilka' ),
 					array(
 						'span' => array(
 							'class' => array(),
@@ -112,14 +112,14 @@ if ( ! function_exists( 'doyel_entry_footer' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'doyel_post_thumbnail' ) ) :
+if ( ! function_exists( 'kilka_post_thumbnail' ) ) :
 	/**
 	 * Displays an optional post thumbnail.
 	 *
 	 * Wraps the post thumbnail in an anchor element on index views, or a div
 	 * element when on single views.
 	 */
-	function doyel_post_thumbnail() {
+	function kilka_post_thumbnail() {
 		if ( post_password_required() || is_attachment() || ! has_post_thumbnail() ) {
 			return;
 		}

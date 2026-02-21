@@ -499,49 +499,49 @@ a.buy-pro-btn:hover{
 }
 
 /** Welcome Notice **/
-.doyel-welcome-notice-wrap{
+.kilka-welcome-notice-wrap{
     position: relative;
     padding: 20px;
 }
 
-.doyel-welcome-notice-wrap h2{
+.kilka-welcome-notice-wrap h2{
     font-size: 20px;
     margin: 0 0 5px;
 }
 
-.notice .doyel-welcome-notice-wrap > p{
+.notice .kilka-welcome-notice-wrap > p{
     font-size: 16px;
     margin: 0 0 25px;
 }
 
-.doyel-welcome-info{
+.kilka-welcome-info{
     display: flex;
 }
 
-.doyel-welcome-info .doyel-welcome-thumb{
+.kilka-welcome-info .kilka-welcome-thumb{
     width: 200px;
     margin-right: 40px;
 }
 
-.doyel-welcome-info > .doyel-welcome-import,
-.doyel-welcome-info > .doyel-welcome-getting-started{
+.kilka-welcome-info > .kilka-welcome-import,
+.kilka-welcome-info > .kilka-welcome-getting-started{
     margin-right: 40px;
 }
 
-.doyel-welcome-thumb img{
+.kilka-welcome-thumb img{
     width: 100%;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.doyel-welcome-info h3{
+.kilka-welcome-info h3{
     margin: 0 0 15px;
 }
 
-.notice .doyel-welcome-info p{
+.notice .kilka-welcome-info p{
     margin: 0 0 20px;
 }
 
-.doyel-welcome-info .button{
+.kilka-welcome-info .button{
     margin: 0;
     padding: 12px 36px;
     height: auto;
@@ -550,13 +550,13 @@ a.buy-pro-btn:hover{
     text-transform: uppercase;
 }
 
-.doyel-welcome-info .button-primary.updating-message:before{
+.kilka-welcome-info .button-primary.updating-message:before{
     margin: 0px 5px 0 0;
     height: auto;
     font-size: 18px;
 }
 
-.doyel-welcome-notice-wrap .notice-close{
+.kilka-welcome-notice-wrap .notice-close{
     position: absolute;
     top: 10px;
     right: 10px;
@@ -566,7 +566,7 @@ a.buy-pro-btn:hover{
     text-decoration: none;
 }
 
-.doyel-welcome-notice-wrap .notice-close:before{
+.kilka-welcome-notice-wrap .notice-close:before{
     position: absolute;
     top: 8px;
     left: 0;
@@ -581,13 +581,13 @@ a.buy-pro-btn:hover{
     width: 20px;
 }
 
-.doyel-welcome-notice-wrap .notice-close:hover,
-.doyel-welcome-notice-wrap .notice-close:hover:before{
+.kilka-welcome-notice-wrap .notice-close:hover,
+.kilka-welcome-notice-wrap .notice-close:hover:before{
     color: #FF0000;
 }
 
 /** Footer Review **/
-body.appearance_page_doyel-welcome #wpfooter {
+body.appearance_page_kilka-welcome #wpfooter {
     position: fixed;
     background: #23282e;
     color: #FFF;
@@ -596,7 +596,7 @@ body.appearance_page_doyel-welcome #wpfooter {
     margin: 0 auto;
 }
 
-body.appearance_page_doyel-welcome #wpfooter a{
+body.appearance_page_kilka-welcome #wpfooter a{
     color: #FFF;
 }
 
@@ -650,7 +650,7 @@ body.appearance_page_doyel-welcome #wpfooter a{
         padding: 40px;
     }
     
-    .doyel-welcome-info .doyel-welcome-thumb{
+    .kilka-welcome-info .kilka-welcome-thumb{
         display: none;
     }
 
@@ -706,17 +706,17 @@ body.appearance_page_doyel-welcome #wpfooter a{
         text-align: left !important;
     }
     
-    .doyel-welcome-info{
+    .kilka-welcome-info{
         display: block;
     }
     
-    .doyel-welcome-info > .doyel-welcome-import, 
-    .doyel-welcome-info > .doyel-welcome-getting-started{
+    .kilka-welcome-info > .kilka-welcome-import, 
+    .kilka-welcome-info > .kilka-welcome-getting-started{
         width: auto;
         margin: 0 0 30px;
     }
     
-    .doyel-welcome-info > .doyel-welcome-getting-started{
+    .kilka-welcome-info > .kilka-welcome-getting-started{
         margin-bottom: 0;
     }
 }

@@ -9,7 +9,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package Doyel
+ * @package Kilka
  */
 
 get_header(); while ( have_posts() ) : the_post(); 

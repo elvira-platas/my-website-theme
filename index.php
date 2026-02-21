@@ -9,20 +9,20 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package Doyel
+ * @package Kilka
  */
 
 if(is_active_sidebar('sidebar-1')){
-	$doyel_column = 8;
+	$kilka_column = 8;
 }else{
-	$doyel_column = 12;
+	$kilka_column = 12;
 }
 get_header();
 ?>
 <section class="blog-area <?php if( ! is_active_sidebar('sidebar-1')): ?>block-content-css<?php endif; ?>" id="content">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-<?php echo esc_attr($doyel_column); ?> text-center">
+			<div class="col-lg-<?php echo esc_attr($kilka_column); ?> text-center">
 				<?php
 					if ( have_posts() ) :
 

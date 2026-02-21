@@ -6,7 +6,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package Doyel
+ * @package Kilka
  */
 
 ?>
@@ -36,4 +36,4 @@
 			</div>
 		</div>
 	</section>
-	<?php do_action( 'doyel_header_style' ); ?>
+	<?php do_action( 'kilka_header_style' ); ?>

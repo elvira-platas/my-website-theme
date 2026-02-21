@@ -4,13 +4,13 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#search-result
  *
- * @package Doyel
+ * @package Kilka
  */
 
 if(is_active_sidebar('sidebar-1')){
-	$doyel_column = 8;
+	$kilka_column = 8;
 }else{
-	$doyel_column = 12;
+	$kilka_column = 12;
 }
 get_header();
 ?>
@@ -20,7 +20,7 @@ get_header();
 			<div class="col-lg-12">
 				<h2 class="page-title"><?php
 						/* translators: %s: search query. */
-						printf( esc_html__( 'Search Results for: %s', 'doyel' ), '<span>' . get_search_query() . '</span>' );
+						printf( esc_html__( 'Search Results for: %s', 'kilka' ), '<span>' . get_search_query() . '</span>' );
 					?></h2>
 			</div>
 		</div>
@@ -30,14 +30,14 @@ get_header();
 <section  class="search-area <?php if( ! is_active_sidebar('sidebar-1')): ?>block-content-css<?php endif; ?>" id="content">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-<?php echo esc_attr($doyel_column); ?>">
+				<div class="col-lg-<?php echo esc_attr($kilka_column); ?>">
 					<?php if ( have_posts() ) : ?>
 
 						<header class="page-header">
 							<h1 class="page-title">
 								<?php
 								/* translators: %s: search query. */
-								printf( esc_html__( 'Search Results for: %s', 'doyel' ), '<span>' . get_search_query() . '</span>' );
+								printf( esc_html__( 'Search Results for: %s', 'kilka' ), '<span>' . get_search_query() . '</span>' );
 								?>
 							</h1>
 						</header><!-- .page-header -->

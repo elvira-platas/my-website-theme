@@ -1,5 +1,5 @@
 /*
-  Doyel Theme css
+  Kilka Theme css
 */ 
 
 /* Gobal Css */
@@ -317,11 +317,11 @@ ul li {
   list-style:none;
 }
 /* Header CSS */
-header.doyel-header-img {
+header.kilka-header-img {
   position: relative;
   padding-top: 0;
 }
-header.doyel-header-img .container {
+header.kilka-header-img .container {
   position: absolute;
   top: 0;
   left:  0;
@@ -457,7 +457,7 @@ ul.children {
   box-shadow: 0 40px 100px rgba(0,0,0,.2);
   transition: 0.5s;
 }
-.doyel-responsive-menu  {
+.kilka-responsive-menu  {
   display: none;
 }
 .screen-reader-text.menu-close{
@@ -990,7 +990,7 @@ p.comment-notes {
   .slicknav_menu {
     margin-top: 10px;
   }
-  .doyel-responsive-menu{
+  .kilka-responsive-menu{
     display: block;
   }
   .screen-reader-text.menu-close{
@@ -1050,7 +1050,7 @@ p.comment-notes {
   .menu-item-has-children::after {
     display: none;
   }
-  .doyel-responsive-menu{
+  .kilka-responsive-menu{
     display: block;
   }
   .screen-reader-text.menu-close{
@@ -1085,7 +1085,7 @@ p.comment-notes {
   .mainmenu{
     display: none;
   }
-  .doyel-responsive-menu{
+  .kilka-responsive-menu{
     display: block;
   }
   .screen-reader-text.menu-close{

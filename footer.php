@@ -6,11 +6,11 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package Doyel
+ * @package Kilka
  */
 
 ?>
-<?php do_action( 'doyel_footer_style' ); ?>
+<?php do_action( 'kilka_footer_style' ); ?>
 </div><!-- #page -->
 <?php wp_footer(); ?>
 </body>
