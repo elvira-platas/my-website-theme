@@ -8,39 +8,39 @@
  *
  * @link https://developer.wordpress.org/themes/functionality/custom-headers/
  *
- * @package Doyel
+ * @package Kilka
  */
 
 /**
  * Set up the WordPress core custom header feature.
  *
- * @uses doyel_header_style()
+ * @uses kilka_header_style()
  */
-function doyel_custom_header_setup() {
+function kilka_custom_header_setup() {
 	add_theme_support(
 		'custom-header',
 		apply_filters(
-			'doyel_custom_header_args',
+			'kilka_custom_header_args',
 			array(
 				'default-image'      => '',
 				'default-text-color' => '000000',
 				'width'              => 1000,
 				'height'             => 250,
 				'flex-height'        => true,
-				'wp-head-callback'   => 'doyel_header_style',
+				'wp-head-callback'   => 'kilka_header_style',
 			)
 		)
 	);
 }
-add_action( 'after_setup_theme', 'doyel_custom_header_setup' );
+add_action( 'after_setup_theme', 'kilka_custom_header_setup' );
 
-if ( ! function_exists( 'doyel_header_style' ) ) :
+if ( ! function_exists( 'kilka_header_style' ) ) :
 	/**
 	 * Styles the header image and text displayed on the blog.
 	 *
-	 * @see doyel_custom_header_setup().
+	 * @see kilka_custom_header_setup().
 	 */
-	function doyel_header_style() {
+	function kilka_header_style() {
 		$header_text_color = get_header_textcolor();
 
 		/*

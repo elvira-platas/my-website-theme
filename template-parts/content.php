@@ -4,17 +4,17 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package Doyel
+ * @package Kilka
  */
 
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<?php doyel_post_thumbnail(); ?>
+	<?php kilka_post_thumbnail(); ?>
 
 	<?php if ( 'post' === get_post_type() ) : ?>
 		<div class="entry-meta">
-			<?php doyel_posted_on(); ?>
+			<?php kilka_posted_on(); ?>
 		</div><!-- .entry-meta -->
 	<?php endif; ?>
 
@@ -28,7 +28,7 @@
 
 		if ( 'post' === get_post_type() ) : ?>
 			<div class="entry-meta">
-				<?php doyel_posted_by(); ?>
+				<?php kilka_posted_by(); ?>
 			</div><!-- .entry-meta -->
 		<?php endif; ?>
 	</header><!-- .entry-header -->
@@ -43,7 +43,7 @@
 				sprintf(
 					wp_kses(
 						/* translators: %s: Name of current post. Only visible to screen readers */
-						__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'doyel' ),
+						__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'kilka' ),
 						array(
 							'span' => array(
 								'class' => array(),
@@ -55,11 +55,11 @@
 			);
 		}else{
 			the_excerpt();
-			echo'<a href="'.esc_url ( get_the_permalink( $post->ID ) ).'" class="button">'.esc_html__('Continue Reading','doyel').'</a>';
+			echo'<a href="'.esc_url ( get_the_permalink( $post->ID ) ).'" class="button">'.esc_html__('Continue Reading','kilka').'</a>';
 		}
 		wp_link_pages(
 			array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'doyel' ),
+				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'kilka' ),
 				'after'  => '</div>',
 			)
 		);
@@ -68,7 +68,7 @@
 
 	<?php if ( is_singular() ) : ?>
 		<footer class="entry-footer">
-			<?php doyel_entry_footer(); ?>
+			<?php kilka_entry_footer(); ?>
 		</footer><!-- .entry-footer -->
 	<?php endif; ?>
 </article><!-- #post-<?php the_ID(); ?> -->

@@ -1,4 +1,4 @@
-=== Doyel ===
+=== Kilka ===
 
 Contributors: ashathemes
 Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready, blog, sticky-post, right-sidebar, full-width-template, one-column, two-columns, custom-colors,
@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Doyel Theme is wordpress blog theme for personal use. Fully responsive design displays beautifully across desktop, mobile, and all devices. Easy installation allows you to start post blogs immediately after the activation.
+Kilka Theme is wordpress blog theme for personal use. Fully responsive design displays beautifully across desktop, mobile, and all devices. Easy installation allows you to start post blogs immediately after the activation.
 
 == Installation ==
 
@@ -65,8 +65,8 @@ Doyel Theme is wordpress blog theme for personal use. Fully responsive design di
 
 == Copyright ==
 
-Doyel WordPress Theme, Copyright 2021 ashathemes
-Doyel is distributed under the terms of the GNU GPL
+Kilka WordPress Theme, Copyright 2021 ashathemes
+Kilka is distributed under the terms of the GNU GPL
 
 == Images Screenshot ==
 

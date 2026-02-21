@@ -5,7 +5,7 @@
  * @since  1.0.0
  * @access public
  */
-final class Doyel_Upgrade_Pro_Customize {
+final class Kilka_Upgrade_Pro_Customize {
 
 	/**
 	 * Returns the instance.
@@ -62,20 +62,20 @@ final class Doyel_Upgrade_Pro_Customize {
 	public function sections( $manager ) {
 
 		// Load custom sections.
-		require_once( trailingslashit( get_template_directory() ) . 'inc/doyel-button/section-pro.php' );
+		require_once( trailingslashit( get_template_directory() ) . 'inc/kilka-button/section-pro.php' );
 
 		// Register custom section types.
-		$manager->register_section_type( 'Doyel_Upgrade_Pro_Customize_Section_Pro' );
+		$manager->register_section_type( 'Kilka_Upgrade_Pro_Customize_Section_Pro' );
 
 		// Register sections.
 		$manager->add_section(
-			new Doyel_Upgrade_Pro_Customize_Section_Pro(
+			new Kilka_Upgrade_Pro_Customize_Section_Pro(
 				$manager,
 				'upgrade_button',
 				array(
-					'title'    => esc_html__( 'Doyel Pro', 'doyel' ),
-					'pro_text' => esc_html__( 'Upgrade Pro', 'doyel' ),
-					'pro_url'  => 'https://ashathemes.com/index.php/product/doyel-pro-personal-blog-wordpress-theme/',
+					'title'    => esc_html__( 'Kilka Pro', 'kilka' ),
+					'pro_text' => esc_html__( 'Upgrade Pro', 'kilka' ),
+					'pro_url'  => 'https://ashathemes.com/index.php/product/kilka-pro-personal-blog-wordpress-theme/',
 					'priority' => 1
 				)
 			)
@@ -91,11 +91,11 @@ final class Doyel_Upgrade_Pro_Customize {
 	 */
 	public function enqueue_control_scripts() {
 
-		wp_enqueue_script( 'doyel-upgrade-button-customize-controls', trailingslashit( esc_url( get_template_directory_uri() ) ) . 'inc/doyel-button/customize-controls.js', array( 'customize-controls' ) );
+		wp_enqueue_script( 'kilka-upgrade-button-customize-controls', trailingslashit( esc_url( get_template_directory_uri() ) ) . 'inc/kilka-button/customize-controls.js', array( 'customize-controls' ) );
 
-		wp_enqueue_style( 'doyel-upgrade-button-customize-controls', trailingslashit( esc_url( get_template_directory_uri() ) ) . 'inc/doyel-button/customize-controls.css' );
+		wp_enqueue_style( 'kilka-upgrade-button-customize-controls', trailingslashit( esc_url( get_template_directory_uri() ) ) . 'inc/kilka-button/customize-controls.css' );
 	}
 }
 
 // Doing this customizer thang!
-Doyel_Upgrade_Pro_Customize::get_instance();
+Kilka_Upgrade_Pro_Customize::get_instance();

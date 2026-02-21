@@ -1,6 +1,6 @@
 (function ($) {
     "use strict";
-    $.fn.doyelAccessibleDropDown = function () {
+    $.fn.kilkaAccessibleDropDown = function () {
 		var el = $(this);
 
 		$("a", el).focus(function() {
@@ -16,11 +16,11 @@
     });
 
     jQuery(document).ready(function($){
-    	$("#primary-menu").doyelAccessibleDropDown();
+    	$("#primary-menu").kilkaAccessibleDropDown();
         // Mobile Menu
         $("#primary-menu").slicknav({
             'allowParentLinks': true,
-            'prependTo': '.doyel-responsive-menu',
+            'prependTo': '.kilka-responsive-menu',
             'nestedParentLinks': false,
             'closeOnClick': true,
         });

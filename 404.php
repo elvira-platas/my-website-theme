@@ -4,7 +4,7 @@
  *
  * @link https://codex.wordpress.org/Creating_an_Error_404_Page
  *
- * @package Doyel
+ * @package Kilka
  */
 
 get_header();
@@ -13,7 +13,7 @@ get_header();
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
-				<h2><?php esc_html_e('404 Error Page','doyel'); ?></h2>
+				<h2><?php esc_html_e('404 Error Page','kilka'); ?></h2>
 			</div>
 		</div>
 	</div>
@@ -23,8 +23,8 @@ get_header();
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12 text-center">
-				<h2><?php esc_html_e('Page not found!','doyel'); ?></h2>
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="button"><?php esc_html_e('Back To Home','doyel'); ?></a>
+				<h2><?php esc_html_e('Page not found!','kilka'); ?></h2>
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="button"><?php esc_html_e('Back To Home','kilka'); ?></a>
 			</div>
 		</div>
 	</div>

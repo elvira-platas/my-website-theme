@@ -4,12 +4,12 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
  *
- * @package Doyel
+ * @package Kilka
  */
 if(is_active_sidebar('sidebar-1')){
-	$doyel_column = 8;
+	$kilka_column = 8;
 }else{
-	$doyel_column = 12;
+	$kilka_column = 12;
 }
 get_header();
 ?>
@@ -26,7 +26,7 @@ get_header();
 <section class="single-area <?php if( ! is_active_sidebar('sidebar-1')): ?>block-content-css<?php endif; ?>" id="content">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-<?php echo esc_attr($doyel_column); ?>">
+			<div class="col-lg-<?php echo esc_attr($kilka_column); ?>">
 				<?php
 					while ( have_posts() ) :
 						the_post();
