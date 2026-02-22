@@ -87,4 +87,3 @@ function kilka_customize_preview_js() {
 	wp_enqueue_script( 'kilka-customizer', get_template_directory_uri() . '/assets/js/customizer.js', array( 'customize-preview' ), '20151215', true );
 }
 add_action( 'customize_preview_init', 'kilka_customize_preview_js' );
-require get_template_directory() . '/inc/kilka-button/kilka-customize.php';
