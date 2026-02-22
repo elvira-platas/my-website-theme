@@ -142,25 +142,11 @@ add_action( 'widgets_init', 'kilka_widgets_init' );
 /**
  * Register custom fonts.
  */
-function kilka_fonts_url() {
-	$fonts_url = '';
-
-	$font_families = array();
-	$font_families[] = 'Roboto:300,300i,400,400i,500,700';
-	$query_args = array(
-		'family' => urlencode( implode( '|', $font_families ) ),
-		'subset' => urlencode( 'latin,latin-ext' ),
-	);
-
-	$fonts_url = add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
-	return esc_url_raw( $fonts_url );
-}
 
 /**
  * Enqueue scripts and styles.
  */
 function kilka_scripts() {
-	wp_enqueue_style( 'kilka-google-fonts', kilka_fonts_url(), array(), null );
 	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.min.css', array(), '4.5.0', 'all');
 	wp_enqueue_style( 'slicknav', get_template_directory_uri() . '/assets/css/slicknav.min.css', array(), '1.0.3', 'all');
 	wp_enqueue_style( 'kilka-default-block', get_template_directory_uri() . '/assets/css/default-block.css', array(), KILKA_VERSION, 'all');
@@ -181,7 +167,6 @@ add_action( 'wp_enqueue_scripts', 'kilka_scripts' );
  * This theme styles the visual editor to resemble the theme style,
  * specifically font, colors, and column width.
 */
-add_editor_style( array(kilka_fonts_url() ) );
 
 /**
  * Implement the Custom Header feature.
