@@ -32,6 +32,56 @@ function kilka_customize_register( $wp_customize ) {
 		);
 	}
 
+	// Add Typography Settings Section
+	$wp_customize->add_section( 'kilka_typography_section', array(
+		'title'    => __( 'Site Title Typography', 'kilka' ),
+		'priority' => 30, // Show it near Site Identity
+	) );
+
+	// Font Family Setting
+	$wp_customize->add_setting( 'kilka_site_title_font', array(
+		'default'           => 'Roboto',
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
+	$wp_customize->add_control( 'kilka_site_title_font', array(
+		'label'    => __( 'Site Title Font Family', 'kilka' ),
+		'section'  => 'kilka_typography_section',
+		'type'     => 'select',
+		'choices'  => array(
+			'Roboto'                 => 'Roboto (Стандартный)',
+			'Arial'                  => 'Arial',
+			'Georgia'                => 'Georgia',
+			'Verdana'                => 'Verdana',
+			'Tahoma'                 => 'Tahoma',
+			'Trebuchet MS'           => 'Trebuchet MS',
+			'Times New Roman'        => 'Times New Roman',
+			'Courier New'            => 'Courier New',
+			'system-ui'              => 'Системный шрифт (Самый быстрый)',
+			'Montserrat'             => 'Montserrat',
+			'Oswald'                 => 'Oswald',
+			'Playfair Display'       => 'Playfair Display',
+			'Merriweather'           => 'Merriweather',
+			'Open Sans'              => 'Open Sans',
+			'Lato'                   => 'Lato',
+		),
+	) );
+
+	// Font Size Setting
+	$wp_customize->add_setting( 'kilka_site_title_size', array(
+		'default'           => 25,
+		'sanitize_callback' => 'absint',
+	) );
+	$wp_customize->add_control( 'kilka_site_title_size', array(
+		'label'    => __( 'Site Title Font Size (px)', 'kilka' ),
+		'section'  => 'kilka_typography_section',
+		'type'     => 'number',
+		'input_attrs' => array(
+			'min'  => 14,
+			'max'  => 100,
+			'step' => 1,
+		),
+	) );
+
 	// Add Footer Settings Section
 	$wp_customize->add_section( 'kilka_footer_section', array(
 		'title'    => __( 'Footer Settings', 'kilka' ),
