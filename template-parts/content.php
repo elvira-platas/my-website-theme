@@ -55,7 +55,21 @@
 			);
 		}else{
 			the_excerpt();
-			echo'<a href="'.esc_url ( get_the_permalink( $post->ID ) ).'" class="button">'.esc_html__('Continue Reading','kilka').'</a>';
+			$continue_reading_text   = get_theme_mod( 'kilka_continue_reading_text', esc_html__('Continue Reading','kilka') );
+			$continue_reading_format = get_theme_mod( 'kilka_continue_reading_format', 'text' );
+			
+			$button_content = '';
+			$arrow_html = '<span class="kilka-button-arrow"></span>';
+			
+			if ( 'arrow' === $continue_reading_format ) {
+				$button_content = $arrow_html;
+			} elseif ( 'text_arrow' === $continue_reading_format ) {
+				$button_content = '<span class="button-text">' . esc_html( $continue_reading_text ) . '</span>' . $arrow_html;
+			} else {
+				$button_content = esc_html( $continue_reading_text );
+			}
+
+			echo'<a href="'.esc_url ( get_the_permalink( $post->ID ) ).'" class="button format-'.esc_attr($continue_reading_format).'">'. $button_content .'</a>';
 		}
 		wp_link_pages(
 			array(

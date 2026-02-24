@@ -131,6 +131,68 @@ function kilka_customize_register( $wp_customize ) {
 		'section'  => 'kilka_footer_section',
 		'type'     => 'url',
 	) );
+
+	// Add Button Settings Section
+	$wp_customize->add_section( 'kilka_button_section', array(
+		'title'    => __( 'Button Settings', 'kilka' ),
+		'priority' => 130,
+	) );
+
+	// Continue Reading Text
+	$wp_customize->add_setting( 'kilka_continue_reading_text', array(
+		'default'           => __( 'Continue Reading', 'kilka' ),
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
+	$wp_customize->add_control( 'kilka_continue_reading_text', array(
+		'label'    => __( 'Continue Reading Button Text', 'kilka' ),
+		'section'  => 'kilka_button_section',
+		'type'     => 'text',
+	) );
+
+	// Continue Reading Format
+	$wp_customize->add_setting( 'kilka_continue_reading_format', array(
+		'default'           => 'text',
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
+	$wp_customize->add_control( 'kilka_continue_reading_format', array(
+		'label'    => __( 'Continue Reading Button Format', 'kilka' ),
+		'section'  => 'kilka_button_section',
+		'type'     => 'select',
+		'choices'  => array(
+			'text'        => 'Text Only',
+			'arrow'       => 'Arrow Only (→)',
+			'text_arrow'  => 'Text + Arrow (→)',
+		),
+	) );
+
+	// Continue Reading Color
+	$wp_customize->add_setting( 'kilka_continue_reading_color', array(
+		'default'           => '#000000',
+		'sanitize_callback' => 'sanitize_hex_color',
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'kilka_continue_reading_color', array(
+		'label'    => __( 'Continue Reading Button Color', 'kilka' ),
+		'section'  => 'kilka_button_section',
+	) ) );
+
+	// Continue Reading Font Weight
+	$wp_customize->add_setting( 'kilka_continue_reading_weight', array(
+		'default'           => '400',
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
+	$wp_customize->add_control( 'kilka_continue_reading_weight', array(
+		'label'    => __( 'Continue Reading Font Weight', 'kilka' ),
+		'section'  => 'kilka_button_section',
+		'type'     => 'select',
+		'choices'  => array(
+			'300' => 'Light (300)',
+			'400' => 'Normal (400)',
+			'500' => 'Medium (500)',
+			'600' => 'Semi-Bold (600)',
+			'700' => 'Bold (700)',
+			'800' => 'Extra-Bold (800)',
+		),
+	) );
 }
 add_action( 'customize_register', 'kilka_customize_register' );
 
