@@ -32,7 +32,7 @@
 		if ( 'post' === get_post_type() ) {
 			$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'kilka' ) );
 			if ( $tags_list ) {
-				printf( '<div class="tags-links">' . esc_html__( '%1$s', 'kilka' ) . '</div>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				printf( '<div class="tags-links text-right">' . esc_html__( '%1$s', 'kilka' ) . '</div>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 		?>
