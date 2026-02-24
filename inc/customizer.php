@@ -48,7 +48,7 @@ function kilka_customize_register( $wp_customize ) {
 		'section'  => 'kilka_typography_section',
 		'type'     => 'select',
 		'choices'  => array(
-			'Roboto'                 => 'Roboto (Стандартный)',
+			'Roboto'                 => 'Roboto (Default)',
 			'Arial'                  => 'Arial',
 			'Georgia'                => 'Georgia',
 			'Verdana'                => 'Verdana',
@@ -56,7 +56,7 @@ function kilka_customize_register( $wp_customize ) {
 			'Trebuchet MS'           => 'Trebuchet MS',
 			'Times New Roman'        => 'Times New Roman',
 			'Courier New'            => 'Courier New',
-			'system-ui'              => 'Системный шрифт (Самый быстрый)',
+			'system-ui'              => 'System Font (Fastest)',
 			'Montserrat'             => 'Montserrat',
 			'Oswald'                 => 'Oswald',
 			'Playfair Display'       => 'Playfair Display',

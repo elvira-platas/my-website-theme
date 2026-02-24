@@ -54,7 +54,7 @@ function kilka_custom_css() {
             border: none;
         }
 
-        /* Стиль длинной стрелки */
+        /* Long arrow style */
         .kilka-button-arrow {
             display: inline-block;
             position: relative;
@@ -76,7 +76,7 @@ function kilka_custom_css() {
             transform: translateY(-50%) rotate(45deg);
         }
 
-        /* Подстройка толщины */
+        /* Thickness adjustment */
         '.( (int)$continue_reading_weight >= 600 ? '
         .kilka-button-arrow { height: 3px; }
         .kilka-button-arrow::after { border-width: 3px; }
@@ -93,11 +93,11 @@ function kilka_custom_css() {
     ';
 
     $kilka_custom_css .= '
-        /* Скрытие стандартного меню и области */
+        /* Hide standard menu and area */
         .mainmenu-area { display: none !important; }
         .mainmenu { display: none !important; }
         
-        /* Контейнер для выравнивания в одну строку */
+        /* Container for single-line alignment */
         .header-main-flex {
             display: flex;
             align-items: center;
@@ -106,22 +106,22 @@ function kilka_custom_css() {
             width: 100%;
         }
 
-        /* Название по центру */
+        /* Center the title */
         .site-branding {
             flex: 1;
         }
 
-        /* Принудительно показываем контейнер меню справа */
+        /* Force show menu container on the right */
         .kilka-responsive-menu { 
             display: block !important;
             position: absolute;
-            right: 15px; /* Совпадает с padding-right колонок Bootstrap */
+            right: 15px; /* Matches Bootstrap column padding-right */
             top: 50%;
             transform: translateY(-50%);
             margin: 0 !important;
         }
 
-        /* Уменьшаем отступы шапки */
+        /* Reduce header paddings */
         header#masthead {
             padding-bottom: 10px !important;
             margin-bottom: 0 !important;
@@ -131,13 +131,13 @@ function kilka_custom_css() {
             margin-top: 20px !important;
         }
 
-        /* Сокращаем расстояние до контента */
+        /* Reduce distance to content */
         #content {
             margin-top: 0 !important;
             padding-top: 5px !important;
         }
 
-        /* Стилизация кнопки slicknav */
+        /* Slicknav button styling */
         .slicknav_menu {
             display: block !important; 
             background: transparent !important;
@@ -153,7 +153,7 @@ function kilka_custom_css() {
             margin: 0 !important;
         }
 
-        /* Убираем текст MENU */
+        /* Remove MENU text */
         .slicknav_btn::before {
             display: none !important;
         }
@@ -171,7 +171,7 @@ function kilka_custom_css() {
             display: block;
         }
 
-        /* Выпадающее меню */
+        /* Dropdown menu */
         .slicknav_nav {
             display: none;
             position: absolute;
@@ -213,10 +213,10 @@ function kilka_custom_css() {
             color: #fff !important;
         }
 
-        /* Скрываем штатную иконку slicknav */
+        /* Hide the default slicknav icon */
         .slicknav_menu .slicknav_menutxt { display: none !important; }
 
-        /* Адаптивность для мобильных */
+        /* Mobile responsiveness */
         @media (max-width: 768px) {
             .kilka-responsive-menu {
                 display: none !important;
