@@ -109,6 +109,28 @@ function kilka_customize_register( $wp_customize ) {
 		'section'  => 'kilka_footer_section',
 		'type'     => 'url',
 	) );
+
+	// Add Footer Link Text 2 Setting
+	$wp_customize->add_setting( 'kilka_footer_link_text_2', array(
+		'default'           => '',
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
+	$wp_customize->add_control( 'kilka_footer_link_text_2', array(
+		'label'    => __( 'Footer Custom Link Text 2', 'kilka' ),
+		'section'  => 'kilka_footer_section',
+		'type'     => 'text',
+	) );
+
+	// Add Footer Link URL 2 Setting
+	$wp_customize->add_setting( 'kilka_footer_link_url_2', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url_raw',
+	) );
+	$wp_customize->add_control( 'kilka_footer_link_url_2', array(
+		'label'    => __( 'Footer Custom Link URL 2', 'kilka' ),
+		'section'  => 'kilka_footer_section',
+		'type'     => 'url',
+	) );
 }
 add_action( 'customize_register', 'kilka_customize_register' );
 
