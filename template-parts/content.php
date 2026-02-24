@@ -14,7 +14,11 @@
 
 	<?php if ( 'post' === get_post_type() ) : ?>
 		<div class="entry-meta">
-			<?php kilka_posted_on(); ?>
+			<?php
+			kilka_posted_on();
+			echo '<span class="sep"> | </span>';
+			kilka_posted_by();
+			?>
 		</div><!-- .entry-meta -->
 	<?php endif; ?>
 
@@ -25,12 +29,7 @@
 		else :
 			the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
 		endif;
-
-		if ( 'post' === get_post_type() ) : ?>
-			<div class="entry-meta">
-				<?php kilka_posted_by(); ?>
-			</div><!-- .entry-meta -->
-		<?php endif; ?>
+		?>
 	</header><!-- .entry-header -->
 
 	
@@ -71,6 +70,14 @@
 
 			echo'<a href="'.esc_url ( get_the_permalink( $post->ID ) ).'" class="button format-'.esc_attr($continue_reading_format).'">'. $button_content .'</a>';
 		}
+
+		if ( ! is_singular() && 'post' === get_post_type() ) {
+			$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'kilka' ) );
+			if ( $tags_list ) {
+				printf( '<div class="entry-footer"><span class="tags-links">' . esc_html__( '%1$s', 'kilka' ) . '</span></div>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+		}
+
 		wp_link_pages(
 			array(
 				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'kilka' ),

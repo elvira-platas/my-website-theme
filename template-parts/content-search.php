@@ -17,6 +17,7 @@
 		<div class="entry-meta">
 			<?php
 			kilka_posted_on();
+			echo '<span class="sep"> | </span>';
 			kilka_posted_by();
 			?>
 		</div><!-- .entry-meta -->
@@ -27,6 +28,14 @@
 
 	<div class="entry-summary">
 		<?php the_excerpt(); ?>
+		<?php
+		if ( 'post' === get_post_type() ) {
+			$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'kilka' ) );
+			if ( $tags_list ) {
+				printf( '<div class="tags-links">' . esc_html__( '%1$s', 'kilka' ) . '</div>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+		}
+		?>
 	</div><!-- .entry-summary -->
 
 	<footer class="entry-footer">
