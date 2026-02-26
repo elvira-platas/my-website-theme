@@ -1001,6 +1001,16 @@ p.comment-notes {
 .single-area {
   padding-top: 100px;
 }
+/* Wider desktop layout preview */
+@media only screen and (min-width: 992px) {
+  .container,
+  .container-sm,
+  .container-md,
+  .container-lg,
+  .container-xl {
+    max-width: 1280px !important;
+  }
+}
 /* Responsive */
 /* Desktop Layout: 1200px */
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
@@ -1883,5 +1893,35 @@ p.comment-notes {
 }
 .site-description {
     margin: 10px 0 0;
+}
+
+.second-blog-intro {
+    margin: 18px auto 0;
+    max-width: 780px;
+}
+
+.second-blog-title {
+    margin: 0;
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.second-blog-description {
+    margin: 10px 0 0;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555555;
+}
+
+@media (max-width: 767px) {
+    .second-blog-title {
+        font-size: 22px;
+    }
+
+    .second-blog-description {
+        font-size: 14px;
+        line-height: 1.6;
+    }
 }
 

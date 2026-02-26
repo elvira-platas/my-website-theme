@@ -27,6 +27,23 @@ function kilka_header_style_1(){ ?>
 								?>
 								<p class="site-description"><?php echo esc_html($kilka_description); ?></p>
 							<?php endif; ?>
+							<?php
+							if ( function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context() ) :
+								$second_blog_heading     = trim( (string) get_theme_mod( 'kilka_second_blog_heading', '' ) );
+								$second_blog_description = trim( (string) get_theme_mod( 'kilka_second_blog_description', '' ) );
+
+								if ( $second_blog_heading || $second_blog_description || is_customize_preview() ) :
+									?>
+									<div class="second-blog-intro">
+										<?php if ( $second_blog_heading || is_customize_preview() ) : ?>
+											<p class="second-blog-title"><?php echo esc_html( $second_blog_heading ); ?></p>
+										<?php endif; ?>
+										<?php if ( $second_blog_description || is_customize_preview() ) : ?>
+											<p class="second-blog-description"><?php echo wp_kses_post( nl2br( esc_html( $second_blog_description ) ) ); ?></p>
+										<?php endif; ?>
+									</div>
+								<?php endif; ?>
+							<?php endif; ?>
 						</div><!-- .site-branding -->
 						
 						<?php if ( has_nav_menu( 'menu-1' ) ) : ?>

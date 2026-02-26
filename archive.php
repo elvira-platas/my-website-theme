@@ -14,23 +14,10 @@ if( is_active_sidebar ( 'sidebar-1' ) ){
 }
 get_header();
 ?>
-<section class="breadcrumbs-area">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<?php
-					the_archive_title( '<h2 class="page-title">', '</h2>' );
-					the_archive_description( '<div class="archive-description">', '</div>' );
-				?>
-			</div>
-		</div>
-	</div>
-</section>
-
 <section class="blog-area <?php if( ! is_active_sidebar ('sidebar-1') ): ?>block-content-css<?php endif; ?>" id="content">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-<?php echo esc_attr ($kilka_column); ?>">
+				<div class="col-lg-<?php echo esc_attr ($kilka_column); ?> text-center">
 				<?php if ( have_posts() ) : ?>
 					<?php
 					/* Start the Loop */

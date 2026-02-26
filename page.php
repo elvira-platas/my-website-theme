@@ -14,17 +14,7 @@
 
 get_header(); while ( have_posts() ) : the_post(); 
 ?>
-<section class="breadcrumbs-area">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<h2><?php  the_title(); ?></h2>
-			</div>
-		</div>
-	</div>
-</section>
-
-<section class="page-area" id="content">
+<section class="blog-area" id="content">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">

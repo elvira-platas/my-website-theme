@@ -25,10 +25,19 @@ if ( ! function_exists( 'kilka_posted_on' ) ) :
 			esc_html( get_the_modified_date() )
 		);
 
+		$day_archive_link = get_day_link(
+			get_the_date( 'Y' ),
+			get_the_date( 'm' ),
+			get_the_date( 'd' )
+		);
+		if ( 'world_note' === get_post_type() ) {
+			$day_archive_link = add_query_arg( 'post_type', 'world_note', $day_archive_link );
+		}
+
 		$posted_on = sprintf(
 			/* translators: %s: post date. */
 			esc_html_x( '%s', 'post date', 'kilka' ),
-			'<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
+			'<a href="' . esc_url( $day_archive_link ) . '">' . $time_string . '</a>'
 		);
 
 		echo '<span class="posted-on">' . $posted_on . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -41,10 +50,15 @@ if ( ! function_exists( 'kilka_posted_by' ) ) :
 	 * Prints HTML with meta information for the current author.
 	 */
 	function kilka_posted_by() {
+		$author_url = get_author_posts_url( get_the_author_meta( 'ID' ) );
+		if ( 'world_note' === get_post_type() ) {
+			$author_url = add_query_arg( 'post_type', 'world_note', $author_url );
+		}
+
 		$byline = sprintf(
 			/* translators: %s: post author. */
 			esc_html_x( '%s', 'post author', 'kilka' ),
-			'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>'
+			'<span class="author vcard"><a class="url fn n" href="' . esc_url( $author_url ) . '">' . esc_html( get_the_author() ) . '</a></span>'
 		);
 
 		echo '<span class="byline"> ' . $byline . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -71,6 +85,24 @@ if ( ! function_exists( 'kilka_entry_footer' ) ) :
 			if ( $tags_list ) {
 				/* translators: 1: list of tags. */
 				printf( '<span class="tags-links">' . esc_html__( 'Tagged %1$s', 'kilka' ) . '</span>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+		} elseif ( 'world_note' === get_post_type() ) {
+			/* translators: used between list items, there is a space after the comma */
+			$world_note_categories = function_exists( 'kilka_get_world_note_term_links' )
+				? kilka_get_world_note_term_links( get_the_ID(), 'world_note_category', esc_html__( ', ', 'kilka' ) )
+				: get_the_term_list( get_the_ID(), 'world_note_category', '', esc_html__( ', ', 'kilka' ) );
+			if ( $world_note_categories ) {
+				/* translators: 1: list of categories. */
+				printf( '<span class="cat-links">' . esc_html__( 'Category %1$s', 'kilka' ) . '</span>', $world_note_categories ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+
+			/* translators: used between list items, there is a space after the comma */
+			$world_note_tags = function_exists( 'kilka_get_world_note_term_links' )
+				? kilka_get_world_note_term_links( get_the_ID(), 'world_note_tag', esc_html_x( ', ', 'list item separator', 'kilka' ) )
+				: get_the_term_list( get_the_ID(), 'world_note_tag', '', esc_html_x( ', ', 'list item separator', 'kilka' ) );
+			if ( $world_note_tags ) {
+				/* translators: 1: list of tags. */
+				printf( '<span class="tags-links">' . esc_html__( 'Tagged %1$s', 'kilka' ) . '</span>', $world_note_tags ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 
