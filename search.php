@@ -14,34 +14,11 @@ if(is_active_sidebar('sidebar-1')){
 }
 get_header();
 ?>
-<section class="breadcrumbs-area">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<h2 class="page-title"><?php
-						/* translators: %s: search query. */
-						printf( esc_html__( 'Search Results for: %s', 'kilka' ), '<span>' . get_search_query() . '</span>' );
-					?></h2>
-			</div>
-		</div>
-	</div>
-</section>
-
-<section  class="search-area <?php if( ! is_active_sidebar('sidebar-1')): ?>block-content-css<?php endif; ?>" id="content">
+<section class="blog-area <?php if( ! is_active_sidebar('sidebar-1')): ?>block-content-css<?php endif; ?>" id="content">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-<?php echo esc_attr($kilka_column); ?>">
+					<div class="col-lg-<?php echo esc_attr($kilka_column); ?> text-center">
 					<?php if ( have_posts() ) : ?>
-
-						<header class="page-header">
-							<h1 class="page-title">
-								<?php
-								/* translators: %s: search query. */
-								printf( esc_html__( 'Search Results for: %s', 'kilka' ), '<span>' . get_search_query() . '</span>' );
-								?>
-							</h1>
-						</header><!-- .page-header -->
-
 						<?php
 						/* Start the Loop */
 						while ( have_posts() ) :

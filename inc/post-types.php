@@ -1,0 +1,471 @@
+<?php
+/**
+ * Register custom post types for the Kilka theme.
+ *
+ * @package Kilka
+ */
+
+if ( ! function_exists( 'kilka_get_world_note_slug' ) ) :
+	/**
+	 * Get the public slug for the Second Blog archive.
+	 *
+	 * @return string
+	 */
+	function kilka_get_world_note_slug() {
+		$slug = sanitize_title( get_option( 'kilka_world_note_slug', 'second-blog' ) );
+
+		if ( '' === $slug ) {
+			return 'second-blog';
+		}
+
+		return $slug;
+	}
+endif;
+
+if ( ! function_exists( 'kilka_sanitize_world_note_slug' ) ) :
+	/**
+	 * Sanitize the Second Blog slug from admin settings.
+	 *
+	 * @param string $value Raw slug value.
+	 * @return string
+	 */
+	function kilka_sanitize_world_note_slug( $value ) {
+		$slug = sanitize_title( $value );
+
+		if ( '' === $slug ) {
+			return 'second-blog';
+		}
+
+		return $slug;
+	}
+endif;
+
+if ( ! function_exists( 'kilka_request_has_world_note_post_type' ) ) :
+	/**
+	 * Check whether current request explicitly targets Second Blog post type.
+	 *
+	 * @return bool
+	 */
+	function kilka_request_has_world_note_post_type() {
+		$post_type = get_query_var( 'post_type' );
+		if ( empty( $post_type ) && isset( $_GET['post_type'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$post_type = sanitize_text_field( wp_unslash( $_GET['post_type'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		}
+
+		if ( is_array( $post_type ) ) {
+			return in_array( 'world_note', $post_type, true );
+		}
+
+		return 'world_note' === $post_type;
+	}
+endif;
+
+if ( ! function_exists( 'kilka_is_second_blog_context' ) ) :
+	/**
+	 * Check whether the current request belongs to the Second Blog context.
+	 *
+	 * @return bool
+	 */
+	function kilka_is_second_blog_context() {
+		if ( is_post_type_archive( 'world_note' ) || is_singular( 'world_note' ) ) {
+			return true;
+		}
+
+		if ( is_tax( array( 'world_note_category', 'world_note_tag' ) ) ) {
+			return true;
+		}
+
+		if ( is_search() ) {
+			return kilka_request_has_world_note_post_type();
+		}
+
+		// Keep context for author/date archives opened via ?post_type=world_note.
+		return kilka_request_has_world_note_post_type();
+	}
+endif;
+
+if ( ! function_exists( 'kilka_get_contextual_search_post_type' ) ) :
+	/**
+	 * Resolve the search post type based on current blog context.
+	 *
+	 * @return string
+	 */
+	function kilka_get_contextual_search_post_type() {
+		return kilka_is_second_blog_context() ? 'world_note' : 'post';
+	}
+endif;
+
+if ( ! function_exists( 'kilka_get_world_note_term_links' ) ) :
+	/**
+	 * Build linked term list for Second Blog taxonomies with explicit post_type context.
+	 *
+	 * @param int    $post_id    Post ID.
+	 * @param string $taxonomy   Taxonomy key.
+	 * @param string $separator  Separator between links.
+	 * @return string
+	 */
+	function kilka_get_world_note_term_links( $post_id, $taxonomy, $separator = ', ' ) {
+		$terms = get_the_terms( $post_id, $taxonomy );
+		if ( empty( $terms ) || is_wp_error( $terms ) ) {
+			return '';
+		}
+
+		$links = array();
+		foreach ( $terms as $term ) {
+			$term_link = get_term_link( $term );
+			if ( is_wp_error( $term_link ) ) {
+				continue;
+			}
+
+			$term_link = add_query_arg( 'post_type', 'world_note', $term_link );
+			$links[]   = '<a href="' . esc_url( $term_link ) . '">' . esc_html( $term->name ) . '</a>';
+		}
+
+		return implode( esc_html( $separator ), $links );
+	}
+endif;
+
+if ( ! function_exists( 'kilka_filter_search_block_post_type' ) ) :
+	/**
+	 * Inject contextual post_type into the core Search block form.
+	 *
+	 * @param string $block_content Rendered block HTML.
+	 * @return string
+	 */
+	function kilka_filter_search_block_post_type( $block_content ) {
+		if ( false === strpos( $block_content, '<form' ) ) {
+			return $block_content;
+		}
+
+		$hidden_input = '<input type="hidden" name="post_type" value="' . esc_attr( kilka_get_contextual_search_post_type() ) . '" />';
+
+		if ( false !== strpos( $block_content, 'name="post_type"' ) || false !== strpos( $block_content, "name='post_type'" ) ) {
+			$updated_block_content = preg_replace( '/<input[^>]*name=["\']post_type["\'][^>]*>/', $hidden_input, $block_content, 1 );
+			if ( is_string( $updated_block_content ) ) {
+				return $updated_block_content;
+			}
+		}
+
+		return str_replace( '</form>', $hidden_input . '</form>', $block_content );
+	}
+endif;
+add_filter( 'render_block_core/search', 'kilka_filter_search_block_post_type' );
+
+if ( ! function_exists( 'kilka_limit_second_blog_taxonomy_queries' ) ) :
+	/**
+	 * Force Second Blog taxonomy archives to query only Second Blog entries.
+	 *
+	 * @param WP_Query $query The main query object.
+	 */
+	function kilka_limit_second_blog_taxonomy_queries( $query ) {
+		if ( is_admin() || ! $query->is_main_query() ) {
+			return;
+		}
+
+		if ( $query->is_tax( array( 'world_note_category', 'world_note_tag' ) ) ) {
+			$query->set( 'post_type', 'world_note' );
+		}
+	}
+endif;
+add_action( 'pre_get_posts', 'kilka_limit_second_blog_taxonomy_queries' );
+
+if ( ! function_exists( 'kilka_register_world_note_post_type' ) ) :
+	/**
+	 * Register the "Second Blog" post type.
+	 */
+	function kilka_register_world_note_post_type() {
+		$labels = array(
+			'name'                  => _x( 'Second Blog', 'Post type general name', 'kilka' ),
+			'singular_name'         => _x( 'Second Blog Entry', 'Post type singular name', 'kilka' ),
+			'menu_name'             => __( 'Second Blog', 'kilka' ),
+			'name_admin_bar'        => __( 'Second Blog', 'kilka' ),
+			'add_new'               => __( 'Add New', 'kilka' ),
+			'add_new_item'          => __( 'Add New Second Blog Entry', 'kilka' ),
+			'new_item'              => __( 'New Second Blog Entry', 'kilka' ),
+			'edit_item'             => __( 'Edit Second Blog Entry', 'kilka' ),
+			'view_item'             => __( 'View Second Blog Entry', 'kilka' ),
+			'all_items'             => __( 'All Second Blog Entries', 'kilka' ),
+			'search_items'          => __( 'Search Second Blog', 'kilka' ),
+			'parent_item_colon'     => __( 'Parent Second Blog Entries:', 'kilka' ),
+			'not_found'             => __( 'No second blog entries found.', 'kilka' ),
+			'not_found_in_trash'    => __( 'No second blog entries found in Trash.', 'kilka' ),
+			'archives'              => __( 'Second Blog Archives', 'kilka' ),
+			'attributes'            => __( 'Second Blog Attributes', 'kilka' ),
+			'insert_into_item'      => __( 'Insert into second blog entry', 'kilka' ),
+			'uploaded_to_this_item' => __( 'Uploaded to this second blog entry', 'kilka' ),
+		);
+
+			$args = array(
+			'labels'             => $labels,
+			'public'             => true,
+			'publicly_queryable' => true,
+			'show_ui'            => true,
+			'show_in_menu'       => true,
+			'query_var'          => true,
+			'rewrite'            => array(
+				'slug'       => kilka_get_world_note_slug(),
+				'with_front' => false,
+			),
+			'capability_type'    => 'post',
+			'has_archive'        => true,
+			'hierarchical'       => false,
+			'menu_position'      => 5,
+			'menu_icon'          => 'dashicons-book-alt',
+			'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'comments', 'revisions' ),
+				'show_in_rest'       => true,
+				'show_in_nav_menus'  => true,
+				'exclude_from_search' => true,
+				'taxonomies'         => array( 'world_note_category', 'world_note_tag' ),
+			);
+
+			register_post_type( 'world_note', $args );
+		}
+endif;
+add_action( 'init', 'kilka_register_world_note_post_type' );
+
+if ( ! function_exists( 'kilka_register_world_note_taxonomies' ) ) :
+	/**
+	 * Register custom taxonomies for the Second Blog post type.
+	 */
+	function kilka_register_world_note_taxonomies() {
+		$base_slug = kilka_get_world_note_slug();
+
+		$category_labels = array(
+			'name'              => _x( 'Second Blog Categories', 'taxonomy general name', 'kilka' ),
+			'singular_name'     => _x( 'Second Blog Category', 'taxonomy singular name', 'kilka' ),
+			'search_items'      => __( 'Search Second Blog Categories', 'kilka' ),
+			'all_items'         => __( 'All Second Blog Categories', 'kilka' ),
+			'parent_item'       => __( 'Parent Second Blog Category', 'kilka' ),
+			'parent_item_colon' => __( 'Parent Second Blog Category:', 'kilka' ),
+			'edit_item'         => __( 'Edit Second Blog Category', 'kilka' ),
+			'update_item'       => __( 'Update Second Blog Category', 'kilka' ),
+			'add_new_item'      => __( 'Add New Second Blog Category', 'kilka' ),
+			'new_item_name'     => __( 'New Second Blog Category', 'kilka' ),
+			'menu_name'         => __( 'Categories', 'kilka' ),
+		);
+
+		register_taxonomy(
+			'world_note_category',
+			array( 'world_note' ),
+			array(
+				'labels'            => $category_labels,
+				'hierarchical'      => true,
+				'public'            => true,
+				'show_ui'           => true,
+				'show_admin_column' => true,
+				'show_in_rest'      => true,
+				'query_var'         => true,
+				'rewrite'           => array(
+					'slug'         => $base_slug . '-category',
+					'with_front'   => false,
+					'hierarchical' => true,
+				),
+			)
+		);
+
+		$tag_labels = array(
+			'name'                       => _x( 'Second Blog Tags', 'taxonomy general name', 'kilka' ),
+			'singular_name'              => _x( 'Second Blog Tag', 'taxonomy singular name', 'kilka' ),
+			'search_items'               => __( 'Search Second Blog Tags', 'kilka' ),
+			'popular_items'              => __( 'Popular Second Blog Tags', 'kilka' ),
+			'all_items'                  => __( 'All Second Blog Tags', 'kilka' ),
+			'edit_item'                  => __( 'Edit Second Blog Tag', 'kilka' ),
+			'update_item'                => __( 'Update Second Blog Tag', 'kilka' ),
+			'add_new_item'               => __( 'Add New Second Blog Tag', 'kilka' ),
+			'new_item_name'              => __( 'New Second Blog Tag', 'kilka' ),
+			'separate_items_with_commas' => __( 'Separate tags with commas', 'kilka' ),
+			'add_or_remove_items'        => __( 'Add or remove tags', 'kilka' ),
+			'choose_from_most_used'      => __( 'Choose from the most used tags', 'kilka' ),
+			'menu_name'                  => __( 'Tags', 'kilka' ),
+		);
+
+		register_taxonomy(
+			'world_note_tag',
+			array( 'world_note' ),
+			array(
+				'labels'            => $tag_labels,
+				'hierarchical'      => false,
+				'public'            => true,
+				'show_ui'           => true,
+				'show_admin_column' => true,
+				'show_in_rest'      => true,
+				'query_var'         => true,
+				'rewrite'           => array(
+					'slug'       => $base_slug . '-tag',
+					'with_front' => false,
+				),
+			)
+		);
+	}
+endif;
+add_action( 'init', 'kilka_register_world_note_taxonomies', 11 );
+
+if ( ! function_exists( 'kilka_flush_rewrite_rules_on_theme_switch' ) ) :
+	/**
+	 * Flush rewrite rules after theme activation to register CPT routes.
+	 */
+	function kilka_flush_rewrite_rules_on_theme_switch() {
+		kilka_register_world_note_post_type();
+		kilka_register_world_note_taxonomies();
+		flush_rewrite_rules();
+	}
+endif;
+add_action( 'after_switch_theme', 'kilka_flush_rewrite_rules_on_theme_switch' );
+
+if ( ! function_exists( 'kilka_schedule_world_note_rewrite_flush' ) ) :
+	/**
+	 * Schedule a single rewrite flush after slug changes.
+	 */
+	function kilka_schedule_world_note_rewrite_flush() {
+		update_option( 'kilka_world_note_needs_rewrite_flush', '1' );
+	}
+endif;
+
+if ( ! function_exists( 'kilka_flush_rewrite_rules_on_world_note_slug_update' ) ) :
+	/**
+	 * Flush rewrite rules when the Second Blog slug changes.
+	 *
+	 * @param mixed $old_value Previous option value.
+	 * @param mixed $value     New option value.
+	 */
+	function kilka_flush_rewrite_rules_on_world_note_slug_update( $old_value, $value ) {
+		if ( $old_value === $value ) {
+			return;
+		}
+
+		kilka_schedule_world_note_rewrite_flush();
+	}
+endif;
+add_action( 'update_option_kilka_world_note_slug', 'kilka_flush_rewrite_rules_on_world_note_slug_update', 10, 2 );
+
+if ( ! function_exists( 'kilka_flush_rewrite_rules_on_world_note_slug_add' ) ) :
+	/**
+	 * Flush rewrite rules when the Second Blog slug option is added for the first time.
+	 *
+	 * @param string $option Option name.
+	 * @param mixed  $value  Option value.
+	 */
+	function kilka_flush_rewrite_rules_on_world_note_slug_add( $option, $value ) {
+		if ( 'kilka_world_note_slug' !== $option ) {
+			return;
+		}
+
+		kilka_schedule_world_note_rewrite_flush();
+	}
+endif;
+add_action( 'added_option', 'kilka_flush_rewrite_rules_on_world_note_slug_add', 10, 2 );
+
+if ( ! function_exists( 'kilka_maybe_flush_world_note_rewrite_rules' ) ) :
+	/**
+	 * Flush rewrite rules once when Second Blog slug was updated.
+	 */
+	function kilka_maybe_flush_world_note_rewrite_rules() {
+		if ( '1' !== get_option( 'kilka_world_note_needs_rewrite_flush', '0' ) ) {
+			return;
+		}
+
+		flush_rewrite_rules();
+		delete_option( 'kilka_world_note_needs_rewrite_flush' );
+	}
+endif;
+add_action( 'init', 'kilka_maybe_flush_world_note_rewrite_rules', 20 );
+
+if ( ! function_exists( 'kilka_world_note_slug_field_markup' ) ) :
+	/**
+	 * Render Second Blog slug input in the Reading settings page.
+	 */
+	function kilka_world_note_slug_field_markup() {
+		$current_slug = get_option( 'kilka_world_note_slug', 'second-blog' );
+		?>
+		<input
+			name="kilka_world_note_slug"
+			id="kilka_world_note_slug"
+			type="text"
+			class="regular-text"
+			value="<?php echo esc_attr( $current_slug ); ?>"
+		/>
+		<p class="description">
+			<?php esc_html_e( 'Example: second-blog. Use lowercase letters, numbers, and hyphens only.', 'kilka' ); ?>
+		</p>
+		<?php
+	}
+endif;
+
+if ( ! function_exists( 'kilka_register_world_note_slug_setting' ) ) :
+	/**
+	 * Register the Second Blog slug setting in admin.
+	 */
+	function kilka_register_world_note_slug_setting() {
+		register_setting(
+			'reading',
+			'kilka_world_note_slug',
+				array(
+					'type'              => 'string',
+					'sanitize_callback' => 'kilka_sanitize_world_note_slug',
+					'default'           => 'second-blog',
+				)
+			);
+
+		add_settings_field(
+			'kilka_world_note_slug',
+			esc_html__( 'Second Blog URL Slug', 'kilka' ),
+			'kilka_world_note_slug_field_markup',
+			'reading',
+			'default'
+		);
+	}
+endif;
+add_action( 'admin_init', 'kilka_register_world_note_slug_setting' );
+
+if ( ! function_exists( 'kilka_append_world_notes_menu_item' ) ) :
+	/**
+	 * Append a Second Blog link to the primary menu when missing.
+	 *
+	 * @param string   $items Menu items HTML.
+	 * @param stdClass $args  Menu arguments.
+	 * @return string
+	 */
+	function kilka_append_world_notes_menu_item( $items, $args ) {
+		if ( ! isset( $args->theme_location ) || 'menu-1' !== $args->theme_location ) {
+			return $items;
+		}
+
+		$archive_url = get_post_type_archive_link( 'world_note' );
+		if ( ! $archive_url ) {
+			return $items;
+		}
+
+		$archive_path = wp_parse_url( $archive_url, PHP_URL_PATH );
+
+		// Prevent duplicates if the menu already contains a world notes link.
+		if ( false !== strpos( $items, 'world_note' ) ) {
+			return $items;
+		}
+
+		if ( is_string( $archive_path ) && '' !== $archive_path ) {
+			$archive_path = trim( $archive_path, '/' );
+			if ( '' !== $archive_path && false !== strpos( $items, $archive_path ) ) {
+				return $items;
+			}
+		}
+
+		if ( false !== strpos( $items, esc_url( $archive_url ) ) ) {
+			return $items;
+		}
+
+		$item_classes = 'menu-item menu-item-type-custom menu-item-second-blog';
+		if ( is_post_type_archive( 'world_note' ) || is_singular( 'world_note' ) ) {
+			$item_classes .= ' current-menu-item';
+		}
+
+		$items .= sprintf(
+			'<li class="%1$s"><a href="%2$s">%3$s</a></li>',
+			esc_attr( $item_classes ),
+			esc_url( $archive_url ),
+			esc_html__( 'Second Blog', 'kilka' )
+		);
+
+		return $items;
+	}
+endif;
+add_filter( 'wp_nav_menu_items', 'kilka_append_world_notes_menu_item', 10, 2 );

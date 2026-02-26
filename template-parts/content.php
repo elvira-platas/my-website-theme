@@ -12,7 +12,7 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<?php kilka_post_thumbnail(); ?>
 
-	<?php if ( 'post' === get_post_type() ) : ?>
+	<?php if ( in_array( get_post_type(), array( 'post', 'world_note' ), true ) ) : ?>
 		<div class="entry-meta">
 			<?php
 			kilka_posted_on();
@@ -71,12 +71,19 @@
 			echo'<a href="'.esc_url ( get_the_permalink( $post->ID ) ).'" class="button format-'.esc_attr($continue_reading_format).'">'. $button_content .'</a>';
 		}
 
-		if ( ! is_singular() && 'post' === get_post_type() ) {
-			$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'kilka' ) );
-			if ( $tags_list ) {
-				printf( '<div class="entry-footer text-right"><span class="tags-links">' . esc_html__( '%1$s', 'kilka' ) . '</span></div>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			if ( ! is_singular() && in_array( get_post_type(), array( 'post', 'world_note' ), true ) ) {
+				if ( 'post' === get_post_type() ) {
+					$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'kilka' ) );
+				} else {
+					$tags_list = function_exists( 'kilka_get_world_note_term_links' )
+						? kilka_get_world_note_term_links( get_the_ID(), 'world_note_tag', esc_html_x( ', ', 'list item separator', 'kilka' ) )
+						: get_the_term_list( get_the_ID(), 'world_note_tag', '', esc_html_x( ', ', 'list item separator', 'kilka' ) );
+				}
+
+				if ( $tags_list ) {
+					printf( '<div class="entry-footer text-right"><span class="tags-links">' . esc_html__( '%1$s', 'kilka' ) . '</span></div>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				}
 			}
-		}
 
 		wp_link_pages(
 			array(

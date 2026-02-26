@@ -193,6 +193,50 @@ function kilka_customize_register( $wp_customize ) {
 			'800' => 'Extra-Bold (800)',
 		),
 	) );
+
+	// Add Second Blog Intro Section
+	$wp_customize->add_section(
+		'kilka_second_blog_intro_section',
+		array(
+			'title'       => __( 'Second Blog Intro', 'kilka' ),
+			'priority'    => 140,
+			'description' => __( 'Shown under the site title on Second Blog pages.', 'kilka' ),
+		)
+	);
+
+	// Second Blog Heading
+	$wp_customize->add_setting(
+		'kilka_second_blog_heading',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'sanitize_text_field',
+		)
+	);
+	$wp_customize->add_control(
+		'kilka_second_blog_heading',
+		array(
+			'label'   => __( 'Second Blog Heading', 'kilka' ),
+			'section' => 'kilka_second_blog_intro_section',
+			'type'    => 'text',
+		)
+	);
+
+	// Second Blog Description
+	$wp_customize->add_setting(
+		'kilka_second_blog_description',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'sanitize_textarea_field',
+		)
+	);
+	$wp_customize->add_control(
+		'kilka_second_blog_description',
+		array(
+			'label'   => __( 'Second Blog Description', 'kilka' ),
+			'section' => 'kilka_second_blog_intro_section',
+			'type'    => 'textarea',
+		)
+	);
 }
 add_action( 'customize_register', 'kilka_customize_register' );
 
@@ -221,3 +265,37 @@ function kilka_customize_preview_js() {
 	wp_enqueue_script( 'kilka-customizer', get_template_directory_uri() . '/assets/js/customizer.js', array( 'customize-preview' ), '20151215', true );
 }
 add_action( 'customize_preview_init', 'kilka_customize_preview_js' );
+
+/**
+ * Enqueue Customizer controls script for Second Blog intro helpers.
+ *
+ * @return void
+ */
+function kilka_customize_controls_js() {
+	$second_blog_url = '';
+
+	if ( post_type_exists( 'world_note' ) ) {
+		$second_blog_url = get_post_type_archive_link( 'world_note' );
+	}
+
+	if ( ! $second_blog_url && function_exists( 'kilka_get_world_note_slug' ) ) {
+		$second_blog_url = home_url( '/' . trim( (string) kilka_get_world_note_slug(), '/' ) . '/' );
+	}
+
+	wp_enqueue_script(
+		'kilka-customizer-controls',
+		get_template_directory_uri() . '/assets/js/customizer-controls.js',
+		array( 'customize-controls' ),
+		KILKA_VERSION,
+		true
+	);
+
+	wp_localize_script(
+		'kilka-customizer-controls',
+		'kilkaCustomizerControls',
+		array(
+			'secondBlogUrl' => esc_url_raw( (string) $second_blog_url ),
+		)
+	);
+}
+add_action( 'customize_controls_enqueue_scripts', 'kilka_customize_controls_js' );

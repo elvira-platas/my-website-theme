@@ -150,7 +150,8 @@ function kilka_scripts() {
 	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.min.css', array(), '4.5.0', 'all');
 	wp_enqueue_style( 'slicknav', get_template_directory_uri() . '/assets/css/slicknav.min.css', array(), '1.0.3', 'all');
 	wp_enqueue_style( 'kilka-default-block', get_template_directory_uri() . '/assets/css/default-block.css', array(), KILKA_VERSION, 'all');
-	wp_enqueue_style( 'kilka-style', get_template_directory_uri() . '/assets/css/kilka-style.css', array(), '1.0.0', 'all');
+	$kilka_style_version = filemtime( get_template_directory() . '/assets/css/kilka-style.css' );
+	wp_enqueue_style( 'kilka-style', get_template_directory_uri() . '/assets/css/kilka-style.css', array(), $kilka_style_version, 'all');
 	wp_enqueue_style( 'kilka-style', get_stylesheet_uri(), array(), KILKA_VERSION );
 
 	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array('jquery'), '4.5.0', true );
@@ -177,6 +178,11 @@ require get_template_directory() . '/inc/custom-header.php';
  * Custom template tags for this theme.
  */
 require get_template_directory() . '/inc/template-tags.php';
+
+/**
+ * Register custom post types.
+ */
+require get_template_directory() . '/inc/post-types.php';
 
 /**
  * Functions which enhance the theme by hooking into WordPress.
