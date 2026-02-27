@@ -194,49 +194,51 @@ function kilka_customize_register( $wp_customize ) {
 		),
 	) );
 
-	// Add Second Blog Intro Section
-	$wp_customize->add_section(
-		'kilka_second_blog_intro_section',
-		array(
-			'title'       => __( 'Second Blog Intro', 'kilka' ),
-			'priority'    => 140,
-			'description' => __( 'Shown under the site title on Second Blog pages.', 'kilka' ),
-		)
-	);
+	if ( function_exists( 'kilka_get_world_note_slug' ) ) {
+		// Add Second Blog Intro Section only when the companion plugin is active.
+		$wp_customize->add_section(
+			'kilka_second_blog_intro_section',
+			array(
+				'title'       => __( 'Second Blog Intro', 'kilka' ),
+				'priority'    => 140,
+				'description' => __( 'Shown under the site title on Second Blog pages.', 'kilka' ),
+			)
+		);
 
-	// Second Blog Heading
-	$wp_customize->add_setting(
-		'kilka_second_blog_heading',
-		array(
-			'default'           => '',
-			'sanitize_callback' => 'sanitize_text_field',
-		)
-	);
-	$wp_customize->add_control(
-		'kilka_second_blog_heading',
-		array(
-			'label'   => __( 'Second Blog Heading', 'kilka' ),
-			'section' => 'kilka_second_blog_intro_section',
-			'type'    => 'text',
-		)
-	);
+		// Second Blog Heading
+		$wp_customize->add_setting(
+			'kilka_second_blog_heading',
+			array(
+				'default'           => '',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'kilka_second_blog_heading',
+			array(
+				'label'   => __( 'Second Blog Heading', 'kilka' ),
+				'section' => 'kilka_second_blog_intro_section',
+				'type'    => 'text',
+			)
+		);
 
-	// Second Blog Description
-	$wp_customize->add_setting(
-		'kilka_second_blog_description',
-		array(
-			'default'           => '',
-			'sanitize_callback' => 'sanitize_textarea_field',
-		)
-	);
-	$wp_customize->add_control(
-		'kilka_second_blog_description',
-		array(
-			'label'   => __( 'Second Blog Description', 'kilka' ),
-			'section' => 'kilka_second_blog_intro_section',
-			'type'    => 'textarea',
-		)
-	);
+		// Second Blog Description
+		$wp_customize->add_setting(
+			'kilka_second_blog_description',
+			array(
+				'default'           => '',
+				'sanitize_callback' => 'sanitize_textarea_field',
+			)
+		);
+		$wp_customize->add_control(
+			'kilka_second_blog_description',
+			array(
+				'label'   => __( 'Second Blog Description', 'kilka' ),
+				'section' => 'kilka_second_blog_intro_section',
+				'type'    => 'textarea',
+			)
+		);
+	}
 }
 add_action( 'customize_register', 'kilka_customize_register' );
 
@@ -272,6 +274,10 @@ add_action( 'customize_preview_init', 'kilka_customize_preview_js' );
  * @return void
  */
 function kilka_customize_controls_js() {
+	if ( ! function_exists( 'kilka_get_world_note_slug' ) ) {
+		return;
+	}
+
 	$second_blog_url = '';
 
 	if ( post_type_exists( 'world_note' ) ) {

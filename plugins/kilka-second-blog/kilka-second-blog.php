@@ -1,9 +1,26 @@
 <?php
 /**
- * Register custom post types for the Kilka theme.
+ * Plugin Name: Kilka Second Blog
+ * Plugin URI:  https://github.com/elvira-platas/my-website-theme
+ * Description: Registers the Second Blog custom post type, taxonomies, and context helpers used by the Kilka theme.
+ * Version:     1.0.0
+ * Author:      Elvira
+ * License:     GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: kilka
+ *
+ * Register custom post types for the Kilka ecosystem.
  *
  * @package Kilka
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+if ( function_exists( 'kilka_register_world_note_post_type' ) ) {
+	return;
+}
 
 if ( ! function_exists( 'kilka_get_world_note_slug' ) ) :
 	/**
@@ -300,17 +317,27 @@ if ( ! function_exists( 'kilka_register_world_note_taxonomies' ) ) :
 endif;
 add_action( 'init', 'kilka_register_world_note_taxonomies', 11 );
 
-if ( ! function_exists( 'kilka_flush_rewrite_rules_on_theme_switch' ) ) :
+if ( ! function_exists( 'kilka_activate_second_blog_plugin' ) ) :
 	/**
-	 * Flush rewrite rules after theme activation to register CPT routes.
+	 * Register rewrite endpoints when the companion plugin is activated.
 	 */
-	function kilka_flush_rewrite_rules_on_theme_switch() {
+	function kilka_activate_second_blog_plugin() {
 		kilka_register_world_note_post_type();
 		kilka_register_world_note_taxonomies();
 		flush_rewrite_rules();
 	}
 endif;
-add_action( 'after_switch_theme', 'kilka_flush_rewrite_rules_on_theme_switch' );
+register_activation_hook( __FILE__, 'kilka_activate_second_blog_plugin' );
+
+if ( ! function_exists( 'kilka_deactivate_second_blog_plugin' ) ) :
+	/**
+	 * Flush rewrite rules when the companion plugin is deactivated.
+	 */
+	function kilka_deactivate_second_blog_plugin() {
+		flush_rewrite_rules();
+	}
+endif;
+register_deactivation_hook( __FILE__, 'kilka_deactivate_second_blog_plugin' );
 
 if ( ! function_exists( 'kilka_schedule_world_note_rewrite_flush' ) ) :
 	/**

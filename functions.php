@@ -9,7 +9,7 @@
 
 if ( ! defined( 'KILKA_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
-	define( 'KILKA_VERSION', '1.1.9' );
+	define( 'KILKA_VERSION', '1.2.2' );
 }
 
 if ( ! function_exists( 'kilka_setup' ) ) :
@@ -178,11 +178,6 @@ require get_template_directory() . '/inc/custom-header.php';
  * Custom template tags for this theme.
  */
 require get_template_directory() . '/inc/template-tags.php';
-
-/**
- * Register custom post types.
- */
-require get_template_directory() . '/inc/post-types.php';
 
 /**
  * Functions which enhance the theme by hooking into WordPress.
