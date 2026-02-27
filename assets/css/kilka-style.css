@@ -631,7 +631,8 @@ ul#primary-menu li.hover ul {
 .blog-area {
 	padding-top: 100px;
 }
-article.post ,
+article.post,
+article.type-world_note,
 article.page {
   margin-bottom: 30px;
   padding: 30px;
@@ -647,10 +648,12 @@ article.sticky {
 	display: block;
   border: 1px solid #f2f2f2;
 }
-article.post:last-child{
+article.post:last-child,
+article.type-world_note:last-child{
   margin-bottom: 0px;
 }
-article.post img {
+article.post img,
+article.type-world_note img {
   margin-bottom: 15px;
 }
 .entry-meta{
@@ -1051,7 +1054,8 @@ p.comment-notes {
   .blog-area {
     padding-top: 50px;
   }
-  article.post:last-child {
+  article.post:last-child,
+  article.type-world_note:last-child {
     margin-bottom: 30px;
   }
   .nav-previous {
@@ -1139,7 +1143,8 @@ p.comment-notes {
   .blog-area {
     padding-top: 50px;
   }
-  article.post:last-child {
+  article.post:last-child,
+  article.type-world_note:last-child {
     margin-bottom: 30px;
   }
   .widget-area {
@@ -1905,6 +1910,17 @@ p.comment-notes {
     font-size: 28px;
     line-height: 1.2;
     font-weight: 700;
+}
+
+.second-blog-title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.second-blog-title a:hover,
+.second-blog-title a:focus {
+    color: inherit;
+    text-decoration: underline;
 }
 
 .second-blog-description {
