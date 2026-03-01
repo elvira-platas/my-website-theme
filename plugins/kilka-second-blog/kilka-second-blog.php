@@ -7,7 +7,7 @@
  * Author:      Elvira
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: kilka
+ * Text Domain: kilka-second-blog
  *
  * Register custom post types for the Kilka ecosystem.
  *
@@ -192,24 +192,24 @@ if ( ! function_exists( 'kilka_register_world_note_post_type' ) ) :
 	 */
 	function kilka_register_world_note_post_type() {
 		$labels = array(
-			'name'                  => _x( 'Second Blog', 'Post type general name', 'kilka' ),
-			'singular_name'         => _x( 'Second Blog Entry', 'Post type singular name', 'kilka' ),
-			'menu_name'             => __( 'Second Blog', 'kilka' ),
-			'name_admin_bar'        => __( 'Second Blog', 'kilka' ),
-			'add_new'               => __( 'Add New', 'kilka' ),
-			'add_new_item'          => __( 'Add New Second Blog Entry', 'kilka' ),
-			'new_item'              => __( 'New Second Blog Entry', 'kilka' ),
-			'edit_item'             => __( 'Edit Second Blog Entry', 'kilka' ),
-			'view_item'             => __( 'View Second Blog Entry', 'kilka' ),
-			'all_items'             => __( 'All Second Blog Entries', 'kilka' ),
-			'search_items'          => __( 'Search Second Blog', 'kilka' ),
-			'parent_item_colon'     => __( 'Parent Second Blog Entries:', 'kilka' ),
-			'not_found'             => __( 'No second blog entries found.', 'kilka' ),
-			'not_found_in_trash'    => __( 'No second blog entries found in Trash.', 'kilka' ),
-			'archives'              => __( 'Second Blog Archives', 'kilka' ),
-			'attributes'            => __( 'Second Blog Attributes', 'kilka' ),
-			'insert_into_item'      => __( 'Insert into second blog entry', 'kilka' ),
-			'uploaded_to_this_item' => __( 'Uploaded to this second blog entry', 'kilka' ),
+			'name'                  => _x( 'Second Blog', 'Post type general name', 'kilka-second-blog' ),
+			'singular_name'         => _x( 'Second Blog Entry', 'Post type singular name', 'kilka-second-blog' ),
+			'menu_name'             => __( 'Second Blog', 'kilka-second-blog' ),
+			'name_admin_bar'        => __( 'Second Blog', 'kilka-second-blog' ),
+			'add_new'               => __( 'Add New', 'kilka-second-blog' ),
+			'add_new_item'          => __( 'Add New Second Blog Entry', 'kilka-second-blog' ),
+			'new_item'              => __( 'New Second Blog Entry', 'kilka-second-blog' ),
+			'edit_item'             => __( 'Edit Second Blog Entry', 'kilka-second-blog' ),
+			'view_item'             => __( 'View Second Blog Entry', 'kilka-second-blog' ),
+			'all_items'             => __( 'All Second Blog Entries', 'kilka-second-blog' ),
+			'search_items'          => __( 'Search Second Blog', 'kilka-second-blog' ),
+			'parent_item_colon'     => __( 'Parent Second Blog Entries:', 'kilka-second-blog' ),
+			'not_found'             => __( 'No second blog entries found.', 'kilka-second-blog' ),
+			'not_found_in_trash'    => __( 'No second blog entries found in Trash.', 'kilka-second-blog' ),
+			'archives'              => __( 'Second Blog Archives', 'kilka-second-blog' ),
+			'attributes'            => __( 'Second Blog Attributes', 'kilka-second-blog' ),
+			'insert_into_item'      => __( 'Insert into second blog entry', 'kilka-second-blog' ),
+			'uploaded_to_this_item' => __( 'Uploaded to this second blog entry', 'kilka-second-blog' ),
 		);
 
 			$args = array(
@@ -248,17 +248,17 @@ if ( ! function_exists( 'kilka_register_world_note_taxonomies' ) ) :
 		$base_slug = kilka_get_world_note_slug();
 
 		$category_labels = array(
-			'name'              => _x( 'Second Blog Categories', 'taxonomy general name', 'kilka' ),
-			'singular_name'     => _x( 'Second Blog Category', 'taxonomy singular name', 'kilka' ),
-			'search_items'      => __( 'Search Second Blog Categories', 'kilka' ),
-			'all_items'         => __( 'All Second Blog Categories', 'kilka' ),
-			'parent_item'       => __( 'Parent Second Blog Category', 'kilka' ),
-			'parent_item_colon' => __( 'Parent Second Blog Category:', 'kilka' ),
-			'edit_item'         => __( 'Edit Second Blog Category', 'kilka' ),
-			'update_item'       => __( 'Update Second Blog Category', 'kilka' ),
-			'add_new_item'      => __( 'Add New Second Blog Category', 'kilka' ),
-			'new_item_name'     => __( 'New Second Blog Category', 'kilka' ),
-			'menu_name'         => __( 'Categories', 'kilka' ),
+			'name'              => _x( 'Second Blog Categories', 'taxonomy general name', 'kilka-second-blog' ),
+			'singular_name'     => _x( 'Second Blog Category', 'taxonomy singular name', 'kilka-second-blog' ),
+			'search_items'      => __( 'Search Second Blog Categories', 'kilka-second-blog' ),
+			'all_items'         => __( 'All Second Blog Categories', 'kilka-second-blog' ),
+			'parent_item'       => __( 'Parent Second Blog Category', 'kilka-second-blog' ),
+			'parent_item_colon' => __( 'Parent Second Blog Category:', 'kilka-second-blog' ),
+			'edit_item'         => __( 'Edit Second Blog Category', 'kilka-second-blog' ),
+			'update_item'       => __( 'Update Second Blog Category', 'kilka-second-blog' ),
+			'add_new_item'      => __( 'Add New Second Blog Category', 'kilka-second-blog' ),
+			'new_item_name'     => __( 'New Second Blog Category', 'kilka-second-blog' ),
+			'menu_name'         => __( 'Categories', 'kilka-second-blog' ),
 		);
 
 		register_taxonomy(
@@ -281,19 +281,19 @@ if ( ! function_exists( 'kilka_register_world_note_taxonomies' ) ) :
 		);
 
 		$tag_labels = array(
-			'name'                       => _x( 'Second Blog Tags', 'taxonomy general name', 'kilka' ),
-			'singular_name'              => _x( 'Second Blog Tag', 'taxonomy singular name', 'kilka' ),
-			'search_items'               => __( 'Search Second Blog Tags', 'kilka' ),
-			'popular_items'              => __( 'Popular Second Blog Tags', 'kilka' ),
-			'all_items'                  => __( 'All Second Blog Tags', 'kilka' ),
-			'edit_item'                  => __( 'Edit Second Blog Tag', 'kilka' ),
-			'update_item'                => __( 'Update Second Blog Tag', 'kilka' ),
-			'add_new_item'               => __( 'Add New Second Blog Tag', 'kilka' ),
-			'new_item_name'              => __( 'New Second Blog Tag', 'kilka' ),
-			'separate_items_with_commas' => __( 'Separate tags with commas', 'kilka' ),
-			'add_or_remove_items'        => __( 'Add or remove tags', 'kilka' ),
-			'choose_from_most_used'      => __( 'Choose from the most used tags', 'kilka' ),
-			'menu_name'                  => __( 'Tags', 'kilka' ),
+			'name'                       => _x( 'Second Blog Tags', 'taxonomy general name', 'kilka-second-blog' ),
+			'singular_name'              => _x( 'Second Blog Tag', 'taxonomy singular name', 'kilka-second-blog' ),
+			'search_items'               => __( 'Search Second Blog Tags', 'kilka-second-blog' ),
+			'popular_items'              => __( 'Popular Second Blog Tags', 'kilka-second-blog' ),
+			'all_items'                  => __( 'All Second Blog Tags', 'kilka-second-blog' ),
+			'edit_item'                  => __( 'Edit Second Blog Tag', 'kilka-second-blog' ),
+			'update_item'                => __( 'Update Second Blog Tag', 'kilka-second-blog' ),
+			'add_new_item'               => __( 'Add New Second Blog Tag', 'kilka-second-blog' ),
+			'new_item_name'              => __( 'New Second Blog Tag', 'kilka-second-blog' ),
+			'separate_items_with_commas' => __( 'Separate tags with commas', 'kilka-second-blog' ),
+			'add_or_remove_items'        => __( 'Add or remove tags', 'kilka-second-blog' ),
+			'choose_from_most_used'      => __( 'Choose from the most used tags', 'kilka-second-blog' ),
+			'menu_name'                  => __( 'Tags', 'kilka-second-blog' ),
 		);
 
 		register_taxonomy(
@@ -412,7 +412,7 @@ if ( ! function_exists( 'kilka_world_note_slug_field_markup' ) ) :
 			value="<?php echo esc_attr( $current_slug ); ?>"
 		/>
 		<p class="description">
-			<?php esc_html_e( 'Example: second-blog. Use lowercase letters, numbers, and hyphens only.', 'kilka' ); ?>
+			<?php esc_html_e( 'Example: second-blog. Use lowercase letters, numbers, and hyphens only.', 'kilka-second-blog' ); ?>
 		</p>
 		<?php
 	}
@@ -435,7 +435,7 @@ if ( ! function_exists( 'kilka_register_world_note_slug_setting' ) ) :
 
 		add_settings_field(
 			'kilka_world_note_slug',
-			esc_html__( 'Second Blog URL Slug', 'kilka' ),
+			esc_html__( 'Second Blog URL Slug', 'kilka-second-blog' ),
 			'kilka_world_note_slug_field_markup',
 			'reading',
 			'default'
@@ -489,7 +489,7 @@ if ( ! function_exists( 'kilka_append_world_notes_menu_item' ) ) :
 			'<li class="%1$s"><a href="%2$s">%3$s</a></li>',
 			esc_attr( $item_classes ),
 			esc_url( $archive_url ),
-			esc_html__( 'Second Blog', 'kilka' )
+			esc_html__( 'Second Blog', 'kilka-second-blog' )
 		);
 
 		return $items;
