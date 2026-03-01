@@ -11,6 +11,8 @@ function kilka_footer_style_1(){ ?>
 			<div class="col-lg-12">
 				<div class="copyright">
 					&copy; <?php echo date('Y'); ?> ❤️ Elvira.
+					<span class="sep"> | </span>
+					<a href="<?php echo esc_url( 'https://wordpress.org/' ); ?>" target="_blank" rel="noopener"><?php echo esc_html__( 'Powered by WordPress', 'kilka' ); ?></a>
 					<?php
 					$footer_link_text = get_theme_mod( 'kilka_footer_link_text' );
 					$footer_link_url  = get_theme_mod( 'kilka_footer_link_url' );
