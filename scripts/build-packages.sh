@@ -37,6 +37,9 @@ rsync -a \
 	--exclude "dist/" \
 	--exclude "plugins/" \
 	--exclude "scripts/" \
+	--exclude ".agents/" \
+	--exclude ".codex/" \
+	--exclude "welcome/" \
 	--exclude "AGENTS.md" \
 	--exclude "README.md" \
 	"${ROOT_DIR}/" "${THEME_STAGING_DIR}/"
