@@ -5,7 +5,7 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-com
 Requires at least: 5.7
 Tested up to: 6.7
 Requires PHP: 5.6
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,11 @@ AI assistance: OpenAI Codex and Google Gemini were used for code review, impleme
 
 == Changelog ==
 
+= 1.2.3 =
+* Updated bundled Bootstrap to 4.6.2.
+* Corrected the bundled SlickNav asset version to 1.0.10.
+* Added package-content validation to the build script.
+
 = 1.2.2 =
 * Updated theme and readme metadata for fork attribution.
 * Added explicit fork notice in style.css.
@@ -50,5 +55,5 @@ Kilka is distributed under the terms of the GNU GPL.
 * Original theme: Kilka by Asha Themes, https://ashathemes.com/
 * Based on Underscores, https://underscores.me/, (C) Automattic, GPLv2 or later
 * normalize.css, https://necolas.github.io/normalize.css/, MIT
-* Bootstrap v4.5.0, https://getbootstrap.com/, MIT
+* Bootstrap v4.6.2, https://getbootstrap.com/, MIT
 * SlickNav v1.0.10, http://slicknav.io/, MIT

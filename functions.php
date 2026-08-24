@@ -9,7 +9,7 @@
 
 if ( ! defined( 'KILKA_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
-	define( 'KILKA_VERSION', '1.2.2' );
+	define( 'KILKA_VERSION', '1.2.3' );
 }
 
 if ( ! function_exists( 'kilka_setup' ) ) :
@@ -147,15 +147,15 @@ add_action( 'widgets_init', 'kilka_widgets_init' );
  * Enqueue scripts and styles.
  */
 function kilka_scripts() {
-	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.min.css', array(), '4.5.0', 'all');
-	wp_enqueue_style( 'slicknav', get_template_directory_uri() . '/assets/css/slicknav.min.css', array(), '1.0.3', 'all');
+	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.min.css', array(), '4.6.2', 'all');
+	wp_enqueue_style( 'slicknav', get_template_directory_uri() . '/assets/css/slicknav.min.css', array(), '1.0.10', 'all');
 	wp_enqueue_style( 'kilka-default-block', get_template_directory_uri() . '/assets/css/default-block.css', array(), KILKA_VERSION, 'all');
 	$kilka_style_version = filemtime( get_template_directory() . '/assets/css/kilka-style.css' );
 	wp_enqueue_style( 'kilka-style', get_template_directory_uri() . '/assets/css/kilka-style.css', array(), $kilka_style_version, 'all');
 	wp_enqueue_style( 'kilka-style', get_stylesheet_uri(), array(), KILKA_VERSION );
 
-	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array('jquery'), '4.5.0', true );
-	wp_enqueue_script( 'slicknav', get_template_directory_uri() . '/assets/js/jquery.slicknav.min.js', array('jquery'), '1.0.3', true );
+	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array('jquery'), '4.6.2', true );
+	wp_enqueue_script( 'slicknav', get_template_directory_uri() . '/assets/js/jquery.slicknav.min.js', array('jquery'), '1.0.10', true );
 	wp_enqueue_script( 'kilka-script', get_template_directory_uri() . '/assets/js/kilka-script.js', array('jquery'), KILKA_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
