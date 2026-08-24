@@ -41,6 +41,7 @@ check_package_directory() {
 	local package_dir="$1"
 	local forbidden_dir
 	local forbidden_path
+	local sensitive_path
 
 	for forbidden_dir in welcome .agents .codex; do
 		forbidden_path="$(find "${package_dir}" -type d -name "${forbidden_dir}" -print -quit)"
@@ -49,6 +50,17 @@ check_package_directory() {
 			return 1
 		fi
 	done
+
+	sensitive_path="$(find "${package_dir}" -type f \( \
+		-name '.env' -o -name '.env.*' -o -name '*.sql' -o -name '*.sql.gz' \
+		-o -name '*.bak' -o -name '*.backup' -o -name '*.orig' \
+		-o -name '*.swp' -o -name '*.swo' -o -name '*.pem' \
+		-o -name '*.key' -o -name '*.log' \
+	\) -print -quit)"
+	if [ -n "${sensitive_path}" ]; then
+		echo "Error: sensitive or backup file found in package: ${sensitive_path}" >&2
+		return 1
+	fi
 
 	if rg -n -i --hidden \
 		--glob '*.php' --glob '*.js' --glob '*.css' --glob '*.txt' \
@@ -65,6 +77,11 @@ check_package_archive() {
 
 	if unzip -Z1 "${archive}" | rg -n -i '(^|/)(welcome|\.agents|\.codex)(/|$)'; then
 		echo "Error: forbidden directory found in archive: ${archive}" >&2
+		return 1
+	fi
+
+	if unzip -Z1 "${archive}" | rg -n -i '(^|/)(\.env(\..*)?|[^/]+\.(sql\.gz|sql|bak|backup|orig|swp|swo|pem|key|log))$'; then
+		echo "Error: sensitive or backup file found in archive: ${archive}" >&2
 		return 1
 	fi
 
@@ -88,9 +105,22 @@ rsync -a \
 	--exclude "docs/" \
 	--exclude "plugins/" \
 	--exclude "scripts/" \
+	--exclude ".env" \
+	--exclude ".env.*" \
+	--exclude "*.sql" \
+	--exclude "*.sql.gz" \
+	--exclude "*.bak" \
+	--exclude "*.backup" \
+	--exclude "*.orig" \
+	--exclude "*.swp" \
+	--exclude "*.swo" \
+	--exclude "*.pem" \
+	--exclude "*.key" \
+	--exclude "*.log" \
 	--exclude ".agents/" \
 	--exclude ".codex/" \
 	--exclude "welcome/" \
+	--exclude ".gitignore" \
 	--exclude "AGENTS.md" \
 	--exclude "README.md" \
 	"${ROOT_DIR}/" "${THEME_STAGING_DIR}/"

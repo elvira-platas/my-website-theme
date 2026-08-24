@@ -57,3 +57,5 @@ Kilka is distributed under the terms of the GNU GPL.
 * normalize.css, https://necolas.github.io/normalize.css/, MIT
 * Bootstrap v4.6.2, https://getbootstrap.com/, MIT
 * SlickNav v1.0.10, http://slicknav.io/, MIT
+* Bundled Google Fonts families are listed in THIRD-PARTY-NOTICES.txt with
+  licensing guidance.
