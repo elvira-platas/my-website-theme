@@ -21,6 +21,7 @@ Original author: Asha Themes
 Original author website: https://ashathemes.com/
 Fork maintainer: Elvira
 Fork repository: https://github.com/elvira-platas/my-website-theme
+AI assistance: OpenAI Codex was used for code review, implementation, documentation, and testing guidance under Elvira's direction. Project decisions, review, and responsibility for the published code remain with Elvira.
 
 == Installation ==
 
