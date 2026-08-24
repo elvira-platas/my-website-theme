@@ -16,6 +16,15 @@ report_build_exit() {
 
 trap report_build_exit EXIT
 
+report_missing_requirement() {
+	local message="$1"
+
+	echo "Error: ${message}" >&2
+	if [ -n "${GITHUB_ACTIONS:-}" ]; then
+		echo "::error file=scripts/build-packages.sh,line=${BASH_LINENO[0]}::${message}"
+	fi
+}
+
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DIST_DIR="${ROOT_DIR}/dist"
 BUILD_DIR="${ROOT_DIR}/.build"
@@ -27,27 +36,27 @@ THEME_STAGING_DIR="${BUILD_DIR}/${THEME_SLUG}"
 PLUGIN_STAGING_DIR="${BUILD_DIR}/${PLUGIN_SLUG}"
 
 if ! command -v rsync >/dev/null 2>&1; then
-	echo "Error: rsync is required but not installed." >&2
+	report_missing_requirement "rsync is required but not installed."
 	exit 1
 fi
 
 if ! command -v zip >/dev/null 2>&1; then
-	echo "Error: zip is required but not installed." >&2
+	report_missing_requirement "zip is required but not installed."
 	exit 1
 fi
 
 if ! command -v rg >/dev/null 2>&1; then
-	echo "Error: rg is required but not installed." >&2
+	report_missing_requirement "rg is required but not installed."
 	exit 1
 fi
 
 if ! command -v unzip >/dev/null 2>&1; then
-	echo "Error: unzip is required but not installed." >&2
+	report_missing_requirement "unzip is required but not installed."
 	exit 1
 fi
 
 if [ ! -d "${ROOT_DIR}/plugins/${PLUGIN_SLUG}" ]; then
-	echo "Error: plugin directory not found: plugins/${PLUGIN_SLUG}" >&2
+	report_missing_requirement "plugin directory not found: plugins/${PLUGIN_SLUG}"
 	exit 1
 fi
 
