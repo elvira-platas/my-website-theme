@@ -8,6 +8,10 @@ This repository stores both:
 
 The `kilka` theme is a maintained fork of the original Kilka theme by [Asha Themes](https://ashathemes.com/). Original theme copyright remains with Asha Themes; fork maintenance and custom modifications are by Elvira.
 
+## AI assistance
+
+This repository has been developed and maintained by Elvira with assistance from OpenAI Codex, an AI coding agent. Codex has supported code review, implementation, documentation, and testing guidance under Elvira's direction. Project decisions, review, and responsibility for the published code remain with Elvira.
+
 For deployment/publishing, build separate ZIP files.
 
 ## Build ZIP packages
