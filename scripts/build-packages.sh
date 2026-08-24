@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+report_build_error() {
+	local exit_code="$?"
+	local line_number="${BASH_LINENO[0]}"
+	local failed_command="${BASH_COMMAND}"
+
+	echo "Error: package build failed at line ${line_number}: ${failed_command}" >&2
+	if [ -n "${GITHUB_ACTIONS:-}" ]; then
+		echo "::error file=scripts/build-packages.sh,line=${line_number}::Package build failed: ${failed_command}"
+	fi
+	exit "${exit_code}"
+}
+
+trap report_build_error ERR
+
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DIST_DIR="${ROOT_DIR}/dist"
 BUILD_DIR="${ROOT_DIR}/.build"
