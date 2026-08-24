@@ -27,11 +27,14 @@ function kilka_body_classes( $classes ) {
 add_filter( 'body_class', 'kilka_body_classes' );
 
 /**
- * Add a pingback url auto-discovery header for single posts, pages, or attachments.
+ * Disable the XML-RPC methods used by pingbacks.
+ *
+ * @param array $methods XML-RPC methods exposed by WordPress.
+ * @return array
  */
-function kilka_pingback_header() {
-	if ( is_singular() && pings_open() ) {
-		printf( '<link rel="pingback" href="%s">', esc_url( get_bloginfo( 'pingback_url' ) ) );
-	}
+function kilka_disable_pingbacks( $methods ) {
+	unset( $methods['pingback.ping'], $methods['pingback.extensions.getPingbacks'] );
+
+	return $methods;
 }
-add_action( 'wp_head', 'kilka_pingback_header' );
+add_filter( 'xmlrpc_methods', 'kilka_disable_pingbacks' );
