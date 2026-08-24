@@ -4,6 +4,10 @@ This repository stores both:
 - the `kilka` theme
 - the companion plugin `kilka-second-blog`
 
+## Attribution
+
+The `kilka` theme is a maintained fork of the original Kilka theme by [Asha Themes](https://ashathemes.com/). Original theme copyright remains with Asha Themes; fork maintenance and custom modifications are by Elvira.
+
 For deployment/publishing, build separate ZIP files.
 
 ## Build ZIP packages
