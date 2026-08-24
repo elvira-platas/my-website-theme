@@ -85,6 +85,7 @@ rsync -a \
 	--exclude ".github/" \
 	--exclude ".build/" \
 	--exclude "dist/" \
+	--exclude "docs/" \
 	--exclude "plugins/" \
 	--exclude "scripts/" \
 	--exclude ".agents/" \
