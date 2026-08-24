@@ -1,86 +1,86 @@
-# Шаги для WP.org и инструкция по companion-плагину
+# WordPress.org Publishing and Companion Plugin Notes
 
-Этот файл — короткая памятка, что осталось сделать для публикации темы и плагина.
+This file is maintainer documentation for publishing the Kilka theme and its companion plugin. It is kept in the repository and excluded from the installable theme ZIP.
 
-## Что уже сделано
+## Completed
 
-- Тема и плагин разделены.
-- Логика `Second Blog` вынесена в `plugins/kilka-second-blog/kilka-second-blog.php`.
-- Для плагина задан отдельный `Text Domain`: `kilka-second-blog`.
-- Сборка выполняется раздельно через `./scripts/build-packages.sh`.
-- Атрибуция оригинального автора уже добавлена в `style.css` и `readme.txt`.
-- Подготовлен шаблон readme плагина: `plugins/kilka-second-blog/readme.txt`.
+- The theme and companion plugin are separated.
+- The `Second Blog` logic is in `plugins/kilka-second-blog/kilka-second-blog.php`.
+- The plugin uses the separate text domain `kilka-second-blog`.
+- Separate packages are built with `./scripts/build-packages.sh`.
+- Original-author attribution is present in `style.css` and `readme.txt`.
+- AI assistance from OpenAI Codex and Google Gemini is disclosed in the public README files.
+- Package validation rejects legacy promotional content and repository-only directories.
 
-## Что осталось для WordPress.org Theme Directory
+## Remaining steps for the WordPress.org Theme Directory
 
-1. Выбрать финальное уникальное имя/slug темы.
-2. Обновить метаданные в `style.css` (имя, версия, при необходимости `Text Domain`).
-3. Проверить `Contributors` в `readme.txt` (должен быть WordPress.org username).
-4. Проверить блок лицензий всех сторонних ресурсов (Bootstrap, SlickNav, шрифты и т.д.).
-5. Прогнать тему через Theme Check и исправить обязательные замечания.
-6. Собирать ZIP темы отдельно: `dist/kilka.zip` (без плагина внутри).
-7. Отправить тему в каталог WP.org и пройти ревью.
+1. Choose a final unique theme name and slug.
+2. Review the metadata in `style.css`.
+3. Verify that `Contributors` in `readme.txt` contains the correct WordPress.org username.
+4. Review the license notices for all bundled third-party resources, including Bootstrap, SlickNav, and fonts.
+5. Run Theme Check and resolve required findings.
+6. Build the theme ZIP separately with `./scripts/build-packages.sh`.
+7. Submit the theme to WordPress.org and complete the review process.
 
-## Плагин: как опубликовать в WordPress.org Plugin Directory
+## Plugin publication steps
 
-1. Подготовить метаданные плагина:
-   - проверить header в `plugins/kilka-second-blog/kilka-second-blog.php`;
-   - поддерживать `plugins/kilka-second-blog/readme.txt` (это основной исходник readme для плагина).
-   - проверить `Contributors` в plugin readme (должен совпадать с реальным WordPress.org username).
-2. Подать заявку на slug плагина:
-   - `https://wordpress.org/plugins/developers/add/`
-3. После одобрения использовать выданный SVN-репозиторий:
-   - код в `trunk/`;
-   - релиз в `tags/x.y.z/`;
-   - баннер/иконки в `assets/` (по желанию, но рекомендуется).
-4. Указать `Stable tag` в plugin `readme.txt`.
-5. Закоммитить в SVN и проверить, что страница плагина появилась в каталоге.
+1. Review the plugin header in `plugins/kilka-second-blog/kilka-second-blog.php`.
+2. Maintain `plugins/kilka-second-blog/readme.txt` as the plugin readme source.
+3. Verify that the plugin `Contributors` value matches the WordPress.org username.
+4. Request a plugin slug at `https://wordpress.org/plugins/developers/add/`.
+5. After approval, use the assigned WordPress.org SVN repository:
+   - code in `trunk/`;
+   - each release in `tags/x.y.z/`;
+   - optional banners and icons in `assets/`.
+6. Keep the `Stable tag` in the plugin `readme.txt` aligned with the release.
+7. Commit the plugin to SVN and verify the directory page after publication.
 
-## Где фиксировать readme плагина
+## Readme locations
 
-1. В Git-репозитории:
-   - `plugins/kilka-second-blog/readme.txt`
-2. В WP.org SVN после одобрения:
-   - `trunk/readme.txt`
-   - `tags/x.y.z/readme.txt` (для каждого релиза)
+1. Git repository: `plugins/kilka-second-blog/readme.txt`.
+2. WordPress.org SVN after approval:
+   - `trunk/readme.txt`;
+   - `tags/x.y.z/readme.txt` for each release.
 
-## Как тема должна ссылаться на плагин
+## Theme and plugin relationship
 
-1. Тема может рекомендовать плагин.
-2. Тема не должна зашивать/автоустанавливать плагин нарушающим правила способом.
-3. CPT/таксономии должны оставаться в плагине.
+1. The theme may recommend the companion plugin.
+2. The theme must not bundle or auto-install the plugin in a way that violates WordPress.org rules.
+3. The custom post type and taxonomies must remain in the plugin.
 
-## Сборка ZIP (тема + плагин)
+## Package build
 
 ```bash
 ./scripts/build-packages.sh
 ```
 
-Результат:
+The command creates:
 
-- `dist/kilka.zip`
-- `dist/kilka-second-blog.zip`
+- `dist/kilka.zip`;
+- `dist/kilka-second-blog.zip`.
 
-## Рекомендуемый порядок релиза
+Repository documentation under `docs/` is not included in either installable package.
 
-1. Поднять версии темы и плагина.
-2. Собрать ZIP.
-3. Проверить на чистом WordPress:
-   - сначала активировать плагин;
-   - потом активировать тему.
-4. Проверить ключевые сценарии:
-   - архив `second-blog`;
-   - одиночный пост `second-blog`;
-   - выборки по tag/category/date/author;
-   - поиск с `post_type=world_note`;
+## Recommended release sequence
+
+1. Update the theme or plugin version when appropriate.
+2. Build both packages.
+3. Test on a clean WordPress installation:
+   - activate the companion plugin first;
+   - activate the theme second.
+4. Verify the key scenarios:
+   - `second-blog` archive;
+   - `second-blog` single entry;
+   - tag, category, date, and author archives;
+   - search with `post_type=world_note`;
    - `Customizer -> Second Blog Intro`.
-5. Публиковать.
+5. Publish only after the clean-install checks pass.
 
-## Полезные ссылки
+## Useful links
 
-- Требования к темам: `https://make.wordpress.org/themes/handbook/review/required/`
-- Header `style.css`: `https://developer.wordpress.org/themes/classic-themes/basics/main-stylesheet-style-css/`
-- Handbook по плагинам: `https://developer.wordpress.org/plugins/`
-- Подача плагина: `https://wordpress.org/plugins/developers/add/`
-- Лицензия WordPress: `https://wordpress.org/about/license/`
+- Theme requirements: `https://make.wordpress.org/themes/handbook/review/required/`
+- `style.css` header: `https://developer.wordpress.org/themes/classic-themes/basics/main-stylesheet-style-css/`
+- Plugin Handbook: `https://developer.wordpress.org/plugins/`
+- Plugin submission: `https://wordpress.org/plugins/developers/add/`
+- WordPress license: `https://wordpress.org/about/license/`
 - Trademark policy: `https://wordpressfoundation.org/trademark-policy/`
