@@ -6,6 +6,58 @@
  */
 
 /**
+ * Limit the site-title font to fonts provided by the theme.
+ *
+ * @param string $value Requested font name.
+ * @return string
+ */
+function kilka_sanitize_site_title_font( $value ) {
+	$fonts = array(
+		'Roboto',
+		'Arial',
+		'Georgia',
+		'Verdana',
+		'Tahoma',
+		'Trebuchet MS',
+		'Times New Roman',
+		'Courier New',
+		'system-ui',
+		'Montserrat',
+		'Oswald',
+		'Playfair Display',
+		'Merriweather',
+		'Open Sans',
+		'Lato',
+	);
+
+	return in_array( $value, $fonts, true ) ? $value : 'Roboto';
+}
+
+/**
+ * Limit the Continue Reading button format to supported values.
+ *
+ * @param string $value Requested button format.
+ * @return string
+ */
+function kilka_sanitize_continue_reading_format( $value ) {
+	$allowed_formats = array( 'text', 'arrow', 'text_arrow' );
+
+	return in_array( $value, $allowed_formats, true ) ? $value : 'text';
+}
+
+/**
+ * Limit the Continue Reading font weight to supported values.
+ *
+ * @param string $value Requested font weight.
+ * @return string
+ */
+function kilka_sanitize_continue_reading_weight( $value ) {
+	$allowed_weights = array( '300', '400', '500', '600', '700', '800' );
+
+	return in_array( (string) $value, $allowed_weights, true ) ? (string) $value : '400';
+}
+
+/**
  * Add postMessage support for site title and description for the Theme Customizer.
  *
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
@@ -41,7 +93,7 @@ function kilka_customize_register( $wp_customize ) {
 	// Font Family Setting
 	$wp_customize->add_setting( 'kilka_site_title_font', array(
 		'default'           => 'Roboto',
-		'sanitize_callback' => 'sanitize_text_field',
+		'sanitize_callback' => 'kilka_sanitize_site_title_font',
 	) );
 	$wp_customize->add_control( 'kilka_site_title_font', array(
 		'label'    => __( 'Site Title Font Family', 'kilka' ),
@@ -152,7 +204,7 @@ function kilka_customize_register( $wp_customize ) {
 	// Continue Reading Format
 	$wp_customize->add_setting( 'kilka_continue_reading_format', array(
 		'default'           => 'text',
-		'sanitize_callback' => 'sanitize_text_field',
+		'sanitize_callback' => 'kilka_sanitize_continue_reading_format',
 	) );
 	$wp_customize->add_control( 'kilka_continue_reading_format', array(
 		'label'    => __( 'Continue Reading Button Format', 'kilka' ),
@@ -178,7 +230,7 @@ function kilka_customize_register( $wp_customize ) {
 	// Continue Reading Font Weight
 	$wp_customize->add_setting( 'kilka_continue_reading_weight', array(
 		'default'           => '400',
-		'sanitize_callback' => 'sanitize_text_field',
+		'sanitize_callback' => 'kilka_sanitize_continue_reading_weight',
 	) );
 	$wp_customize->add_control( 'kilka_continue_reading_weight', array(
 		'label'    => __( 'Continue Reading Font Weight', 'kilka' ),
@@ -248,7 +300,7 @@ add_action( 'customize_register', 'kilka_customize_register' );
  * @return void
  */
 function kilka_customize_partial_blogname() {
-	bloginfo( 'name' );
+	echo esc_html( get_bloginfo( 'name', 'display' ) );
 }
 
 /**
@@ -257,7 +309,7 @@ function kilka_customize_partial_blogname() {
  * @return void
  */
 function kilka_customize_partial_blogdescription() {
-	bloginfo( 'description' );
+	echo esc_html( get_bloginfo( 'description', 'display' ) );
 }
 
 /**

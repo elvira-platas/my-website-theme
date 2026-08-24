@@ -20,7 +20,7 @@ function kilka_header_style_1(){ ?>
 							<?php
 							the_custom_logo();
 							?>
-							<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
+							<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php echo esc_html( get_bloginfo( 'name', 'display' ) ); ?></a></p>
 							<?php
 							$kilka_description = get_bloginfo( 'description', 'display' );
 							if ( $kilka_description || is_customize_preview() ) :

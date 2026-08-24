@@ -199,6 +199,3 @@ require get_template_directory() . '/inc/header/header-1.php';
  * Load kilka Footer.
  */
 require get_template_directory() . '/inc/footer/footer-1.php';
-
-/** Welcome Page * */
-require get_template_directory() . '/welcome/welcome.php';
