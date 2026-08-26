@@ -9,6 +9,9 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: kilka-second-blog
  *
+ * Development of this plugin was carried out with substantial assistance from
+ * OpenAI Codex and Google Gemini under Elvira's direction.
+ *
  * Register custom post types for the Kilka ecosystem.
  *
  * @package Kilka
