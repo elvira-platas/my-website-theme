@@ -6,31 +6,31 @@
  */
 
 /**
- * Limit the site-title font to fonts provided by the theme.
+ * Get the site-title fonts supported by the theme.
+ *
+ * @return array
+ */
+function kilka_get_site_title_font_choices() {
+	return array(
+		'Roboto'           => __( 'Roboto (Default)', 'kilka' ),
+		'system-ui'        => __( 'System UI (Fastest)', 'kilka' ),
+		'Montserrat'       => __( 'Montserrat', 'kilka' ),
+		'Oswald'           => __( 'Oswald', 'kilka' ),
+		'Playfair Display' => __( 'Playfair Display', 'kilka' ),
+		'Merriweather'     => __( 'Merriweather', 'kilka' ),
+	);
+}
+
+/**
+ * Limit the site-title font to fonts supported by the theme.
  *
  * @param string $value Requested font name.
  * @return string
  */
 function kilka_sanitize_site_title_font( $value ) {
-	$fonts = array(
-		'Roboto',
-		'Arial',
-		'Georgia',
-		'Verdana',
-		'Tahoma',
-		'Trebuchet MS',
-		'Times New Roman',
-		'Courier New',
-		'system-ui',
-		'Montserrat',
-		'Oswald',
-		'Playfair Display',
-		'Merriweather',
-		'Open Sans',
-		'Lato',
-	);
+	$fonts = kilka_get_site_title_font_choices();
 
-	return in_array( $value, $fonts, true ) ? $value : 'Roboto';
+	return array_key_exists( $value, $fonts ) ? $value : 'Roboto';
 }
 
 /**
@@ -99,23 +99,7 @@ function kilka_customize_register( $wp_customize ) {
 		'label'    => __( 'Site Title Font Family', 'kilka' ),
 		'section'  => 'kilka_typography_section',
 		'type'     => 'select',
-		'choices'  => array(
-			'Roboto'                 => 'Roboto (Default)',
-			'Arial'                  => 'Arial',
-			'Georgia'                => 'Georgia',
-			'Verdana'                => 'Verdana',
-			'Tahoma'                 => 'Tahoma',
-			'Trebuchet MS'           => 'Trebuchet MS',
-			'Times New Roman'        => 'Times New Roman',
-			'Courier New'            => 'Courier New',
-			'system-ui'              => 'System Font (Fastest)',
-			'Montserrat'             => 'Montserrat',
-			'Oswald'                 => 'Oswald',
-			'Playfair Display'       => 'Playfair Display',
-			'Merriweather'           => 'Merriweather',
-			'Open Sans'              => 'Open Sans',
-			'Lato'                   => 'Lato',
-		),
+		'choices'  => kilka_get_site_title_font_choices(),
 	) );
 
 	// Font Size Setting
