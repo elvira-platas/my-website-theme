@@ -5,7 +5,7 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-com
 Requires at least: 5.7
 Tested up to: 6.7
 Requires PHP: 5.6
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,10 @@ AI assistance: OpenAI Codex and Google Gemini were used for code review, impleme
 3. Click Activate.
 
 == Changelog ==
+
+= 1.2.5 =
+* Reduced the site-title font selector to six distinct Latin and Cyrillic options.
+* Corrected local font subsets and weights and removed unused font assets.
 
 = 1.2.4 =
 * Disabled WordPress pingback XML-RPC methods and pingback auto-discovery.

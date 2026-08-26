@@ -39,8 +39,8 @@ function kilka_custom_css() {
     $font_family = $site_title_font === 'system-ui' ? 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' : '"' . esc_attr( $site_title_font ) . '", sans-serif';
     $font_weight = '700'; // Default bold for site title
     
-    // Check for serif and cursive fonts to apply correct fallback
-    if ( in_array( $site_title_font, array('Georgia', 'Times New Roman', 'Playfair Display', 'Merriweather') ) ) {
+    // Apply the appropriate generic fallback for local serif fonts.
+    if ( in_array( $site_title_font, array( 'Playfair Display', 'Merriweather' ), true ) ) {
         $font_family = '"' . esc_attr( $site_title_font ) . '", serif';
         $font_weight = '400'; 
     }

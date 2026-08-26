@@ -27,9 +27,9 @@ Project: http://slicknav.io/
 Fonts
 -----
 The theme includes local font files for Roboto, Montserrat, Oswald, Playfair
-Display, Merriweather, Open Sans, Lato, Pacifico, and Caveat under
-assets/fonts/. These files are bundled locally; the theme does not request
-Google Fonts or any other font resource from an external server at runtime.
+Display, and Merriweather under assets/fonts/. Latin and Cyrillic subsets are
+bundled locally; the theme does not request Google Fonts or any other font
+resource from an external server at runtime.
 
 Font licenses are family-specific. The font files originate from the Google
 Fonts collection, and the applicable license for each family should be checked
