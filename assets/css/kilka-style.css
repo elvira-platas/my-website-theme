@@ -1134,6 +1134,28 @@ p.comment-notes {
   }
 }
 
+/* Single post typography */
+.single-area .entry-content {
+  font-size: 17px;
+  line-height: 1.7;
+  letter-spacing: normal;
+}
+
+.single-area .entry-content p {
+  margin-bottom: 1.15em;
+}
+
+.single-area .entry-content li + li {
+  margin-top: .35em;
+}
+
+@media (max-width: 767px) {
+  .single-area .entry-content {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+}
+
 
 /* Local Google Fonts (Latin + Cyrillic) */
 /* cyrillic-ext */
