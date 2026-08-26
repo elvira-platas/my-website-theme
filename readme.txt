@@ -5,7 +5,7 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-com
 Requires at least: 5.7
 Tested up to: 6.7
 Requires PHP: 5.6
-Stable tag: 1.2.8
+Stable tag: 1.2.9
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,11 @@ AI-assisted development: Development of this fork was carried out with substanti
 3. Click Activate.
 
 == Changelog ==
+
+= 1.2.9 =
+* Added an accessible responsive back-to-top button with reduced-motion support.
+* Fixed screen-reader-only labels that caused horizontal overflow on mobile layouts.
+* Improved cache busting for the editor stylesheet and the main theme script.
 
 = 1.2.8 =
 * Added an independent widget area for Second Blog pages.
