@@ -4,7 +4,16 @@
 
 /* Gobal Css */
 .screen-reader-text {
-  visibility: visible;
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important;
 }
 .skip-link.screen-reader-text {
   border: 0;
@@ -974,6 +983,68 @@ p.comment-notes {
   margin: 20px 0px 0px 0px;
   padding: 20px 0;
   text-align: center;
+}
+.back-to-top {
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #d7d7d7;
+  border-radius: 50%;
+  bottom: 24px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+  color: #666666;
+  cursor: pointer;
+  display: flex;
+  height: 44px;
+  justify-content: center;
+  opacity: 0;
+  padding: 0;
+  pointer-events: none;
+  position: fixed;
+  right: 24px;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+  visibility: hidden;
+  width: 44px;
+  z-index: 999;
+}
+.back-to-top.is-visible,
+.back-to-top:focus {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition-delay: 0s;
+  visibility: visible;
+}
+.back-to-top:hover {
+  background-color: #f2f2f2;
+  border-color: #aaaaaa;
+  color: #444444;
+}
+.back-to-top:focus-visible {
+  outline: 2px solid #444444;
+  outline-offset: 3px;
+}
+.back-to-top svg {
+  fill: none;
+  height: 22px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  width: 22px;
+}
+@media (max-width: 767px) {
+  .back-to-top {
+    bottom: 16px;
+    height: 42px;
+    right: 16px;
+    width: 42px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top {
+    transition: none;
+  }
 }
 .single-area {
   padding-top: 100px;

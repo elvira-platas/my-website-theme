@@ -37,6 +37,10 @@ msgstr ""
 msgid "Back To Home"
 msgstr ""
 
+#: footer.php:18
+msgid "Back to top"
+msgstr ""
+
 #. 1: list of categories.
 #: inc/template-tags.php:66
 #, php-format
