@@ -9,7 +9,7 @@
 
 if ( ! defined( 'KILKA_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
-	define( 'KILKA_VERSION', '1.2.5' );
+	define( 'KILKA_VERSION', '1.2.6' );
 }
 
 if ( ! function_exists( 'kilka_setup' ) ) :
@@ -85,6 +85,10 @@ if ( ! function_exists( 'kilka_setup' ) ) :
 
 		// Add theme support for selective refresh for widgets.
 		add_theme_support( 'customize-selective-refresh-widgets' );
+
+		// Keep the block editor typography aligned with published posts.
+		add_theme_support( 'editor-styles' );
+		add_editor_style( 'assets/css/default-block.css' );
 
 		/**
 		 * Add support for core custom logo.
