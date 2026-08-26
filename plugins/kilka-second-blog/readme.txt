@@ -16,7 +16,7 @@ Kilka Second Blog is a companion plugin for the Kilka theme fork.
 
 == AI Assistance ==
 
-This plugin has been developed and maintained by Elvira with assistance from OpenAI Codex and Google Gemini, AI tools used for code review, implementation, documentation, and testing guidance. Their assistance was used under Elvira's direction. Project decisions, review, and responsibility for the published code remain with Elvira.
+Development of this plugin was carried out with substantial assistance from OpenAI Codex and Google Gemini. These AI systems were used to generate and modify code, review changes, prepare documentation, and guide testing. Elvira directed the work, evaluated the results, and is responsible for published releases.
 
 It registers:
 

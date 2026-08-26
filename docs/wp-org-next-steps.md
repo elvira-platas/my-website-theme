@@ -9,7 +9,7 @@ This file is maintainer documentation for publishing the Kilka theme and its com
 - The plugin uses the separate text domain `kilka-second-blog`.
 - Separate packages are built with `./scripts/build-packages.sh`.
 - Original-author attribution is present in `style.css` and `readme.txt`.
-- AI assistance from OpenAI Codex and Google Gemini is disclosed in the public README files.
+- Substantial AI-assisted development with OpenAI Codex and Google Gemini is disclosed in the public README files.
 - Package validation rejects legacy promotional content and repository-only directories.
 
 ## Remaining steps for the WordPress.org Theme Directory

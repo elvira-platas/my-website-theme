@@ -21,7 +21,7 @@ Original author: Asha Themes
 Original author website: https://ashathemes.com/
 Fork maintainer: Elvira
 Fork repository: https://github.com/elvira-platas/my-website-theme
-AI assistance: OpenAI Codex and Google Gemini were used for code review, implementation, documentation, and testing guidance under Elvira's direction. Project decisions, review, and responsibility for the published code remain with Elvira.
+AI-assisted development: Development of this fork was carried out with substantial assistance from OpenAI Codex and Google Gemini. These AI systems were used to generate and modify code, review changes, prepare documentation, and guide testing. Elvira directed the work, evaluated the results, and is responsible for published releases.
 
 == Installation ==
 
