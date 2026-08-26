@@ -9,7 +9,7 @@
 
 if ( ! defined( 'KILKA_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
-	define( 'KILKA_VERSION', '1.2.7' );
+	define( 'KILKA_VERSION', '1.2.8' );
 }
 
 if ( ! function_exists( 'kilka_setup' ) ) :
@@ -131,15 +131,29 @@ add_action( 'after_setup_theme', 'kilka_content_width', 0 );
 function kilka_widgets_init() {
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Sidebar', 'kilka' ),
+			'name'          => esc_html__( 'Main Blog Sidebar', 'kilka' ),
 			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', 'kilka' ),
+			'description'   => esc_html__( 'Widgets shown on the main blog.', 'kilka' ),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
 			'before_title'  => '<h2 class="widget-title">',
 			'after_title'   => '</h2>',
 		)
 	);
+
+	if ( function_exists( 'kilka_is_second_blog_context' ) ) {
+		register_sidebar(
+			array(
+				'name'          => esc_html__( 'Second Blog Sidebar', 'kilka' ),
+				'id'            => 'sidebar-second-blog',
+				'description'   => esc_html__( 'Widgets shown on Second Blog pages. Leave empty for a full-width layout.', 'kilka' ),
+				'before_widget' => '<section id="%1$s" class="widget %2$s">',
+				'after_widget'  => '</section>',
+				'before_title'  => '<h2 class="widget-title">',
+				'after_title'   => '</h2>',
+			)
+		);
+	}
 }
 add_action( 'widgets_init', 'kilka_widgets_init' );
 
