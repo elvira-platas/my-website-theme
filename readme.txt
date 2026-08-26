@@ -5,7 +5,7 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-com
 Requires at least: 5.7
 Tested up to: 6.7
 Requires PHP: 5.6
-Stable tag: 1.2.6
+Stable tag: 1.2.7
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,11 @@ AI assistance: OpenAI Codex and Google Gemini were used for code review, impleme
 3. Click Activate.
 
 == Changelog ==
+
+= 1.2.7 =
+* Reorganized theme-specific Customizer controls into a clearer options panel.
+* Moved site-title typography controls into the standard Site Identity section.
+* Combined background color and image controls into a single Background section.
 
 = 1.2.6 =
 * Improved single-post readability with larger responsive text and more comfortable spacing.
