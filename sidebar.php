@@ -1,17 +1,19 @@
 <?php
 /**
- * The sidebar containing the main widget area
+ * The sidebar containing the contextual widget area
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
  * @package Kilka
  */
 
-if ( ! is_active_sidebar( 'sidebar-1' ) ) {
+$kilka_sidebar_id = kilka_get_contextual_sidebar_id();
+
+if ( ! is_active_sidebar( $kilka_sidebar_id ) ) {
 	return;
 }
 ?>
 
 <aside id="secondary" class="widget-area">
-	<?php dynamic_sidebar( 'sidebar-1' ); ?>
+	<?php dynamic_sidebar( $kilka_sidebar_id ); ?>
 </aside><!-- #secondary -->

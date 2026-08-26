@@ -5,7 +5,7 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-com
 Requires at least: 5.7
 Tested up to: 6.7
 Requires PHP: 5.6
-Stable tag: 1.2.7
+Stable tag: 1.2.8
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,14 @@ AI assistance: OpenAI Codex and Google Gemini were used for code review, impleme
 3. Click Activate.
 
 == Changelog ==
+
+= 1.2.8 =
+* Added an independent widget area for Second Blog pages.
+* Kept the main blog's existing widgets in a separately named sidebar.
+* Refined post title and content heading hierarchy, alignment, and color.
+* Preserved authored capitalization for headings inside post content.
+* Simplified single-post footers to show only unlabeled tags.
+* Limited large featured images on single posts and archive previews without cropping or upscaling them.
 
 = 1.2.7 =
 * Reorganized theme-specific Customizer controls into a clearer options panel.

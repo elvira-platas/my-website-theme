@@ -7,14 +7,16 @@
  * @package Kilka
  */
 
-if(is_active_sidebar('sidebar-1')){
+$kilka_has_sidebar = kilka_has_contextual_sidebar();
+
+if ( $kilka_has_sidebar ) {
 	$kilka_column = 8;
-}else{
+} else {
 	$kilka_column = 12;
 }
 get_header();
 ?>
-<section class="blog-area <?php if( ! is_active_sidebar('sidebar-1')): ?>block-content-css<?php endif; ?>" id="content">
+<section class="blog-area <?php if ( ! $kilka_has_sidebar ) : ?>block-content-css<?php endif; ?>" id="content">
 		<div class="container">
 			<div class="row">
 					<div class="col-lg-<?php echo esc_attr($kilka_column); ?> text-center">
@@ -42,7 +44,7 @@ get_header();
 					endif;
 					?>
 				</div>
-				<?php if(is_active_sidebar('sidebar-1')): ?>
+				<?php if ( $kilka_has_sidebar ) : ?>
 				<div class="col-lg-4">
 					<?php get_sidebar(); ?>
 				</div>

@@ -5,9 +5,12 @@
 	background-color: #fff;
 }
 .editor-post-title__block .editor-post-title__input{
+	color: #999999;
 	font-family: Roboto, sans-serif;
-	font-size: 1.875em;
-	font-weight: normal;
+	font-size: 30px;
+	font-weight: 700;
+	line-height: 1.3;
+	text-align: center;
 }
 .editor-default-block-appender textarea.editor-default-block-appender__content{
 	font-family: Roboto, sans-serif;
@@ -38,34 +41,35 @@
 .editor-styles-wrapper h5,
 .editor-styles-wrapper h6{
 	color: #616161;
-	font-weight: normal;
-	line-height: 1.2;
+	font-weight: 700;
+	line-height: 1.35;
 	font-family: Roboto, sans-serif;
-	margin: 0 0 1.25em;
+	margin: 1.6em 0 .65em;
+	text-transform: none;
 }
 .editor-styles-wrapper .wp-block-heading h1,
 .editor-styles-wrapper h1{
-	font-size: 1.875em;
+	font-size: 27px;
 }
 .editor-styles-wrapper .wp-block-heading h2,
 .editor-styles-wrapper h2{
-	font-size: 1.75em;
+	font-size: 24px;
 }
 .editor-styles-wrapper .wp-block-heading h3,
 .editor-styles-wrapper h3{
-	font-size: 1.625em;
+	font-size: 20px;
 }
 .editor-styles-wrapper .wp-block-heading h4,
 .editor-styles-wrapper h4{
-	font-size: 1.5em;
+	font-size: 18px;
 }
 .editor-styles-wrapper .wp-block-heading h5,
 .editor-styles-wrapper h5{
-	font-size: 1.375em;
+	font-size: 17px;
 }
 .editor-styles-wrapper .wp-block-heading h6,
 .editor-styles-wrapper h6{
-	font-size: 1.125em;
+	font-size: 16px;
 }
 .editor-rich-text__tinymce a,
 .block-editor-rich-text__editable a{

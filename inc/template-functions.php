@@ -6,6 +6,28 @@
  */
 
 /**
+ * Get the widget area for the current blog context.
+ *
+ * @return string Sidebar ID.
+ */
+function kilka_get_contextual_sidebar_id() {
+	if ( function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context() ) {
+		return 'sidebar-second-blog';
+	}
+
+	return 'sidebar-1';
+}
+
+/**
+ * Check whether the current blog context has an active widget area.
+ *
+ * @return bool
+ */
+function kilka_has_contextual_sidebar() {
+	return is_active_sidebar( kilka_get_contextual_sidebar_id() );
+}
+
+/**
  * Adds custom classes to the array of body classes.
  *
  * @param array $classes Classes for the body element.
@@ -18,7 +40,7 @@ function kilka_body_classes( $classes ) {
 	}
 
 	// Adds a class of no-sidebar when there is no sidebar present.
-	if ( ! is_active_sidebar( 'sidebar-1' ) ) {
+	if ( ! kilka_has_contextual_sidebar() ) {
 		$classes[] = 'no-sidebar';
 	}
 
