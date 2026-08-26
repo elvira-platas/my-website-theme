@@ -632,15 +632,21 @@ article.type-world_note img {
   text-transform: uppercase;
   line-height: 26px;
 }
-.entry-title a,
+.entry-title a {
+  color: #666666;
+  text-decoration: none;
+}
 .entry-footer span a,
-.entry-meta a{
+.entry-meta a {
   color: #999999;
   text-decoration: none;
 }
-.entry-title a:hover ,
+.entry-title a:hover {
+  color: #444444;
+  text-decoration: underline;
+}
 .entry-footer span a:hover,
-.entry-meta a:hover{
+.entry-meta a:hover {
   color: #000000;
   text-decoration: underline;
 }
@@ -1136,7 +1142,7 @@ p.comment-notes {
 
 /* Single post typography */
 .single-area .entry-title {
-  color: #999999;
+  color: #666666;
   font-size: 30px;
   line-height: 1.3;
   text-align: center;
