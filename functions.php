@@ -9,7 +9,7 @@
 
 if ( ! defined( 'KILKA_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
-	define( 'KILKA_VERSION', '1.2.9' );
+	define( 'KILKA_VERSION', '1.2.10' );
 }
 
 if ( ! function_exists( 'kilka_setup' ) ) :

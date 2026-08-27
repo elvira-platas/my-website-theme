@@ -17,10 +17,17 @@ function kilka_header_style_1(){ ?>
 				<div class="col-lg-12">
 					<div class="header-main-flex">
 						<div class="site-branding text-center">
-							<?php
-							the_custom_logo();
-							?>
-							<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php echo esc_html( get_bloginfo( 'name', 'display' ) ); ?></a></p>
+							<div class="site-branding-main">
+								<div class="site-branding-identity">
+									<?php
+									the_custom_logo();
+									?>
+									<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php echo esc_html( get_bloginfo( 'name', 'display' ) ); ?></a></p>
+								</div>
+								<?php if ( has_nav_menu( 'menu-1' ) ) : ?>
+									<div class="kilka-responsive-menu" data-menu-label="<?php esc_attr_e( 'Menu', 'kilka' ); ?>"></div>
+								<?php endif; ?>
+							</div>
 							<?php
 							$kilka_description = get_bloginfo( 'description', 'display' );
 							if ( $kilka_description || is_customize_preview() ) :
@@ -56,10 +63,6 @@ function kilka_header_style_1(){ ?>
 								<?php endif; ?>
 							<?php endif; ?>
 						</div><!-- .site-branding -->
-						
-						<?php if ( has_nav_menu( 'menu-1' ) ) : ?>
-							<div class="kilka-responsive-menu"></div>
-						<?php endif; ?>
 					</div>
 				</div>
 			</div>

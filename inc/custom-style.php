@@ -134,8 +134,8 @@ function kilka_custom_css() {
             position: absolute;
             left: 83.333333%;
             right: auto;
-            top: calc(30px + (var(--kilka-site-title-size) * 1.1));
-            transform: translate(-50%, -100%);
+            top: calc(30px + (var(--kilka-site-title-size) * 0.55));
+            transform: translate(-50%, -50%);
             z-index: 11000;
             margin: 0 !important;
         }
@@ -145,7 +145,7 @@ function kilka_custom_css() {
             .kilka-responsive-menu {
                 left: auto;
                 right: 0;
-                transform: translateY(-100%);
+                transform: translateY(-50%);
             }
         }
 
@@ -167,20 +167,44 @@ function kilka_custom_css() {
 
         /* Slicknav button styling */
         .slicknav_menu {
-            display: block !important; 
+            display: block !important;
             background: transparent !important;
+            margin: 0 !important;
             padding: 0 !important;
             position: relative;
+            width: 42px;
             z-index: 11000;
         }
 
         .slicknav_btn {
-            background-color: transparent !important;
-            text-shadow: none !important;
-            padding: 0 !important;
-            display: block !important;
+            align-items: center;
+            background-color: #fff !important;
+            border: 1px solid #d7d7d7 !important;
+            border-radius: 50%;
+            box-sizing: border-box;
             cursor: pointer;
+            display: flex !important;
+            float: none !important;
+            height: 42px;
+            justify-content: center;
+            left: auto !important;
             margin: 0 !important;
+            padding: 0 !important;
+            text-shadow: none !important;
+            transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            width: 42px;
+        }
+
+        .slicknav_btn:hover,
+        .slicknav_btn:focus-visible {
+            background-color: #f2f2f2 !important;
+            border-color: #aaa !important;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .slicknav_btn:focus-visible {
+            outline: 2px solid #444;
+            outline-offset: 3px;
         }
 
         /* Remove MENU text */
@@ -188,33 +212,59 @@ function kilka_custom_css() {
             display: none !important;
         }
 
-        .slicknav_icon {
+        .slicknav_menu .slicknav_icon {
+            display: flex !important;
+            flex-direction: column;
+            gap: 4px;
+            height: 18px !important;
+            justify-content: center;
             margin: 0 !important;
-            width: 24px;
+            width: 18px !important;
         }
 
-        .slicknav_icon-bar {
-            background-color: #000 !important; 
-            width: 24px !important;
+        .slicknav_menu .slicknav_icon-bar {
+            background-color: #666 !important;
+            border-radius: 2px;
+            display: block !important;
             height: 2px !important;
-            margin: 5px 0 !important;
-            display: block;
+            margin: 0 !important;
+            transform-origin: center;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            width: 18px !important;
+        }
+
+        .slicknav_btn.slicknav_open span.slicknav_icon-bar:first-child {
+            transform: translateY(6px) rotate(45deg) !important;
+            transform-origin: center !important;
+        }
+
+        .slicknav_btn.slicknav_open span.slicknav_icon-bar:nth-child(2) {
+            display: block !important;
+            opacity: 0;
+        }
+
+        .slicknav_btn.slicknav_open span.slicknav_icon-bar:last-child {
+            transform: translateY(-6px) rotate(-45deg) !important;
+            transform-origin: center !important;
         }
 
         /* Dropdown menu */
         .slicknav_nav {
+            background: #fff !important;
+            border: 1px solid #e4e4e4;
+            border-radius: 10px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
             display: none;
+            left: auto !important;
+            max-width: calc(100vw - 30px);
+            min-width: 0;
+            padding: 6px !important;
             position: absolute;
             right: 0 !important;
-            left: auto !important;
-            transform: none !important;
-            top: 100%;
-            background: #fff !important;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            min-width: 200px;
             text-align: left !important;
-            padding: 10px 0 !important;
-            border: 1px solid #eee;
+            top: calc(100% + 10px);
+            transform: none !important;
+            width: 280px;
             z-index: 11010;
         }
         
@@ -228,28 +278,76 @@ function kilka_custom_css() {
             padding: 0 !important;
         }
 
+        .slicknav_nav li + li {
+            border-top: 1px solid #eee;
+        }
+
         .slicknav_nav a {
+            border: 0;
+            border-radius: 6px;
             color: #333 !important;
-            padding: 12px 25px !important;
-            text-transform: uppercase;
-            font-size: 12px;
-            font-weight: 700;
             display: block !important;
-            border-bottom: 1px solid #f5f5f5;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: normal;
+            line-height: 1.4;
+            padding: 12px 14px !important;
+            text-transform: none;
         }
 
-        .slicknav_nav a:hover {
-            background: #000 !important;
-            color: #fff !important;
+        .slicknav_nav a:hover,
+        .slicknav_nav a:focus {
+            background-color: #f2f2f2 !important;
+            color: #444 !important;
+            text-decoration: none;
         }
 
-        /* Hide the default slicknav icon */
-        .slicknav_menu .slicknav_menutxt { display: none !important; }
+        /* Keep the menu label available to screen readers. */
+        .slicknav_menu .slicknav_menutxt {
+            border: 0 !important;
+            clip: rect(1px, 1px, 1px, 1px) !important;
+            clip-path: inset(50%) !important;
+            height: 1px !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            padding: 0 !important;
+            position: absolute !important;
+            width: 1px !important;
+        }
 
         /* Mobile responsiveness */
-        @media (max-width: 768px) {
+        @media (max-width: 767px) {
+            .site-branding-main {
+                align-items: center;
+                box-sizing: border-box;
+                display: grid;
+                grid-template-columns: 42px minmax(0, 1fr) 42px;
+                column-gap: 8px;
+                width: 100%;
+            }
+
+            .site-branding-main::before {
+                content: "";
+                grid-column: 1;
+            }
+
+            .site-branding-identity {
+                grid-column: 2;
+                min-width: 0;
+            }
+
             .kilka-responsive-menu {
-                display: none !important;
+                align-self: center;
+                display: block !important;
+                grid-column: 3;
+                justify-self: end;
+                left: auto;
+                margin: 0 !important;
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                width: 42px;
             }
         }
     ';

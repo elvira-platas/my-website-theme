@@ -18,15 +18,20 @@
 
     $(document).ready(function () {
         var $primaryMenu = $("#primary-menu");
+        var $responsiveMenu = $(".kilka-responsive-menu");
         var $backToTop = $(".back-to-top");
+        var menuLabel = $responsiveMenu.data("menu-label") || "Menu";
 
         $primaryMenu.kilkaAccessibleDropDown();
         $primaryMenu.slicknav({
             allowParentLinks: true,
+            label: menuLabel,
             prependTo: ".kilka-responsive-menu",
             nestedParentLinks: false,
             closeOnClick: true
         });
+
+        $responsiveMenu.find(".slicknav_btn").attr("aria-label", menuLabel);
 
         if ($backToTop.length) {
             var getScrollTop = function () {
