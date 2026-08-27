@@ -78,6 +78,10 @@ msgstr ""
 msgid "Kilka"
 msgstr ""
 
+#: inc/header/header-1.php:29
+msgid "Menu"
+msgstr ""
+
 #. Description of the theme
 msgid ""
 "Kilka Theme is wordpress blog theme for personal use. Fully responsive "
