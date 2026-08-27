@@ -1603,6 +1603,15 @@ p.comment-notes {
     color: #555555;
 }
 
+.second-blog-disclosure {
+    margin: 8px 0 0;
+    color: #999999;
+    font-size: 13px;
+    font-style: italic;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
 @media (max-width: 767px) {
     .second-blog-title {
         font-size: 22px;
@@ -1611,6 +1620,10 @@ p.comment-notes {
     .second-blog-description {
         font-size: 14px;
         line-height: 1.6;
+    }
+
+    .second-blog-disclosure {
+        font-size: 13px;
     }
 }
 
