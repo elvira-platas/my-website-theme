@@ -38,13 +38,14 @@ function kilka_header_style_1(){ ?>
 							if ( function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context() ) :
 								$second_blog_heading     = trim( (string) get_theme_mod( 'kilka_second_blog_heading', '' ) );
 								$second_blog_description = trim( (string) get_theme_mod( 'kilka_second_blog_description', '' ) );
+								$second_blog_disclosure  = trim( (string) get_theme_mod( 'kilka_second_blog_disclosure', '' ) );
 								$second_blog_archive_url = get_post_type_archive_link( 'world_note' );
 
 								if ( ! $second_blog_archive_url && function_exists( 'kilka_get_world_note_slug' ) ) {
 									$second_blog_archive_url = home_url( '/' . trim( (string) kilka_get_world_note_slug(), '/' ) . '/' );
 								}
 
-								if ( $second_blog_heading || $second_blog_description || is_customize_preview() ) :
+								if ( $second_blog_heading || $second_blog_description || $second_blog_disclosure || is_customize_preview() ) :
 									?>
 									<div class="second-blog-intro">
 										<?php if ( $second_blog_heading || is_customize_preview() ) : ?>
@@ -58,6 +59,9 @@ function kilka_header_style_1(){ ?>
 										<?php endif; ?>
 										<?php if ( $second_blog_description || is_customize_preview() ) : ?>
 											<p class="second-blog-description"><?php echo wp_kses_post( nl2br( esc_html( $second_blog_description ) ) ); ?></p>
+										<?php endif; ?>
+										<?php if ( $second_blog_disclosure || is_customize_preview() ) : ?>
+											<p class="second-blog-disclosure"><?php echo esc_html( $second_blog_disclosure ); ?></p>
 										<?php endif; ?>
 									</div>
 								<?php endif; ?>

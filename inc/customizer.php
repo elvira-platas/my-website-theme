@@ -299,6 +299,24 @@ function kilka_customize_register( $wp_customize ) {
 				'type'    => 'textarea',
 			)
 		);
+
+		// Second Blog Disclosure
+		$wp_customize->add_setting(
+			'kilka_second_blog_disclosure',
+			array(
+				'default'           => '',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'kilka_second_blog_disclosure',
+			array(
+				'label'       => __( 'Second Blog Disclosure', 'kilka' ),
+				'description' => __( 'Optional notice shown below the Second Blog description.', 'kilka' ),
+				'section'     => 'kilka_second_blog_intro_section',
+				'type'        => 'text',
+			)
+		);
 	}
 }
 add_action( 'customize_register', 'kilka_customize_register' );

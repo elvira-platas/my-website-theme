@@ -82,6 +82,14 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
+#: inc/customizer.php
+msgid "Second Blog Disclosure"
+msgstr ""
+
+#: inc/customizer.php
+msgid "Optional notice shown below the Second Blog description."
+msgstr ""
+
 #. Description of the theme
 msgid ""
 "Kilka Theme is wordpress blog theme for personal use. Fully responsive "
