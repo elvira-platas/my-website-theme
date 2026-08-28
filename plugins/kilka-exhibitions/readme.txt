@@ -22,7 +22,7 @@ An Image Space caption can be shown below the image, assigned to an information 
 
 Text Spaces provide constrained width, horizontal and vertical placement, text-scale, minimum-height, alignment, interval, and optional short-line marker presets. Taller spaces use minimum heights so wrapped or enlarged text is never clipped. Vertical placement is only enabled when a taller space has been selected.
 
-The Exhibition information document panel edits the brief description, creator, rights notice, and public information-panel state. A supporting theme can retrieve these portable values together with the ordered work captions.
+The Exhibition information document panel edits an optional public heading, the brief description, creator, rights notice, and public information-panel state. The administrative Exhibition title remains independent, so a supporting theme can omit or replace the visible panel heading while retaining a useful title for content management and accessibility. A supporting theme can retrieve these portable values together with the ordered work captions.
 
 == AI Assistance ==
 
@@ -62,7 +62,7 @@ No. Version 0.2.0 provides the first working editor vertical slice, core informa
 * Adds one restrained optional short-line marker for Text Spaces.
 * Adds neutral structural styles and accessible saved markup.
 * Exposes ordered caption and rights data for a theme-owned exhibition information panel.
-* Adds document-sidebar controls for exhibition description, creator, rights, and panel visibility.
+* Adds document-sidebar controls for an optional information heading, exhibition description, creator, rights, and panel visibility.
 
 = 0.1.0 =
 * Adds the portable `kilka_exhibition` post type.

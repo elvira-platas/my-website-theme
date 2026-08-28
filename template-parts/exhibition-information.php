@@ -21,21 +21,17 @@ if (
 
 $kilka_information_context = kilka_exhibitions_get_information_context( $kilka_exhibition_id );
 $kilka_information_items   = kilka_exhibitions_get_information_items( $kilka_exhibition_id );
+$kilka_heading             = isset( $kilka_information_context['heading'] ) ? $kilka_information_context['heading'] : '';
 $kilka_description         = isset( $kilka_information_context['description'] ) ? $kilka_information_context['description'] : '';
 $kilka_creator             = isset( $kilka_information_context['creator'] ) ? $kilka_information_context['creator'] : '';
 $kilka_copyright           = isset( $kilka_information_context['copyright'] ) ? $kilka_information_context['copyright'] : '';
 
-if ( ! $kilka_information_items && ! $kilka_description && ! $kilka_creator && ! $kilka_copyright ) {
+if ( ! $kilka_information_items && ! $kilka_heading && ! $kilka_description && ! $kilka_creator && ! $kilka_copyright ) {
 	return;
 }
 
 $kilka_panel_id       = 'kilka-exhibition-information-' . $kilka_exhibition_id;
 $kilka_panel_title_id = $kilka_panel_id . '-title';
-$kilka_panel_title    = get_the_title( $kilka_exhibition_id );
-
-if ( '' === trim( $kilka_panel_title ) ) {
-	$kilka_panel_title = __( 'Exhibition information', 'kilka' );
-}
 ?>
 
 <button class="kilka-exhibition__information-toggle" type="button" aria-label="<?php esc_attr_e( 'About this exhibition', 'kilka' ); ?>" aria-controls="<?php echo esc_attr( $kilka_panel_id ); ?>" aria-expanded="false">i</button>
@@ -44,7 +40,11 @@ if ( '' === trim( $kilka_panel_title ) ) {
 	<div class="kilka-exhibition__information-panel">
 		<button class="kilka-exhibition__information-close" type="button" aria-label="<?php esc_attr_e( 'Close information', 'kilka' ); ?>">&times;</button>
 		<header class="kilka-exhibition__information-section kilka-exhibition__information-intro">
-			<h2 id="<?php echo esc_attr( $kilka_panel_title_id ); ?>" class="kilka-exhibition__information-title"><?php echo esc_html( $kilka_panel_title ); ?></h2>
+			<?php if ( $kilka_heading ) : ?>
+				<h2 id="<?php echo esc_attr( $kilka_panel_title_id ); ?>" class="kilka-exhibition__information-title"><?php echo esc_html( $kilka_heading ); ?></h2>
+			<?php else : ?>
+				<h2 id="<?php echo esc_attr( $kilka_panel_title_id ); ?>" class="screen-reader-text"><?php esc_html_e( 'Exhibition information', 'kilka' ); ?></h2>
+			<?php endif; ?>
 
 			<?php if ( $kilka_description ) : ?>
 				<div class="kilka-exhibition__information-note"><?php echo wp_kses_post( wpautop( $kilka_description ) ); ?></div>

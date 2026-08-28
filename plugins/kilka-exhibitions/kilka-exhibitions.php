@@ -187,6 +187,18 @@ if ( ! function_exists( 'kilka_exhibitions_register_post_meta' ) ) :
 
 		register_post_meta(
 			'kilka_exhibition',
+			'kilka_exhibition_information_heading',
+			array(
+				'type'              => 'string',
+				'single'            => true,
+				'default'           => '',
+				'sanitize_callback' => 'sanitize_text_field',
+				'show_in_rest'      => array( 'schema' => $string_schema ),
+			)
+		);
+
+		register_post_meta(
+			'kilka_exhibition',
 			'kilka_exhibition_creator',
 			array(
 				'type'              => 'string',
@@ -274,6 +286,7 @@ if ( ! function_exists( 'kilka_exhibitions_get_information_context' ) ) :
 		}
 
 		return array(
+			'heading'     => sanitize_text_field( get_post_meta( $post_id, 'kilka_exhibition_information_heading', true ) ),
 			'description' => sanitize_textarea_field( get_post_field( 'post_excerpt', $post_id ) ),
 			'creator'     => sanitize_text_field( get_post_meta( $post_id, 'kilka_exhibition_creator', true ) ),
 			'copyright'   => sanitize_text_field( get_post_meta( $post_id, 'kilka_exhibition_copyright_notice', true ) ),

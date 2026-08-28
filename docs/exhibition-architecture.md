@@ -127,6 +127,7 @@ Core fields:
 
 Exhibition-level metadata:
 
+- optional public information-panel heading;
 - default creator name;
 - default copyright notice;
 - information-panel visibility;
@@ -296,13 +297,15 @@ The following details remain experimental until the editing model is proven:
 2. Completed: scaffold the separate first-party exhibition plugin, post type,
    metadata, and independent ZIP package.
 3. Completed: build the constrained Sequence and Space editor blocks.
-4. In progress: description, creator, rights, and panel-state metadata are
-   editable; search-summary and wall-tone controls plus the complete neutral,
-   accessible fallback output remain.
+4. In progress: optional information heading, description, creator, rights, and
+   panel-state metadata are editable; search-summary and wall-tone controls plus
+   the complete neutral, accessible fallback output remain.
 5. In progress: connect the current theme prototype to the new data model. The
-   caption data now reaches the theme-owned information panel; the final
-   exhibition sequence template is still pending.
-6. Restore the shared footer at the end of the exhibition.
+   caption data reaches the theme-owned information panel and the dedicated
+   `single-kilka_exhibition.php` renders the plugin-owned Sequence without
+   ordinary post metadata, navigation, or comments.
+6. Completed structurally: restore the shared footer at the end of the
+   exhibition. Its final surface treatment remains part of visual work.
 7. Prototype the edge-positioned site identity on blog, single-post, and
    exhibition views.
 8. Finalise visual treatments only after the complete workflow is usable.
@@ -319,11 +322,28 @@ The following details remain experimental until the editing model is proven:
    surface colour may adapt to the exhibition wall.
 
 The block editor exposes a dedicated `Exhibition information` document panel
-for the brief description, creator, rights notice, and information-panel
-toggle. These values belong to the exhibition as a whole. Image-level creator
-or rights overrides are shown only for the affected work, avoiding repeated
-global credit lines throughout the works list.
+for an optional public heading, the brief description, creator, rights notice,
+and information-panel toggle. The public heading is independent from the
+administrative Exhibition title and is omitted visually when empty; the dialog
+keeps a screen-reader name in that state. These values belong to the exhibition
+as a whole. Image-level creator or rights overrides are shown only for the
+affected work, avoiding repeated global credit lines throughout the works list.
 
-The current theme presents this information in three ordered sections: centred
-title and description, one compact creator/rights group, and the ordered works
-list. Short centred rules separate sections without turning them into cards.
+The current theme presents this information in three ordered sections: optional
+centred heading and description, one compact creator/rights group, and the
+ordered works list. Bold labels followed by colons distinguish Creator, Rights,
+and Works from their values. Short centred rules separate the sections. The
+complete information surface is a floating white panel derived from the global
+menu treatment: an inset position, thin border, restrained corner radius, and
+soft shadow keep it distinct from both the exhibition wall and the modal
+backdrop.
+
+For the first theme-level composition pass, the exhibition wall is white while
+the shared footer keeps its normal treatment. The shared site title starts in
+the upper-left corner but remains part of the document header and scrolls away
+before it can cover later works. The global menu remains the rightmost fixed
+control, with the exhibition-specific information button directly below it;
+both remain available while scrolling and keep separate gaze/touch targets.
+The two controls use equal 42px circles with transparent surfaces so they cover
+less of a work on narrow screens. A larger conventional information glyph makes
+the second control recognisable without introducing a text label over the wall.
