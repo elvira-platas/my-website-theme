@@ -347,3 +347,10 @@ both remain available while scrolling and keep separate gaze/touch targets.
 The two controls use equal 42px circles with transparent surfaces so they cover
 less of a work on narrow screens. A larger conventional information glyph makes
 the second control recognisable without introducing a text label over the wall.
+
+The first image-edge experiment uses no frame and no interaction. A compact
+near-edge shadow establishes the physical edge of the photograph, while a much
+broader shadow is displaced downwards to suggest distance between the image and
+the white wall. Mobile uses the same two-layer model with shorter offsets and
+less spread, preserving the hovering impression without turning each work into
+a conventional card.
