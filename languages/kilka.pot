@@ -82,6 +82,31 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
+#: page-templates/exhibition-prototype.php
+msgid "Back to site"
+msgstr ""
+
+#: page-templates/exhibition-prototype.php
+msgid "About this exhibition"
+msgstr ""
+
+#: page-templates/exhibition-prototype.php
+msgid "Exhibition"
+msgstr ""
+
+#: page-templates/exhibition-prototype.php
+#. translators: 1: current image number, 2: total image count, 3: image description.
+msgid "Image %1$s of %2$s: %3$s"
+msgstr ""
+
+#: page-templates/exhibition-prototype.php
+msgid "Close information"
+msgstr ""
+
+#: page-templates/exhibition-prototype.php
+msgid "Works in this prototype"
+msgstr ""
+
 #: inc/customizer.php
 msgid "Second Blog Disclosure"
 msgstr ""

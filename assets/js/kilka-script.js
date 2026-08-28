@@ -20,6 +20,7 @@
         var $primaryMenu = $("#primary-menu");
         var $responsiveMenu = $(".kilka-responsive-menu");
         var $backToTop = $(".back-to-top");
+        var $exhibition = $(".kilka-exhibition");
         var menuLabel = $responsiveMenu.data("menu-label") || "Menu";
 
         $primaryMenu.kilkaAccessibleDropDown();
@@ -60,6 +61,59 @@
                     });
                 } else {
                     window.scrollTo(0, 0);
+                }
+            });
+        }
+
+        if ($exhibition.length) {
+            var $information = $exhibition.find(".kilka-exhibition__information");
+            var $informationToggle = $exhibition.find(".kilka-exhibition__information-toggle");
+            var $informationClose = $exhibition.find(".kilka-exhibition__information-close");
+            var lastFocusedElement = null;
+
+            var closeInformation = function () {
+                $information.attr("hidden", "hidden");
+                $informationToggle.attr("aria-expanded", "false");
+                $("body").removeClass("kilka-exhibition-information-open");
+                $(document).off("keydown.kilkaExhibitionInformation");
+
+                if (lastFocusedElement) {
+                    lastFocusedElement.focus();
+                }
+            };
+
+            var openInformation = function () {
+                lastFocusedElement = document.activeElement;
+                $information.removeAttr("hidden");
+                $informationToggle.attr("aria-expanded", "true");
+                $("body").addClass("kilka-exhibition-information-open");
+                $informationClose.focus();
+
+                $(document).on("keydown.kilkaExhibitionInformation", function (event) {
+                    var $focusableElements;
+
+                    if (event.key === "Escape") {
+                        event.preventDefault();
+                        closeInformation();
+                    } else if (event.key === "Tab") {
+                        $focusableElements = $information.find("a[href], button:not([disabled])").filter(":visible");
+
+                        if (event.shiftKey && document.activeElement === $focusableElements.first()[0]) {
+                            event.preventDefault();
+                            $focusableElements.last().focus();
+                        } else if (!event.shiftKey && document.activeElement === $focusableElements.last()[0]) {
+                            event.preventDefault();
+                            $focusableElements.first().focus();
+                        }
+                    }
+                });
+            };
+
+            $informationToggle.on("click", openInformation);
+            $informationClose.on("click", closeInformation);
+            $information.on("click", function (event) {
+                if (event.target === this) {
+                    closeInformation();
                 }
             });
         }

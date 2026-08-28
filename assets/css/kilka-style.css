@@ -1627,3 +1627,286 @@ p.comment-notes {
     }
 }
 
+/* Exhibition prototype */
+.page-template-exhibition-prototype .header-top,
+.page-template-exhibition-prototype #masthead,
+.page-template-exhibition-prototype .mainmenu-area,
+.page-template-exhibition-prototype .footer-area,
+.page-template-exhibition-prototype .back-to-top {
+    display: none !important;
+}
+
+.page-template-exhibition-prototype #page {
+    overflow: clip;
+}
+
+.kilka-exhibition {
+    --kilka-exhibition-wall: #ebe9e3;
+    --kilka-exhibition-panel: #f7f5f0;
+    --kilka-exhibition-ink: #242424;
+    min-height: 100vh;
+    color: var(--kilka-exhibition-ink);
+    background: var(--kilka-exhibition-wall);
+}
+
+.kilka-exhibition__home,
+.kilka-exhibition__information-toggle {
+    position: fixed;
+    z-index: 1000;
+    top: 24px;
+    color: var(--kilka-exhibition-ink);
+    background: transparent;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.kilka-exhibition__home {
+    left: 28px;
+}
+
+.admin-bar .kilka-exhibition__home,
+.admin-bar .kilka-exhibition__information-toggle {
+    top: 56px;
+}
+
+.kilka-exhibition__information-toggle {
+    right: 28px;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+}
+
+.kilka-exhibition__home:hover,
+.kilka-exhibition__home:focus,
+.kilka-exhibition__information-toggle:hover,
+.kilka-exhibition__information-toggle:focus {
+    color: #000000;
+    text-decoration: underline;
+}
+
+.kilka-exhibition__home:focus-visible,
+.kilka-exhibition__information-toggle:focus-visible,
+.kilka-exhibition__information-close:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 5px;
+}
+
+.kilka-exhibition__sequence {
+    width: 100%;
+}
+
+.kilka-exhibition__piece {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-height: 100svh;
+    margin: 0;
+    padding: clamp(78px, 9vh, 130px) clamp(28px, 7vw, 130px);
+}
+
+.kilka-exhibition__frame {
+    display: flex;
+    justify-content: center;
+    width: min(74vw, 1120px);
+    margin: 0;
+}
+
+.kilka-exhibition__image {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 78vh;
+    border: 0;
+    background: transparent;
+    box-shadow:
+        0 0 12px 1px rgba(36, 32, 25, 0.24),
+        0 0 36px 4px rgba(36, 32, 25, 0.14);
+}
+
+.kilka-exhibition__piece--right {
+    justify-content: flex-end;
+    padding-right: clamp(42px, 11vw, 190px);
+}
+
+.kilka-exhibition__piece--right .kilka-exhibition__frame {
+    width: min(58vw, 860px);
+}
+
+.kilka-exhibition__piece--left {
+    justify-content: flex-start;
+    padding-left: clamp(42px, 8vw, 150px);
+}
+
+.kilka-exhibition__piece--left .kilka-exhibition__frame {
+    width: min(68vw, 1020px);
+}
+
+.kilka-exhibition__piece--small .kilka-exhibition__frame {
+    width: min(46vw, 710px);
+}
+
+.kilka-exhibition__piece--wide .kilka-exhibition__frame {
+    width: min(88vw, 1400px);
+}
+
+.kilka-exhibition__interval {
+    height: clamp(90px, 18vh, 240px);
+}
+
+.kilka-exhibition__interval--long {
+    height: clamp(160px, 31vh, 420px);
+}
+
+body.kilka-exhibition-information-open {
+    overflow: hidden;
+}
+
+.kilka-exhibition__information[hidden] {
+    display: none;
+}
+
+.kilka-exhibition__information {
+    position: fixed;
+    z-index: 1100;
+    inset: 0;
+    display: flex;
+    justify-content: flex-end;
+    background: rgba(36, 36, 36, 0.34);
+}
+
+.kilka-exhibition__information-panel {
+    position: relative;
+    width: min(520px, 100%);
+    height: 100%;
+    padding: 76px 54px 54px;
+    overflow-y: auto;
+    color: var(--kilka-exhibition-ink);
+    background: var(--kilka-exhibition-panel);
+}
+
+.kilka-exhibition__information-close {
+    position: absolute;
+    top: 22px;
+    right: 26px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    color: var(--kilka-exhibition-ink);
+    background: transparent;
+    font-family: Arial, sans-serif;
+    font-size: 28px;
+    line-height: 34px;
+    cursor: pointer;
+}
+
+.kilka-exhibition__information-title {
+    margin: 0 0 28px;
+    color: var(--kilka-exhibition-ink);
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 1.25;
+    text-transform: none;
+}
+
+.kilka-exhibition__information-note {
+    margin: 0 0 36px;
+    color: #4f4f4f;
+    font-size: 15px;
+    line-height: 1.75;
+}
+
+.kilka-exhibition__works-title {
+    margin: 0 0 14px;
+    color: #777777;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.kilka-exhibition__works {
+    margin: 0;
+    padding-left: 20px;
+    color: #555555;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.kilka-exhibition__works li + li {
+    margin-top: 8px;
+}
+
+@media (max-width: 767px) {
+    .kilka-exhibition__home,
+    .kilka-exhibition__information-toggle {
+        top: 20px;
+        font-size: 11px;
+    }
+
+    .kilka-exhibition__home {
+        left: 18px;
+    }
+
+    .kilka-exhibition__information-toggle {
+        right: 18px;
+    }
+
+    .admin-bar .kilka-exhibition__home,
+    .admin-bar .kilka-exhibition__information-toggle {
+        top: 66px;
+    }
+
+    .kilka-exhibition__piece,
+    .kilka-exhibition__piece--right,
+    .kilka-exhibition__piece--left {
+        justify-content: center;
+        min-height: 100vh;
+        min-height: 100svh;
+        padding: 72px 20px 58px;
+    }
+
+    .kilka-exhibition__frame,
+    .kilka-exhibition__piece--right .kilka-exhibition__frame,
+    .kilka-exhibition__piece--left .kilka-exhibition__frame,
+    .kilka-exhibition__piece--wide .kilka-exhibition__frame {
+        width: 100%;
+    }
+
+    .kilka-exhibition__piece--small .kilka-exhibition__frame {
+        width: 82%;
+    }
+
+    .kilka-exhibition__image {
+        max-height: 72svh;
+        box-shadow:
+            0 0 10px 1px rgba(36, 32, 25, 0.22),
+            0 0 26px 3px rgba(36, 32, 25, 0.13);
+    }
+
+    .kilka-exhibition__interval {
+        height: 12vh;
+    }
+
+    .kilka-exhibition__interval--long {
+        height: 22vh;
+    }
+
+    .kilka-exhibition__information-panel {
+        padding: 68px 28px 40px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .kilka-exhibition {
+        scroll-behavior: auto;
+    }
+}
+
