@@ -6,7 +6,7 @@ This file is maintainer documentation for publishing the Kilka theme and its com
 
 - The theme and companion plugins are separated.
 - The `Second Blog` logic is in `plugins/kilka-second-blog/kilka-second-blog.php`.
-- The exhibition content foundation is in `plugins/kilka-exhibitions/kilka-exhibitions.php`.
+- The exhibition content model and constrained block editor are in `plugins/kilka-exhibitions/`.
 - The plugins use separate `kilka-second-blog` and `kilka-exhibitions` text domains.
 - Separate packages are built with `./scripts/build-packages.sh`.
 - Original-author attribution is present in `style.css` and `readme.txt`.
@@ -83,6 +83,8 @@ Repository documentation under `docs/` is not included in any installable packag
    - search with `post_type=world_note`;
    - `Customizer -> Second Blog Intro`;
    - exhibition post type registration and REST metadata;
+   - Sequence template locking and Image, Text, and Pause Space editing;
+   - block insertion, reordering, saving, reopening, and mobile preview;
    - exhibition output with and without the Kilka theme.
 5. Publish only after the clean-install checks pass.
 

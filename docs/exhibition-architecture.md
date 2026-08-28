@@ -1,8 +1,8 @@
 # Exhibition Architecture Draft
 
-Status: architecture draft with the `0.1.0` plugin foundation implemented. This
-document describes the proposed content model and editing workflow. It does not
-define the final visual design.
+Status: architecture draft with the `0.2.0` content model and first editor
+vertical slice implemented. This document describes the content model and
+editing workflow. It does not define the final visual design.
 
 ## Purpose
 
@@ -70,9 +70,12 @@ Experimental work is isolated on the `feature/exhibitions` branch until the
 content model, editor, fallback rendering, and theme integration are ready for
 review. The stable `main` branch remains release-oriented.
 
-Version `0.1.0` of the exhibition plugin now registers the portable
-`kilka_exhibition` post type and exhibition-level metadata. The constrained
-Sequence and Space block editor remains the next implementation stage.
+Version `0.2.0` of the exhibition plugin registers the portable
+`kilka_exhibition` post type, exhibition-level metadata, and the constrained
+Sequence and Space block editor. Description, creator, rights, and panel-state
+controls are now wired into the editor. Search-summary and wall-tone controls,
+the complete neutral fallback, and final theme integration remain separate
+implementation stages.
 
 ## Shared Site Frame
 
@@ -158,11 +161,26 @@ Required data:
 
 Curatorial controls:
 
-- scale: `small`, `medium`, `large`, or `immersive`;
+- image presence: `35–100` in increments of `5`; the presentation constrains
+  both spatial width and viewport height rather than treating every image as a
+  percentage-width post image;
 - alignment: `left`, `centre`, or `right`;
 - interval after the image: `short`, `normal`, or `long`;
 - caption mode: `information panel`, `visible`, or `hidden`;
 - optional creator and copyright overrides.
+
+Caption-mode behaviour is deliberately explicit:
+
+- `information panel` keeps the saved `figcaption` accessible but visually
+  quiet and includes the caption in the ordered exhibition panel;
+- `visible` shows the caption directly below the image and does not duplicate
+  it in the panel;
+- `hidden` keeps an accessible `figcaption` but does not place the caption in
+  the visual panel or below the image.
+
+The plugin exposes the ordered panel data, including exhibition-level rights
+fallbacks, without generating theme-specific drawer markup. A supporting theme
+may present that data as a dialog or another accessible interface.
 
 The editor must not expose pixel sizes, arbitrary CSS classes, per-image wall
 colours, shadows, frames, animations, or desktop/mobile duplicates in the first
@@ -176,9 +194,21 @@ section marker without turning the exhibition into a normal article.
 Initial controls:
 
 - text;
-- width: `narrow` or `standard`;
-- alignment: `left` or `centre`;
+- width: `compact`, `narrow`, `standard`, `wide`, or `full width`;
+- position within the exhibition width: `left`, `centre`, or `right`;
+- text alignment: `left` or `centre`;
+- text scale: `small`, `normal`, `large`, or `statement`;
+- minimum space height: `by content`, `half viewport`, or `full viewport`;
+- vertical position within a taller space: `top`, `centre`, or `bottom`;
+- optional text marker: `none` or one short horizontal line;
 - interval after the text.
+
+Height presets use `min-height`, never a fixed height, so content remains
+readable when it wraps, text size changes, or a narrow screen requires more
+lines. Vertical position is disabled when height follows the content because
+there is no free vertical space to distribute. The short line is the only
+initial emphasis treatment; borders, backgrounds, and decorative variants are
+intentionally deferred.
 
 Long essays should remain normal pages or posts and may be linked from the
 information panel.
@@ -265,9 +295,13 @@ The following details remain experimental until the editing model is proven:
 1. Completed: approve the initial content model and editor controls.
 2. Completed: scaffold the separate first-party exhibition plugin, post type,
    metadata, and independent ZIP package.
-3. Next: build the constrained Sequence and Space editor blocks.
-4. Render neutral, accessible fallback markup from the plugin.
-5. Connect the current theme prototype to the new data model.
+3. Completed: build the constrained Sequence and Space editor blocks.
+4. In progress: description, creator, rights, and panel-state metadata are
+   editable; search-summary and wall-tone controls plus the complete neutral,
+   accessible fallback output remain.
+5. In progress: connect the current theme prototype to the new data model. The
+   caption data now reaches the theme-owned information panel; the final
+   exhibition sequence template is still pending.
 6. Restore the shared footer at the end of the exhibition.
 7. Prototype the edge-positioned site identity on blog, single-post, and
    exhibition views.
@@ -283,3 +317,13 @@ The following details remain experimental until the editing model is proven:
    ordered list of works.
 5. The footer preserves shared markup and content everywhere, while its
    surface colour may adapt to the exhibition wall.
+
+The block editor exposes a dedicated `Exhibition information` document panel
+for the brief description, creator, rights notice, and information-panel
+toggle. These values belong to the exhibition as a whole. Image-level creator
+or rights overrides are shown only for the affected work, avoiding repeated
+global credit lines throughout the works list.
+
+The current theme presents this information in three ordered sections: centred
+title and description, one compact creator/rights group, and the ordered works
+list. Short centred rules separate sections without turning them into cards.

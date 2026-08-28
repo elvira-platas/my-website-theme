@@ -11,10 +11,21 @@ Experimental exhibition work is currently developed on the
 [`docs/exhibition-architecture.md`](docs/exhibition-architecture.md).
 
 The exhibition content model lives in a separate first-party
-`kilka-exhibitions` companion plugin. Version `0.1.0` establishes the portable
-post type and metadata foundation; the dedicated sequence editor is not yet
-implemented. The plugin is stored in this monorepo but installed independently
-from the theme, following the existing Second Blog packaging model.
+`kilka-exhibitions` companion plugin. Version `0.2.0` adds a constrained block
+editor: every exhibition contains one Sequence whose ordered children can only
+be Image, Text, or Pause Spaces. The plugin is stored in this monorepo but
+installed independently from the theme, following the existing Second Blog
+packaging model. Image captions can be assigned to a visible caption, the
+exhibition information panel, or accessible-only hidden output. The plugin
+provides the ordered information-panel data; the Kilka theme owns the panel's
+interactive presentation. Text Spaces provide constrained text scale, minimum
+height, and vertical-placement presets without exposing arbitrary pixels or
+arbitrary decorative styling; one optional short-line marker is available as a
+restrained emphasis cue.
+
+Exhibition-level description, creator, rights, and information-panel visibility
+are edited together in a dedicated document-sidebar panel. The values remain
+portable plugin data while the theme controls their public presentation.
 
 ## Attribution
 
