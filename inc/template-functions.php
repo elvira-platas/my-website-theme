@@ -44,6 +44,10 @@ function kilka_body_classes( $classes ) {
 		$classes[] = 'hfeed';
 	}
 
+	if ( is_singular( 'kilka_exhibition' ) ) {
+		$classes[] = has_nav_menu( 'menu-1' ) ? 'kilka-exhibition-has-menu' : 'kilka-exhibition-no-menu';
+	}
+
 	// Adds a class of no-sidebar when there is no sidebar present.
 	if ( ! kilka_has_contextual_sidebar() ) {
 		$classes[] = 'no-sidebar';

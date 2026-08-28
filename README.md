@@ -23,9 +23,15 @@ height, and vertical-placement presets without exposing arbitrary pixels or
 arbitrary decorative styling; one optional short-line marker is available as a
 restrained emphasis cue.
 
-Exhibition-level description, creator, rights, and information-panel visibility
-are edited together in a dedicated document-sidebar panel. The values remain
-portable plugin data while the theme controls their public presentation.
+An optional public information heading, exhibition-level description, creator,
+rights, and information-panel visibility are edited together in a dedicated
+document-sidebar panel. The public heading is independent from the
+administrative Exhibition title. The values remain portable plugin data while
+the theme controls their public presentation.
+
+The theme includes a dedicated single-Exhibition template. It renders the
+plugin-owned Sequence inside the shared site header and footer without ordinary
+post metadata, post navigation, comments, or blog sidebars.
 
 ## Attribution
 

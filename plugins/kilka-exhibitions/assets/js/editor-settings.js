@@ -50,6 +50,14 @@
 				title: __( 'Exhibition information', 'kilka-exhibitions' ),
 				className: 'kilka-exhibition-information-settings'
 			},
+			el( TextControl, {
+				label: __( 'Information heading', 'kilka-exhibitions' ),
+				help: __( 'Optional. Leave blank to omit the visible heading from the public information panel.', 'kilka-exhibitions' ),
+				value: meta.kilka_exhibition_information_heading || '',
+				onChange: function ( value ) {
+					updateMeta( 'kilka_exhibition_information_heading', value );
+				}
+			} ),
 			el( TextareaControl, {
 				label: __( 'Brief description', 'kilka-exhibitions' ),
 				help: __( 'Shown near the beginning of the public information panel.', 'kilka-exhibitions' ),
