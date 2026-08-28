@@ -6,10 +6,12 @@ DIST_DIR="${ROOT_DIR}/dist"
 BUILD_DIR="${ROOT_DIR}/.build"
 
 THEME_SLUG="kilka"
-PLUGIN_SLUG="kilka-second-blog"
+PLUGIN_SLUGS=(
+	"kilka-second-blog"
+	"kilka-exhibitions"
+)
 
 THEME_STAGING_DIR="${BUILD_DIR}/${THEME_SLUG}"
-PLUGIN_STAGING_DIR="${BUILD_DIR}/${PLUGIN_SLUG}"
 
 if ! command -v rsync >/dev/null 2>&1; then
 	echo "Error: rsync is required but not installed." >&2
@@ -31,10 +33,12 @@ if ! command -v unzip >/dev/null 2>&1; then
 	exit 1
 fi
 
-if [ ! -d "${ROOT_DIR}/plugins/${PLUGIN_SLUG}" ]; then
-	echo "Error: plugin directory not found: plugins/${PLUGIN_SLUG}" >&2
-	exit 1
-fi
+for plugin_slug in "${PLUGIN_SLUGS[@]}"; do
+	if [ ! -d "${ROOT_DIR}/plugins/${plugin_slug}" ]; then
+		echo "Error: plugin directory not found: plugins/${plugin_slug}" >&2
+		exit 1
+	fi
+done
 
 # Reject legacy promo code and repository-only directories before packaging.
 check_package_directory() {
@@ -94,7 +98,11 @@ check_package_archive() {
 }
 
 rm -rf "${BUILD_DIR}"
-mkdir -p "${THEME_STAGING_DIR}" "${PLUGIN_STAGING_DIR}" "${DIST_DIR}"
+mkdir -p "${THEME_STAGING_DIR}" "${DIST_DIR}"
+
+for plugin_slug in "${PLUGIN_SLUGS[@]}"; do
+	mkdir -p "${BUILD_DIR}/${plugin_slug}"
+done
 
 # Build theme package without repository-only and plugin files.
 rsync -a \
@@ -125,23 +133,41 @@ rsync -a \
 	--exclude "README.md" \
 	"${ROOT_DIR}/" "${THEME_STAGING_DIR}/"
 
-# Build companion plugin package from its own directory.
-rsync -a "${ROOT_DIR}/plugins/${PLUGIN_SLUG}/" "${PLUGIN_STAGING_DIR}/"
+# Build each companion plugin package from its own directory.
+for plugin_slug in "${PLUGIN_SLUGS[@]}"; do
+	rsync -a "${ROOT_DIR}/plugins/${plugin_slug}/" "${BUILD_DIR}/${plugin_slug}/"
+done
 
 check_package_directory "${THEME_STAGING_DIR}"
-check_package_directory "${PLUGIN_STAGING_DIR}"
 
-rm -f "${DIST_DIR}/${THEME_SLUG}.zip" "${DIST_DIR}/${PLUGIN_SLUG}.zip"
+for plugin_slug in "${PLUGIN_SLUGS[@]}"; do
+	check_package_directory "${BUILD_DIR}/${plugin_slug}"
+done
+
+rm -f "${DIST_DIR}/${THEME_SLUG}.zip"
+
+for plugin_slug in "${PLUGIN_SLUGS[@]}"; do
+	rm -f "${DIST_DIR}/${plugin_slug}.zip"
+done
 
 (
 	cd "${BUILD_DIR}"
 	zip -qr "${DIST_DIR}/${THEME_SLUG}.zip" "${THEME_SLUG}"
-	zip -qr "${DIST_DIR}/${PLUGIN_SLUG}.zip" "${PLUGIN_SLUG}"
+
+	for plugin_slug in "${PLUGIN_SLUGS[@]}"; do
+		zip -qr "${DIST_DIR}/${plugin_slug}.zip" "${plugin_slug}"
+	done
 )
 
 check_package_archive "${DIST_DIR}/${THEME_SLUG}.zip"
-check_package_archive "${DIST_DIR}/${PLUGIN_SLUG}.zip"
+
+for plugin_slug in "${PLUGIN_SLUGS[@]}"; do
+	check_package_archive "${DIST_DIR}/${plugin_slug}.zip"
+done
 
 echo "Done."
-echo "Theme package:  ${DIST_DIR}/${THEME_SLUG}.zip"
-echo "Plugin package: ${DIST_DIR}/${PLUGIN_SLUG}.zip"
+echo "Theme package: ${DIST_DIR}/${THEME_SLUG}.zip"
+
+for plugin_slug in "${PLUGIN_SLUGS[@]}"; do
+	echo "Plugin package: ${DIST_DIR}/${plugin_slug}.zip"
+done

@@ -1,7 +1,8 @@
 # Exhibition Architecture Draft
 
-Status: design draft. This document describes the proposed content model and
-editing workflow. It does not define the final visual design.
+Status: architecture draft with the `0.1.0` plugin foundation implemented. This
+document describes the proposed content model and editing workflow. It does not
+define the final visual design.
 
 ## Purpose
 
@@ -59,7 +60,7 @@ The installable products remain independent:
 
 - `kilka.zip`: theme presentation;
 - `kilka-second-blog.zip`: Second Blog content model;
-- `kilka-exhibitions.zip`: exhibition content model and editor, once built.
+- `kilka-exhibitions.zip`: exhibition content model and editor foundation.
 
 The theme must work without either plugin. Each plugin must be installable and
 activatable independently. The exhibition plugin must not depend on the Second
@@ -68,6 +69,10 @@ Blog plugin.
 Experimental work is isolated on the `feature/exhibitions` branch until the
 content model, editor, fallback rendering, and theme integration are ready for
 review. The stable `main` branch remains release-oriented.
+
+Version `0.1.0` of the exhibition plugin now registers the portable
+`kilka_exhibition` post type and exhibition-level metadata. The constrained
+Sequence and Space block editor remains the next implementation stage.
 
 ## Shared Site Frame
 
@@ -257,9 +262,10 @@ The following details remain experimental until the editing model is proven:
 
 ## Proposed Implementation Order
 
-1. Approve the content model and editor controls.
-2. Scaffold the separate first-party exhibition plugin and post type.
-3. Build the constrained Sequence and Space editor blocks.
+1. Completed: approve the initial content model and editor controls.
+2. Completed: scaffold the separate first-party exhibition plugin, post type,
+   metadata, and independent ZIP package.
+3. Next: build the constrained Sequence and Space editor blocks.
 4. Render neutral, accessible fallback markup from the plugin.
 5. Connect the current theme prototype to the new data model.
 6. Restore the shared footer at the end of the exhibition.
@@ -267,13 +273,13 @@ The following details remain experimental until the editing model is proven:
    exhibition views.
 8. Finalise visual treatments only after the complete workflow is usable.
 
-## Questions to Resolve Before Implementation
+## Initial Working Decisions
 
-1. Should visible captions be exceptional or common?
-2. Does the first release need Text Spaces, or only Image and Pause Spaces?
-3. Should an exhibition have a normal archive page immediately, or remain
-   accessible only through deliberate menu links?
-4. Should the information panel list every work, or only exhibition-level
-   context and rights information?
-5. Should the common footer keep exactly the same surface colour everywhere,
-   or adapt its background while preserving the same markup and content?
+1. Visible captions are exceptional; the information panel is the default.
+2. The first editor version includes Image, Text, and Pause Spaces.
+3. The post type has no public archive initially. Exhibitions are reached
+   through deliberate links and navigation.
+4. The information panel may contain both exhibition-level context and an
+   ordered list of works.
+5. The footer preserves shared markup and content everywhere, while its
+   surface colour may adapt to the exhibition wall.

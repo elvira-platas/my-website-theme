@@ -1,12 +1,13 @@
 # WordPress.org Publishing and Companion Plugin Notes
 
-This file is maintainer documentation for publishing the Kilka theme and its companion plugin. It is kept in the repository and excluded from the installable theme ZIP.
+This file is maintainer documentation for publishing the Kilka theme and its companion plugins. It is kept in the repository and excluded from the installable ZIP packages.
 
 ## Completed
 
-- The theme and companion plugin are separated.
+- The theme and companion plugins are separated.
 - The `Second Blog` logic is in `plugins/kilka-second-blog/kilka-second-blog.php`.
-- The plugin uses the separate text domain `kilka-second-blog`.
+- The exhibition content foundation is in `plugins/kilka-exhibitions/kilka-exhibitions.php`.
+- The plugins use separate `kilka-second-blog` and `kilka-exhibitions` text domains.
 - Separate packages are built with `./scripts/build-packages.sh`.
 - Original-author attribution is present in `style.css` and `readme.txt`.
 - Substantial AI-assisted development with OpenAI Codex and Google Gemini is disclosed in the public README files.
@@ -24,8 +25,12 @@ This file is maintainer documentation for publishing the Kilka theme and its com
 
 ## Plugin publication steps
 
-1. Review the plugin header in `plugins/kilka-second-blog/kilka-second-blog.php`.
-2. Maintain `plugins/kilka-second-blog/readme.txt` as the plugin readme source.
+1. Review each plugin header:
+   - `plugins/kilka-second-blog/kilka-second-blog.php`;
+   - `plugins/kilka-exhibitions/kilka-exhibitions.php`.
+2. Maintain each plugin readme source:
+   - `plugins/kilka-second-blog/readme.txt`;
+   - `plugins/kilka-exhibitions/readme.txt`.
 3. Verify that the plugin `Contributors` value matches the WordPress.org username.
 4. Request a plugin slug at `https://wordpress.org/plugins/developers/add/`.
 5. After approval, use the assigned WordPress.org SVN repository:
@@ -37,16 +42,18 @@ This file is maintainer documentation for publishing the Kilka theme and its com
 
 ## Readme locations
 
-1. Git repository: `plugins/kilka-second-blog/readme.txt`.
+1. Git repository:
+   - `plugins/kilka-second-blog/readme.txt`;
+   - `plugins/kilka-exhibitions/readme.txt`.
 2. WordPress.org SVN after approval:
    - `trunk/readme.txt`;
    - `tags/x.y.z/readme.txt` for each release.
 
 ## Theme and plugin relationship
 
-1. The theme may recommend the companion plugin.
-2. The theme must not bundle or auto-install the plugin in a way that violates WordPress.org rules.
-3. The custom post type and taxonomies must remain in the plugin.
+1. The theme may recommend the optional companion plugins.
+2. The theme must not bundle or auto-install either plugin in a way that violates WordPress.org rules.
+3. Custom post types, taxonomies, and custom editor blocks must remain in their respective plugins.
 
 ## Package build
 
@@ -57,23 +64,26 @@ This file is maintainer documentation for publishing the Kilka theme and its com
 The command creates:
 
 - `dist/kilka.zip`;
-- `dist/kilka-second-blog.zip`.
+- `dist/kilka-second-blog.zip`;
+- `dist/kilka-exhibitions.zip`.
 
-Repository documentation under `docs/` is not included in either installable package.
+Repository documentation under `docs/` is not included in any installable package.
 
 ## Recommended release sequence
 
 1. Update the theme or plugin version when appropriate.
-2. Build both packages.
+2. Build all packages.
 3. Test on a clean WordPress installation:
-   - activate the companion plugin first;
+   - activate the required companion plugins first;
    - activate the theme second.
 4. Verify the key scenarios:
    - `second-blog` archive;
    - `second-blog` single entry;
    - tag, category, date, and author archives;
    - search with `post_type=world_note`;
-   - `Customizer -> Second Blog Intro`.
+   - `Customizer -> Second Blog Intro`;
+   - exhibition post type registration and REST metadata;
+   - exhibition output with and without the Kilka theme.
 5. Publish only after the clean-install checks pass.
 
 ## Useful links
