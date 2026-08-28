@@ -4,7 +4,7 @@ Tags: exhibition, images, storytelling, custom post type
 Requires at least: 5.7
 Tested up to: 6.7
 Requires PHP: 5.6
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,9 +14,15 @@ Provides portable exhibition content and editor foundations for the Kilka ecosys
 
 Kilka Exhibitions is an optional first-party companion plugin for the Kilka theme fork. The theme works without it, and the plugin does not depend on Kilka Second Blog.
 
-Version 0.1.0 establishes the portable content foundation. It registers the Exhibition post type and exhibition-level metadata for creator information, copyright notices, the information panel, wall-tone intent, and search context.
+Version 0.2.0 provides the portable Exhibition post type, exhibition-level metadata, and a constrained block editor. Each exhibition contains one Sequence whose ordered children can only be Image, Text, or Pause Spaces.
 
-The constrained Image, Text, and Pause space editor described in the project architecture is planned for a later development step.
+The editor exposes curatorial presets rather than arbitrary pixel sizes or per-work CSS. Image Spaces use the WordPress media library and retain accessible alternative text and caption information.
+
+An Image Space caption can be shown below the image, assigned to an information panel, or kept in accessible-only hidden output. The plugin exposes ordered information-panel data so a supporting theme can present it without making the stored exhibition content theme-dependent.
+
+Text Spaces provide constrained width, horizontal and vertical placement, text-scale, minimum-height, alignment, interval, and optional short-line marker presets. Taller spaces use minimum heights so wrapped or enlarged text is never clipped. Vertical placement is only enabled when a taller space has been selected.
+
+The Exhibition information document panel edits the brief description, creator, rights notice, and public information-panel state. A supporting theme can retrieve these portable values together with the ordered work captions.
 
 == AI Assistance ==
 
@@ -42,11 +48,21 @@ No. The two plugins are independent.
 
 Yes. The Exhibition post type and its metadata are registered by this plugin, so the content remains available while the plugin is active.
 
-= Does version 0.1.0 include the final exhibition editor? =
+= Does version 0.2.0 include the final exhibition presentation? =
 
-No. This first development version establishes the portable post type and metadata. The dedicated sequence editor is the next implementation stage.
+No. Version 0.2.0 provides the first working editor vertical slice, core information controls, and neutral structural block output. Search and wall-tone controls, final theme integration, the shared footer, and visual treatments remain in development.
 
 == Changelog ==
+
+= 0.2.0 =
+* Adds one locked Sequence container to every new Exhibition.
+* Adds constrained Image, Text, and Pause Space blocks.
+* Adds curatorial presets for scale, alignment, intervals, captions, and rights overrides.
+* Adds structural Text Space presets for text scale, minimum height, and vertical placement.
+* Adds one restrained optional short-line marker for Text Spaces.
+* Adds neutral structural styles and accessible saved markup.
+* Exposes ordered caption and rights data for a theme-owned exhibition information panel.
+* Adds document-sidebar controls for exhibition description, creator, rights, and panel visibility.
 
 = 0.1.0 =
 * Adds the portable `kilka_exhibition` post type.
@@ -54,6 +70,9 @@ No. This first development version establishes the portable post type and metada
 * Provides independent activation and rewrite handling.
 
 == Upgrade Notice ==
+
+= 0.2.0 =
+Adds the first working Sequence and Space editor. The final exhibition presentation is still in development.
 
 = 0.1.0 =
 Initial development foundation. The dedicated sequence editor is not included yet.

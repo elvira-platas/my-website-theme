@@ -24,6 +24,11 @@ function kilka_get_contextual_sidebar_id() {
  * @return bool
  */
 function kilka_has_contextual_sidebar() {
+	// Exhibitions use the full content width and never inherit blog widgets.
+	if ( is_singular( 'kilka_exhibition' ) ) {
+		return false;
+	}
+
 	return is_active_sidebar( kilka_get_contextual_sidebar_id() );
 }
 
