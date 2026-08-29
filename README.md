@@ -33,6 +33,11 @@ The theme includes a dedicated single-Exhibition template. It renders the
 plugin-owned Sequence inside the shared site header and footer without ordinary
 post metadata, post navigation, comments, or blog sidebars.
 
+Second Blog also supports an optional numbered source note. Its text, source
+title, and source URL are edited in the Customizer; the marker stays with the
+introductory disclosure while the note appears below the content area and
+outside the shared footer.
+
 ## Attribution
 
 The `kilka` theme is a maintained fork of the original Kilka theme by [Asha Themes](https://ashathemes.com/). Original theme copyright remains with Asha Themes. Elvira is the owner and maintainer of this fork.

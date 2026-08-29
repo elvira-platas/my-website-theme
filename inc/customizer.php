@@ -317,6 +317,58 @@ function kilka_customize_register( $wp_customize ) {
 				'type'        => 'text',
 			)
 		);
+
+		// Second Blog Source Note
+		$wp_customize->add_setting(
+			'kilka_second_blog_source_note',
+			array(
+				'default'           => '',
+				'sanitize_callback' => 'sanitize_textarea_field',
+			)
+		);
+		$wp_customize->add_control(
+			'kilka_second_blog_source_note',
+			array(
+				'label'       => __( 'Second Blog Source Note', 'kilka' ),
+				'description' => __( 'Optional footnote shown at the bottom of Second Blog pages.', 'kilka' ),
+				'section'     => 'kilka_second_blog_intro_section',
+				'type'        => 'textarea',
+			)
+		);
+
+		// Second Blog Source Title
+		$wp_customize->add_setting(
+			'kilka_second_blog_source_title',
+			array(
+				'default'           => '',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'kilka_second_blog_source_title',
+			array(
+				'label'   => __( 'Second Blog Source Title', 'kilka' ),
+				'section' => 'kilka_second_blog_intro_section',
+				'type'    => 'text',
+			)
+		);
+
+		// Second Blog Source URL
+		$wp_customize->add_setting(
+			'kilka_second_blog_source_url',
+			array(
+				'default'           => '',
+				'sanitize_callback' => 'esc_url_raw',
+			)
+		);
+		$wp_customize->add_control(
+			'kilka_second_blog_source_url',
+			array(
+				'label'   => __( 'Second Blog Source URL', 'kilka' ),
+				'section' => 'kilka_second_blog_intro_section',
+				'type'    => 'url',
+			)
+		);
 	}
 }
 add_action( 'customize_register', 'kilka_customize_register' );
