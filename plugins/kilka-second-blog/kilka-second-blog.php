@@ -608,3 +608,19 @@ if ( ! function_exists( 'kilka_append_world_notes_menu_item' ) ) :
 	}
 endif;
 add_filter( 'wp_nav_menu_items', 'kilka_append_world_notes_menu_item', 10, 2 );
+
+/**
+ * Add a contextual search form to the menu while viewing Second Blog.
+ *
+ * @param string   $items Menu items HTML.
+ * @param stdClass $args  Menu arguments.
+ * @return string
+ */
+function kilka_append_world_note_search_menu_item( $items, $args ) {
+	if ( ! isset( $args->theme_location ) || 'menu-1' !== $args->theme_location || ! kilka_is_second_blog_context() || false !== strpos( $items, 'kilka-menu-search' ) ) {
+		return $items;
+	}
+
+	return $items . '<li class="menu-item menu-item-search kilka-menu-search">' . get_search_form( false ) . '</li>';
+}
+add_filter( 'wp_nav_menu_items', 'kilka_append_world_note_search_menu_item', 11, 2 );

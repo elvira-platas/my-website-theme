@@ -25,10 +25,10 @@
 				? kilka_get_world_note_term_links( get_the_ID(), 'world_note_category', esc_html_x( ', ', 'list item separator', 'kilka' ) )
 				: get_the_term_list( get_the_ID(), 'world_note_category', '', esc_html_x( ', ', 'list item separator', 'kilka' ) );
 			if ( $world_note_type_links ) {
-				echo '<span class="sep"> · </span><span class="world-note-type">' . $world_note_type_links . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '<span class="sep">|</span><span class="world-note-type">' . $world_note_type_links . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			if ( $world_note_place_links ) {
-				echo '<span class="sep"> · </span><span class="world-note-place">' . $world_note_place_links . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '<span class="sep">|</span><span class="world-note-place">' . $world_note_place_links . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			?>
 		</div><!-- .entry-meta -->
