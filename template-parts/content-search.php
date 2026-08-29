@@ -10,9 +10,29 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<?php kilka_post_thumbnail(); ?>
+	<?php if ( 'world_note' !== get_post_type() ) : ?>
+		<?php kilka_post_thumbnail(); ?>
+	<?php endif; ?>
 
-	<?php if ( in_array( get_post_type(), array( 'post', 'world_note' ), true ) ) : ?>
+	<?php if ( 'world_note' === get_post_type() ) : ?>
+		<div class="entry-meta world-note-meta">
+			<?php kilka_posted_on(); ?>
+			<?php
+			$world_note_type_links = function_exists( 'kilka_get_world_note_term_links' )
+				? kilka_get_world_note_term_links( get_the_ID(), 'world_note_type', esc_html_x( ', ', 'list item separator', 'kilka' ) )
+				: get_the_term_list( get_the_ID(), 'world_note_type', '', esc_html_x( ', ', 'list item separator', 'kilka' ) );
+			$world_note_place_links = function_exists( 'kilka_get_world_note_term_links' )
+				? kilka_get_world_note_term_links( get_the_ID(), 'world_note_category', esc_html_x( ', ', 'list item separator', 'kilka' ) )
+				: get_the_term_list( get_the_ID(), 'world_note_category', '', esc_html_x( ', ', 'list item separator', 'kilka' ) );
+			if ( $world_note_type_links ) {
+				echo '<span class="sep"> · </span><span class="world-note-type">' . $world_note_type_links . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+			if ( $world_note_place_links ) {
+				echo '<span class="sep"> · </span><span class="world-note-place">' . $world_note_place_links . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+			?>
+		</div><!-- .entry-meta -->
+	<?php elseif ( 'post' === get_post_type() ) : ?>
 		<div class="entry-meta">
 			<?php
 			kilka_posted_on();

@@ -633,6 +633,46 @@ article.post img,
 article.type-world_note img {
   margin-bottom: 15px;
 }
+
+/* Second Blog archives read as a continuous stream rather than cards. */
+.kilka-second-blog-archive > .container > .row > [class*="col-"] {
+  text-align: left;
+}
+.kilka-second-blog-archive article.type-world_note {
+  margin-bottom: 72px;
+  padding: 0;
+  background-color: transparent;
+  border-radius: 0;
+}
+.kilka-second-blog-archive article.type-world_note:last-child {
+  margin-bottom: 0;
+}
+.kilka-second-blog-archive article.type-world_note .entry-title {
+  text-transform: none;
+}
+.kilka-second-blog-archive article.type-world_note .entry-content {
+  text-align: left;
+}
+.kilka-second-blog-archive .world-note-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 9px;
+  margin-bottom: 12px;
+  color: #888888;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.kilka-second-blog-archive .world-note-meta .sep {
+  margin: 0;
+  color: #666666;
+  font-size: 14px;
+  font-weight: 400;
+}
+.kilka-second-blog-archive .world-note-meta a {
+  color: inherit;
+}
 .entry-meta{
   margin-bottom: 10px;
 }

@@ -91,7 +91,7 @@ if ( ! function_exists( 'kilka_is_second_blog_context' ) ) :
 			return true;
 		}
 
-		if ( is_tax( array( 'world_note_category', 'world_note_tag' ) ) ) {
+		if ( is_tax( array( 'world_note_category', 'world_note_type', 'world_note_tag' ) ) ) {
 			return true;
 		}
 
@@ -182,7 +182,7 @@ if ( ! function_exists( 'kilka_limit_second_blog_taxonomy_queries' ) ) :
 			return;
 		}
 
-		if ( $query->is_tax( array( 'world_note_category', 'world_note_tag' ) ) ) {
+		if ( $query->is_tax( array( 'world_note_category', 'world_note_type', 'world_note_tag' ) ) ) {
 			$query->set( 'post_type', 'world_note' );
 		}
 	}
@@ -235,7 +235,7 @@ if ( ! function_exists( 'kilka_register_world_note_post_type' ) ) :
 				'show_in_rest'       => true,
 				'show_in_nav_menus'  => true,
 				'exclude_from_search' => true,
-				'taxonomies'         => array( 'world_note_category', 'world_note_tag' ),
+			'taxonomies'         => array( 'world_note_category', 'world_note_type', 'world_note_tag' ),
 			);
 
 			register_post_type( 'world_note', $args );
@@ -279,6 +279,36 @@ if ( ! function_exists( 'kilka_register_world_note_taxonomies' ) ) :
 					'slug'         => $base_slug . '-category',
 					'with_front'   => false,
 					'hierarchical' => true,
+				),
+			)
+		);
+
+		$type_labels = array(
+			'name'              => _x( 'Second Blog Types', 'taxonomy general name', 'kilka-second-blog' ),
+			'singular_name'     => _x( 'Second Blog Type', 'taxonomy singular name', 'kilka-second-blog' ),
+			'search_items'      => __( 'Search Second Blog Types', 'kilka-second-blog' ),
+			'all_items'         => __( 'All Second Blog Types', 'kilka-second-blog' ),
+			'edit_item'         => __( 'Edit Second Blog Type', 'kilka-second-blog' ),
+			'update_item'       => __( 'Update Second Blog Type', 'kilka-second-blog' ),
+			'add_new_item'      => __( 'Add New Second Blog Type', 'kilka-second-blog' ),
+			'new_item_name'     => __( 'New Second Blog Type', 'kilka-second-blog' ),
+			'menu_name'         => __( 'Types', 'kilka-second-blog' ),
+		);
+
+		register_taxonomy(
+			'world_note_type',
+			array( 'world_note' ),
+			array(
+				'labels'            => $type_labels,
+				'hierarchical'      => false,
+				'public'            => true,
+				'show_ui'           => true,
+				'show_admin_column' => true,
+				'show_in_rest'      => true,
+				'query_var'         => true,
+				'rewrite'           => array(
+					'slug'       => $base_slug . '-type',
+					'with_front' => false,
 				),
 			)
 		);

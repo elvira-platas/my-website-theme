@@ -7,7 +7,8 @@
  * @package Kilka
  */
 
-$kilka_has_sidebar = kilka_has_contextual_sidebar();
+$kilka_has_sidebar      = kilka_has_contextual_sidebar();
+$kilka_second_blog_view = function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context();
 
 if ( $kilka_has_sidebar ) {
 	$kilka_column = 8;
@@ -16,7 +17,7 @@ if ( $kilka_has_sidebar ) {
 }
 get_header();
 ?>
-<section class="blog-area <?php if ( ! $kilka_has_sidebar ) : ?>block-content-css<?php endif; ?>" id="content">
+<section class="blog-area <?php if ( ! $kilka_has_sidebar ) : ?>block-content-css<?php endif; ?><?php if ( $kilka_second_blog_view ) : ?> kilka-second-blog-archive<?php endif; ?>" id="content">
 	<div class="container">
 		<div class="row">
 				<div class="col-lg-<?php echo esc_attr ($kilka_column); ?> text-center">
@@ -53,7 +54,7 @@ get_header();
 	</div>
 </section>	
 
-<?php if ( function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context() ) : ?>
+<?php if ( $kilka_second_blog_view ) : ?>
 	<?php get_template_part( 'template-parts/second-blog-source-note' ); ?>
 <?php endif; ?>
 
