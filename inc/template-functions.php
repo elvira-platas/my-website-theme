@@ -48,6 +48,10 @@ function kilka_body_classes( $classes ) {
 		$classes[] = has_nav_menu( 'menu-1' ) ? 'kilka-exhibition-has-menu' : 'kilka-exhibition-no-menu';
 	}
 
+	if ( function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context() ) {
+		$classes[] = 'kilka-second-blog-context';
+	}
+
 	// Adds a class of no-sidebar when there is no sidebar present.
 	if ( ! kilka_has_contextual_sidebar() ) {
 		$classes[] = 'no-sidebar';
