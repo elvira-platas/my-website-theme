@@ -647,6 +647,16 @@ article.type-world_note img {
 .kilka-second-blog-archive article.type-world_note:last-child {
   margin-bottom: 0;
 }
+.kilka-second-blog-archive article.type-world_note + article.type-world_note {
+  padding-top: 42px;
+}
+.kilka-second-blog-archive article.type-world_note + article.type-world_note::before {
+  display: block;
+  width: 114px;
+  margin: 0 auto 28px;
+  border-top: 2px solid #aaaaaa;
+  content: "";
+}
 .kilka-second-blog-archive article.type-world_note .entry-title {
   text-transform: none;
 }
@@ -1641,6 +1651,14 @@ p.comment-notes {
     font-size: 15px;
     line-height: 1.7;
     color: #555555;
+}
+
+.second-blog-description::after {
+    display: block;
+    width: 114px;
+    margin: 22px auto 0;
+    border-top: 2px solid #aaaaaa;
+    content: "";
 }
 
 .second-blog-disclosure {

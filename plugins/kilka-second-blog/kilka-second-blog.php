@@ -350,6 +350,85 @@ if ( ! function_exists( 'kilka_register_world_note_taxonomies' ) ) :
 endif;
 add_action( 'init', 'kilka_register_world_note_taxonomies', 11 );
 
+/**
+ * Add per-entry controls for the More link presentation.
+ */
+function kilka_world_note_more_meta_box() {
+	add_meta_box(
+		'kilka-world-note-more',
+		__( 'Continue Reading', 'kilka-second-blog' ),
+		'kilka_render_world_note_more_meta_box',
+		'world_note',
+		'side',
+		'default'
+	);
+}
+add_action( 'add_meta_boxes_world_note', 'kilka_world_note_more_meta_box' );
+
+function kilka_render_world_note_more_meta_box( $post ) {
+	wp_nonce_field( 'kilka_world_note_more', 'kilka_world_note_more_nonce' );
+	$format = get_post_meta( $post->ID, '_kilka_world_note_more_format', true );
+	if ( ! in_array( $format, array( 'text', 'arrow', 'text_arrow' ), true ) ) {
+		$format = 'text';
+	}
+	?>
+	<p><label for="kilka-world-note-more-format"><?php esc_html_e( 'Display format', 'kilka-second-blog' ); ?></label></p>
+	<select id="kilka-world-note-more-format" name="kilka_world_note_more_format" class="widefat">
+		<option value="text" <?php selected( $format, 'text' ); ?>><?php esc_html_e( 'Text', 'kilka-second-blog' ); ?></option>
+		<option value="arrow" <?php selected( $format, 'arrow' ); ?>><?php esc_html_e( 'Arrow', 'kilka-second-blog' ); ?></option>
+		<option value="text_arrow" <?php selected( $format, 'text_arrow' ); ?>><?php esc_html_e( 'Text + arrow', 'kilka-second-blog' ); ?></option>
+	</select>
+	<p class="description"><?php esc_html_e( 'Set the wording in the More block inside the post.', 'kilka-second-blog' ); ?></p>
+	<?php
+}
+
+function kilka_save_world_note_more_meta( $post_id ) {
+	if ( ! isset( $_POST['kilka_world_note_more_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['kilka_world_note_more_nonce'] ) ), 'kilka_world_note_more' ) ) {
+		return;
+	}
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+	$format = isset( $_POST['kilka_world_note_more_format'] ) ? sanitize_key( wp_unslash( $_POST['kilka_world_note_more_format'] ) ) : 'text';
+	if ( ! in_array( $format, array( 'text', 'arrow', 'text_arrow' ), true ) ) {
+		$format = 'text';
+	}
+	update_post_meta( $post_id, '_kilka_world_note_more_format', $format );
+}
+add_action( 'save_post_world_note', 'kilka_save_world_note_more_meta' );
+
+function kilka_filter_world_note_more_link( $link, $more_link_text ) {
+	$post_id = get_the_ID();
+	if ( 'world_note' !== get_post_type( $post_id ) ) {
+		return $link;
+	}
+
+	$format = get_post_meta( $post_id, '_kilka_world_note_more_format', true );
+	if ( ! in_array( $format, array( 'text', 'arrow', 'text_arrow' ), true ) ) {
+		$format = 'text';
+	}
+	$link = preg_replace( '/class="([^"]*)"/', 'class="$1 button format-' . esc_attr( $format ) . '"', $link, 1 );
+
+	if ( 'text' === $format ) {
+		return $link;
+	}
+
+	$screen_reader = '';
+	if ( preg_match( '/(<span class=["\']screen-reader-text["\']>.*?<\/span>)/s', $link, $match ) ) {
+		$screen_reader = $match[1];
+	}
+	$visible_text = trim( str_replace( $screen_reader, '', wp_strip_all_tags( $link ) ) );
+	$visible_text = '' !== $visible_text ? $visible_text : $more_link_text;
+	$arrow        = '<span class="kilka-button-arrow" aria-hidden="true"></span>';
+	$replacement  = 'arrow' === $format ? $arrow . $screen_reader : '<span class="kilka-more-text">' . esc_html( $visible_text ) . '</span>' . $arrow . $screen_reader;
+
+	return preg_replace( '/(<a\b[^>]*>).*?(<\/a>)/s', '$1' . $replacement . '$2', $link, 1 );
+}
+add_filter( 'the_content_more_link', 'kilka_filter_world_note_more_link', 10, 2 );
+
 if ( ! function_exists( 'kilka_activate_second_blog_plugin' ) ) :
 	/**
 	 * Register rewrite endpoints when the companion plugin is activated.
