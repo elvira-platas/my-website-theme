@@ -679,6 +679,11 @@ article.type-world_note img {
 .kilka-second-blog-archive article.type-world_note .post-thumbnail img {
   max-width: min(100%, 860px);
 }
+.wp-block-image.is-style-kilka-floating img {
+  box-shadow:
+    0 4px 8px -2px rgba(28, 30, 32, 0.28),
+    0 38px 52px -10px rgba(28, 30, 32, 0.44);
+}
 .kilka-second-blog-archive .world-note-meta {
   display: flex;
   flex-wrap: wrap;
@@ -705,6 +710,27 @@ article.type-world_note img {
 }
 .kilka-second-blog-archive .world-note-meta a {
   color: inherit;
+}
+.kilka-second-blog-context .world-note-type a {
+  color: #e74c3c;
+}
+.kilka-second-blog-context .world-note-type a:hover,
+.kilka-second-blog-context .world-note-type a:focus {
+  color: #c0392b;
+}
+.kilka-second-blog-context .more-link {
+  color: #e74c3c !important;
+}
+.kilka-second-blog-context .more-link:hover,
+.kilka-second-blog-context .more-link:focus {
+  color: #c0392b !important;
+}
+.kilka-second-blog-context .tags-links a {
+  color: #e74c3c;
+}
+.kilka-second-blog-context .tags-links a:hover,
+.kilka-second-blog-context .tags-links a:focus {
+  color: #c0392b;
 }
 .entry-meta{
   margin-bottom: 10px;

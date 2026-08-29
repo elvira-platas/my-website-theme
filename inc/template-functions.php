@@ -62,6 +62,20 @@ function kilka_body_classes( $classes ) {
 add_filter( 'body_class', 'kilka_body_classes' );
 
 /**
+ * Register the optional floating presentation for standalone image blocks.
+ */
+function kilka_register_floating_image_block_style() {
+	register_block_style(
+		'core/image',
+		array(
+			'name'  => 'kilka-floating',
+			'label' => __( 'Floating image', 'kilka' ),
+		)
+	);
+}
+add_action( 'init', 'kilka_register_floating_image_block_style' );
+
+/**
  * Disable the XML-RPC methods used by pingbacks.
  *
  * @param array $methods XML-RPC methods exposed by WordPress.
