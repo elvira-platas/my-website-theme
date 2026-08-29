@@ -39,6 +39,7 @@ function kilka_header_style_1(){ ?>
 								$second_blog_heading     = trim( (string) get_theme_mod( 'kilka_second_blog_heading', '' ) );
 								$second_blog_description = trim( (string) get_theme_mod( 'kilka_second_blog_description', '' ) );
 								$second_blog_disclosure  = trim( (string) get_theme_mod( 'kilka_second_blog_disclosure', '' ) );
+								$second_blog_source_note = trim( (string) get_theme_mod( 'kilka_second_blog_source_note', '' ) );
 								$second_blog_archive_url = get_post_type_archive_link( 'world_note' );
 
 								if ( ! $second_blog_archive_url && function_exists( 'kilka_get_world_note_slug' ) ) {
@@ -58,10 +59,19 @@ function kilka_header_style_1(){ ?>
 											</p>
 										<?php endif; ?>
 										<?php if ( $second_blog_description || is_customize_preview() ) : ?>
-											<p class="second-blog-description"><?php echo wp_kses_post( nl2br( esc_html( $second_blog_description ) ) ); ?></p>
+											<p class="second-blog-description">
+												<?php echo wp_kses_post( nl2br( esc_html( $second_blog_description ) ) ); ?>
+												<?php if ( $second_blog_source_note ) : ?>
+													<sup><a id="second-blog-source-marker" class="second-blog-source-marker" href="#second-blog-source-note" aria-label="<?php esc_attr_e( 'Go to source note', 'kilka' ); ?>">1</a></sup>
+												<?php endif; ?>
+											</p>
 										<?php endif; ?>
-										<?php if ( $second_blog_disclosure || is_customize_preview() ) : ?>
-											<p class="second-blog-disclosure"><?php echo esc_html( $second_blog_disclosure ); ?></p>
+										<?php if ( $second_blog_disclosure || $second_blog_source_note || is_customize_preview() ) : ?>
+											<p class="second-blog-disclosure">
+												<?php if ( $second_blog_disclosure ) : ?>
+													<?php echo esc_html( $second_blog_disclosure ); ?>
+												<?php endif; ?>
+											</p>
 										<?php endif; ?>
 									</div>
 								<?php endif; ?>

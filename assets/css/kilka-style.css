@@ -1612,6 +1612,31 @@ p.comment-notes {
     text-transform: uppercase;
 }
 
+.second-blog-source-note {
+	max-width: 760px;
+	margin: clamp(48px, 8vw, 96px) auto 0;
+	padding: 16px 20px 0;
+	border-top: 1px solid #f2f2f2;
+	color: #aaaaaa;
+	font-size: 11px;
+	line-height: 1.65;
+	text-align: center;
+}
+
+.second-blog-source-note p {
+    margin: 0;
+}
+
+.second-blog-source-note a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.second-blog-source-marker {
+    color: inherit;
+    text-decoration: none;
+}
+
 @media (max-width: 767px) {
     .second-blog-title {
         font-size: 22px;
