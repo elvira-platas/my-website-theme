@@ -235,7 +235,10 @@ if ( ! function_exists( 'kilka_register_world_note_post_type' ) ) :
 				'show_in_rest'       => true,
 				'show_in_nav_menus'  => true,
 				'exclude_from_search' => true,
-			'taxonomies'         => array( 'world_note_category', 'world_note_type', 'world_note_tag' ),
+				'template'           => array(
+					array( 'core/freeform', array() ),
+				),
+				'taxonomies'         => array( 'world_note_category', 'world_note_type', 'world_note_tag' ),
 			);
 
 			register_post_type( 'world_note', $args );
