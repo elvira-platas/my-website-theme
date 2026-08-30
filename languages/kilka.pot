@@ -68,6 +68,12 @@ msgstr[1] ""
 msgid "Continue Reading"
 msgstr ""
 
+#. %s: post title.
+#: inc/template-tags.php:190
+#, php-format
+msgid "Continue reading: %s"
+msgstr ""
+
 #. %s: Name of current post. Only visible to screen readers
 #: template-parts/content.php:46
 #, php-format
