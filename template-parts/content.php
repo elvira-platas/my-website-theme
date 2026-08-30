@@ -75,11 +75,12 @@
 			$continue_reading_text   = get_theme_mod( 'kilka_continue_reading_text', esc_html__('Continue Reading','kilka') );
 			$continue_reading_format = get_theme_mod( 'kilka_continue_reading_format', 'text' );
 			
-			$button_content = '';
-			$arrow_html = '<span class="kilka-button-arrow"></span>';
+			$button_content     = '';
+			$arrow_html        = kilka_get_button_arrow();
+			$screen_reader_text = kilka_get_continue_reading_screen_reader_text( $post->ID );
 			
 			if ( 'arrow' === $continue_reading_format ) {
-				$button_content = $arrow_html;
+				$button_content = $arrow_html . $screen_reader_text;
 			} elseif ( 'text_arrow' === $continue_reading_format ) {
 				$button_content = '<span class="button-text">' . esc_html( $continue_reading_text ) . '</span>' . $arrow_html;
 			} else {

@@ -381,7 +381,7 @@ function kilka_render_world_note_more_meta_box( $post ) {
 		<option value="arrow" <?php selected( $format, 'arrow' ); ?>><?php esc_html_e( 'Arrow', 'kilka-second-blog' ); ?></option>
 		<option value="text_arrow" <?php selected( $format, 'text_arrow' ); ?>><?php esc_html_e( 'Text + arrow', 'kilka-second-blog' ); ?></option>
 	</select>
-	<p class="description"><?php esc_html_e( 'Set the wording in the More block inside the post.', 'kilka-second-blog' ); ?></p>
+	<p class="description"><?php esc_html_e( 'Set any wording in the More block, or choose Arrow to hide the visible text.', 'kilka-second-blog' ); ?></p>
 	<?php
 }
 
@@ -420,12 +420,25 @@ function kilka_filter_world_note_more_link( $link, $more_link_text ) {
 	}
 
 	$screen_reader = '';
+	$visible_link  = $link;
 	if ( preg_match( '/(<span class=["\']screen-reader-text["\']>.*?<\/span>)/s', $link, $match ) ) {
 		$screen_reader = $match[1];
+		$visible_link  = str_replace( $screen_reader, '', $link );
 	}
-	$visible_text = trim( str_replace( $screen_reader, '', wp_strip_all_tags( $link ) ) );
+	if ( '' === $screen_reader ) {
+		$post_title = wp_strip_all_tags( get_the_title( $post_id ) );
+		if ( 'arrow' === $format ) {
+			$accessible_action  = trim( wp_strip_all_tags( $more_link_text ) );
+			$accessible_action  = '' !== $accessible_action ? $accessible_action : __( 'Continue reading', 'kilka-second-blog' );
+			$screen_reader_text = $accessible_action . ': ' . $post_title;
+		} else {
+			$screen_reader_text = ': ' . $post_title;
+		}
+		$screen_reader = '<span class="screen-reader-text">' . esc_html( $screen_reader_text ) . '</span>';
+	}
+	$visible_text = trim( wp_strip_all_tags( $visible_link ) );
 	$visible_text = '' !== $visible_text ? $visible_text : $more_link_text;
-	$arrow        = '<span class="kilka-button-arrow" aria-hidden="true"></span>';
+	$arrow        = '<span class="kilka-button-arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" focusable="false"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></span>';
 	$replacement  = 'arrow' === $format ? $arrow . $screen_reader : '<span class="kilka-more-text">' . esc_html( $visible_text ) . '</span>' . $arrow . $screen_reader;
 
 	return preg_replace( '/(<a\b[^>]*>).*?(<\/a>)/s', '$1' . $replacement . '$2', $link, 1 );

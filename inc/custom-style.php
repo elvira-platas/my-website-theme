@@ -60,50 +60,62 @@ function kilka_custom_css() {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             text-decoration: none;
             transition: all 0.3s ease;
-            padding: 15px 0; 
-            min-width: 40px; 
+            min-height: 48px;
+            min-width: 48px;
+            padding: 8px 0;
             background: transparent;
             border: none;
         }
 
-        /* Long arrow style */
+        .entry-content a.button.format-arrow {
+            padding: 0;
+            width: 48px;
+        }
+
+        /* Shared reading arrow style */
         .kilka-button-arrow {
-            display: inline-block;
-            position: relative;
-            width: 40px; 
-            height: 2px;
-            background-color: currentColor;
-            vertical-align: middle;
+            align-items: center;
+            background: none;
+            display: inline-flex;
+            height: 22px;
+            justify-content: center;
+            transition: transform 0.2s ease;
+            width: 22px;
         }
 
-        .kilka-button-arrow::after {
-            content: "";
-            position: absolute;
-            right: 0;
-            top: 50%;
-            width: 8px;
-            height: 8px;
-            border-top: 2px solid currentColor;
-            border-right: 2px solid currentColor;
-            transform: translateY(-50%) rotate(45deg);
+        .kilka-button-arrow svg {
+            display: block;
+            fill: none;
+            height: 22px;
+            stroke: currentColor;
+            width: 22px;
         }
-
-        /* Thickness adjustment */
-        '.( (int)$continue_reading_weight >= 600 ? '
-        .kilka-button-arrow { height: 3px; }
-        .kilka-button-arrow::after { border-width: 3px; }
-        ' : '' ).'
-        
-        '.( (int)$continue_reading_weight <= 300 ? '
-        .kilka-button-arrow { height: 1px; }
-        .kilka-button-arrow::after { border-width: 1px; }
-        ' : '' ).'
 
         .entry-content a.button:hover .kilka-button-arrow {
-            width: 50px; 
+            transform: translateX(3px);
+        }
+
+        .entry-content a.button:focus-visible {
+            outline: 2px solid currentColor;
+            outline-offset: 3px;
+        }
+
+        /* Second Blog More links use the shared navigation arrow language. */
+        .kilka-second-blog-context .entry-content a.more-link.button {
+            color: var(--kilka-second-blog-accent) !important;
+        }
+
+        .kilka-second-blog-context .entry-content a.more-link.button:hover,
+        .kilka-second-blog-context .entry-content a.more-link.button:focus {
+            color: var(--kilka-second-blog-accent-hover) !important;
+        }
+
+        .kilka-second-blog-context .entry-content a.more-link.button:focus-visible {
+            outline: 2px solid currentColor;
+            outline-offset: 3px;
         }
     ';
 

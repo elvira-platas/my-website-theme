@@ -165,3 +165,32 @@ if ( ! function_exists( 'kilka_post_thumbnail' ) ) :
 		endif; // End is_singular().
 	}
 endif;
+
+if ( ! function_exists( 'kilka_get_button_arrow' ) ) :
+	/**
+	 * Return the shared forward arrow used by reading links.
+	 *
+	 * @return string Arrow markup.
+	 */
+	function kilka_get_button_arrow() {
+		return '<span class="kilka-button-arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" focusable="false"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></span>';
+	}
+endif;
+
+if ( ! function_exists( 'kilka_get_continue_reading_screen_reader_text' ) ) :
+	/**
+	 * Return an accessible label for an arrow-only reading link.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return string Screen-reader label markup.
+	 */
+	function kilka_get_continue_reading_screen_reader_text( $post_id ) {
+		$label = sprintf(
+			/* translators: %s: post title. */
+			__( 'Continue reading: %s', 'kilka' ),
+			wp_strip_all_tags( get_the_title( $post_id ) )
+		);
+
+		return '<span class="screen-reader-text">' . esc_html( $label ) . '</span>';
+	}
+endif;
