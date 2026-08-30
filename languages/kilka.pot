@@ -78,6 +78,10 @@ msgstr ""
 msgid "Kilka"
 msgstr ""
 
+#: single.php:31
+msgid "Next post:"
+msgstr ""
+
 #: inc/header/header-1.php:29
 msgid "Menu"
 msgstr ""
@@ -192,6 +196,10 @@ msgstr ""
 
 #: functions.php:53
 msgid "Primary"
+msgstr ""
+
+#: single.php:30
+msgid "Previous post:"
 msgstr ""
 
 #. %s: CMS name, i.e. WordPress.
