@@ -1404,6 +1404,11 @@ p.comment-notes {
 }
 
 @media (max-width: 767px) {
+  .single-area article.post > .entry-meta,
+  .single-area article.type-world_note > .entry-meta {
+    text-align: center;
+  }
+
   .kilka-second-blog-archive article.type-world_note .post-thumbnail,
   .single-area article.type-world_note .post-thumbnail {
     margin-bottom: 60px;
