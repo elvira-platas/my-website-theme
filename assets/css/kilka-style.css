@@ -1402,6 +1402,22 @@ p.comment-notes {
   margin-top: .35em;
 }
 
+@media (min-width: 768px) {
+  .kilka-second-blog-context article.type-world_note > .entry-meta,
+  .kilka-second-blog-context article.type-world_note > .entry-header,
+  .kilka-second-blog-context article.type-world_note > .entry-content,
+  .kilka-second-blog-context article.type-world_note > .entry-footer {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .kilka-second-blog-context article.type-world_note > .entry-content {
+    font-size: 18px;
+    line-height: 1.75;
+  }
+}
+
 @media (max-width: 767px) {
   .single-area article.post > .entry-meta,
   .single-area article.type-world_note > .entry-meta {
