@@ -2028,6 +2028,10 @@ p.comment-notes {
     padding: clamp(42px, 7vh, 96px) clamp(20px, 5vw, 80px);
 }
 
+.single-kilka_exhibition .footer-area {
+    margin-top: 0;
+}
+
 .single-kilka_exhibition .header-top,
 .single-kilka_exhibition .site-description {
     display: none;
