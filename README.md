@@ -48,6 +48,11 @@ Development of this fork and its companion plugin was carried out with substanti
 
 For deployment/publishing, build separate ZIP files.
 
+The source repository and public download model are described in
+[`docs/github-release-plan.md`](docs/github-release-plan.md). Development stays
+in this monorepo, while WordPress installation uses separate theme and plugin
+ZIP files from GitHub Releases.
+
 ## Build ZIP packages
 
 ```bash
