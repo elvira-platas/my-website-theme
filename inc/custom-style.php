@@ -140,11 +140,15 @@ function kilka_custom_css() {
             flex: 1;
         }
 
-        /* Align menu icon with the center of the sidebar column on desktop */
+        /*
+         * Align the desktop menu with the right post-navigation control.
+         * A 960px Bootstrap column renders a 930px card; both controls sit
+         * 26px inside its edge, producing a 439px offset from the centre.
+         */
         .kilka-responsive-menu { 
             display: block !important;
             position: absolute;
-            left: 83.333333%;
+            left: calc(50% + 439px);
             right: auto;
             top: calc(30px + (var(--kilka-site-title-size) * 0.55));
             transform: translate(-50%, -50%);
