@@ -758,6 +758,9 @@ article.type-world_note img {
 .entry-meta{
   margin-bottom: 10px;
 }
+.kilka-main-blog-context article.post > .entry-meta {
+  text-align: center;
+}
 .entry-title {
   font-size: 20px;
   text-transform: uppercase;
