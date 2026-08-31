@@ -56,13 +56,13 @@ $kilka_panel_title_id = $kilka_panel_id . '-title';
 				<dl class="kilka-exhibition__information-details">
 					<?php if ( $kilka_creator ) : ?>
 						<div>
-							<dt><?php esc_html_e( 'Creator', 'kilka' ); ?></dt>
+							<dt class="screen-reader-text"><?php esc_html_e( 'Creator', 'kilka' ); ?></dt>
 							<dd><?php echo esc_html( $kilka_creator ); ?></dd>
 						</div>
 					<?php endif; ?>
 					<?php if ( $kilka_copyright ) : ?>
 						<div>
-							<dt><?php esc_html_e( 'Rights', 'kilka' ); ?></dt>
+							<dt class="screen-reader-text"><?php esc_html_e( 'Rights', 'kilka' ); ?></dt>
 							<dd><?php echo esc_html( $kilka_copyright ); ?></dd>
 						</div>
 					<?php endif; ?>
@@ -72,7 +72,7 @@ $kilka_panel_title_id = $kilka_panel_id . '-title';
 
 		<?php if ( $kilka_information_items ) : ?>
 			<section class="kilka-exhibition__information-section">
-				<h3 class="kilka-exhibition__works-title"><?php esc_html_e( 'Works', 'kilka' ); ?></h3>
+				<h3 class="screen-reader-text"><?php esc_html_e( 'Works', 'kilka' ); ?></h3>
 				<ol class="kilka-exhibition__works">
 					<?php foreach ( $kilka_information_items as $kilka_item ) : ?>
 						<?php
