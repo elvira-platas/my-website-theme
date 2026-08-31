@@ -33,6 +33,51 @@ function kilka_has_contextual_sidebar() {
 }
 
 /**
+ * Check whether the current page belongs to either blog search context.
+ *
+ * @return bool
+ */
+function kilka_is_blog_search_context() {
+	if ( function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context() ) {
+		return true;
+	}
+
+	if ( is_home() || is_singular( 'post' ) || is_category() || is_tag() || is_author() || is_date() ) {
+		return true;
+	}
+
+	if ( is_search() ) {
+		$post_type = get_query_var( 'post_type' );
+		if ( is_array( $post_type ) ) {
+			return in_array( 'post', $post_type, true );
+		}
+
+		return empty( $post_type ) || 'post' === $post_type;
+	}
+
+	return false;
+}
+
+/**
+ * Add contextual search to the primary menu for both blogs.
+ *
+ * Search remains a theme presentation concern. The companion plugin only
+ * supplies the post type context used by the shared search form.
+ *
+ * @param string   $items Menu items HTML.
+ * @param stdClass $args  Menu arguments.
+ * @return string
+ */
+function kilka_append_contextual_search_menu_item( $items, $args ) {
+	if ( ! isset( $args->theme_location ) || 'menu-1' !== $args->theme_location || ! kilka_is_blog_search_context() || false !== strpos( $items, 'kilka-menu-search' ) ) {
+		return $items;
+	}
+
+	return $items . '<li class="menu-item menu-item-search kilka-menu-search">' . get_search_form( false ) . '</li>';
+}
+add_filter( 'wp_nav_menu_items', 'kilka_append_contextual_search_menu_item', 11, 2 );
+
+/**
  * Adds custom classes to the array of body classes.
  *
  * @param array $classes Classes for the body element.
@@ -48,8 +93,11 @@ function kilka_body_classes( $classes ) {
 		$classes[] = has_nav_menu( 'menu-1' ) ? 'kilka-exhibition-has-menu' : 'kilka-exhibition-no-menu';
 	}
 
-	if ( function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context() ) {
+	$is_second_blog_context = function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context();
+	if ( $is_second_blog_context ) {
 		$classes[] = 'kilka-second-blog-context';
+	} elseif ( kilka_is_blog_search_context() ) {
+		$classes[] = 'kilka-main-blog-context';
 	}
 
 	// Adds a class of no-sidebar when there is no sidebar present.

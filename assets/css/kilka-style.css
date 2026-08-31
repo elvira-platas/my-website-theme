@@ -1297,6 +1297,15 @@ p.comment-notes {
     max-width: 1280px !important;
   }
 }
+
+/* Keep the sidebar-free Main Blog readable while retaining room for images. */
+.kilka-main-blog-context.no-sidebar .blog-area > .container > .row > [class*="col-"],
+.kilka-main-blog-context.no-sidebar .single-area > .container > .row > [class*="col-"] {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Responsive */
 /* Desktop Layout: 1200px */
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
@@ -1959,6 +1968,9 @@ p.comment-notes {
 .slicknav_nav .kilka-menu-search .search-form {
     display: block;
 }
+.slicknav_nav .kilka-menu-search .kilka-icon-search-form {
+    position: relative;
+}
 .slicknav_nav .kilka-menu-search label {
     display: block;
     margin: 0;
@@ -1966,13 +1978,59 @@ p.comment-notes {
 .slicknav_nav .kilka-menu-search .search-field {
     box-sizing: border-box;
     width: 100%;
-    min-height: 38px;
-    padding: 7px 9px;
+    min-height: 48px;
+    margin: 0;
+    padding: 9px 58px 9px 15px;
     border: 1px solid #dddddd;
-    border-radius: 5px;
+    border-radius: 24px;
+    color: #252525;
+    background: #ffffff;
 }
-.slicknav_nav .kilka-menu-search .search-submit {
+.slicknav_nav .kilka-menu-search input.search-submit {
     display: none;
+}
+.slicknav_nav .kilka-menu-search .kilka-search-icon-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: #666666;
+    background: transparent;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+.slicknav_nav .kilka-menu-search .kilka-search-icon-button:hover,
+.slicknav_nav .kilka-menu-search .kilka-search-icon-button:focus {
+    color: #444444;
+    background-color: rgba(37, 37, 37, 0.06);
+}
+.slicknav_nav .kilka-menu-search .kilka-search-icon-button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+.slicknav_nav .kilka-menu-search .kilka-search-icon-button svg {
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.kilka-second-blog-context .slicknav_nav .kilka-menu-search .kilka-search-icon-button {
+    color: var(--kilka-second-blog-accent);
+}
+.kilka-second-blog-context .slicknav_nav .kilka-menu-search .kilka-search-icon-button:hover,
+.kilka-second-blog-context .slicknav_nav .kilka-menu-search .kilka-search-icon-button:focus {
+    color: var(--kilka-second-blog-accent-hover);
+    background-color: rgba(108, 59, 209, 0.08);
 }
 
 @media (max-width: 767px) {
