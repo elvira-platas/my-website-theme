@@ -84,6 +84,13 @@ function kilka_customize_register( $wp_customize ) {
 		);
 	}
 
+	// Group theme-specific controls under one top-level Customizer item.
+	$wp_customize->add_panel( 'kilka_theme_options_panel', array(
+		'title'       => __( 'Kilka Theme Options', 'kilka' ),
+		'description' => __( 'Customize site appearance, post listings, the footer, and Second Blog content.', 'kilka' ),
+		'priority'    => 130,
+	) );
+
 	// Keep the header text color with the other site identity controls.
 	$header_text_color_control = $wp_customize->get_control( 'header_textcolor' );
 	if ( $header_text_color_control ) {
@@ -92,12 +99,24 @@ function kilka_customize_register( $wp_customize ) {
 		$header_text_color_control->priority = 60;
 	}
 
+	// Keep the optional homepage image with the theme appearance controls.
+	$header_image_section = $wp_customize->get_section( 'header_image' );
+	if ( $header_image_section ) {
+		$header_image_section->title       = __( 'Homepage Header Image', 'kilka' );
+		$header_image_section->description = __( 'Shown only at the top of the site homepage.', 'kilka' );
+		$header_image_section->panel       = 'kilka_theme_options_panel';
+		$header_image_section->priority    = 10;
+	}
+
 	// Combine the core background color and image controls into one section.
 	$background_section       = $wp_customize->get_section( 'background_image' );
 	$background_color_control = $wp_customize->get_control( 'background_color' );
 
 	if ( $background_section && $background_color_control ) {
-		$background_section->title            = __( 'Background', 'kilka' );
+		$background_section->title            = __( 'General Background', 'kilka' );
+		$background_section->description      = __( 'Used by the Main Blog and standard pages. Second Blog and Exhibitions use their own backgrounds.', 'kilka' );
+		$background_section->panel            = 'kilka_theme_options_panel';
+		$background_section->priority         = 20;
 		$background_color_control->section     = 'background_image';
 		$background_color_control->priority    = 5;
 		$wp_customize->remove_section( 'colors' );
@@ -132,18 +151,11 @@ function kilka_customize_register( $wp_customize ) {
 		),
 	) );
 
-	// Group theme-specific controls under one top-level Customizer item.
-	$wp_customize->add_panel( 'kilka_theme_options_panel', array(
-		'title'       => __( 'Kilka Theme Options', 'kilka' ),
-		'description' => __( 'Customize post listings, the footer, and Second Blog content.', 'kilka' ),
-		'priority'    => 130,
-	) );
-
 	// Add Footer Settings Section
 	$wp_customize->add_section( 'kilka_footer_section', array(
 		'title'    => __( 'Footer', 'kilka' ),
 		'panel'    => 'kilka_theme_options_panel',
-		'priority' => 20,
+		'priority' => 40,
 	) );
 
 	// Add Footer Link Text Setting
@@ -195,7 +207,7 @@ function kilka_customize_register( $wp_customize ) {
 		'title'       => __( 'Post Listings', 'kilka' ),
 		'description' => __( 'Customize the Continue Reading link shown on post lists.', 'kilka' ),
 		'panel'       => 'kilka_theme_options_panel',
-		'priority'    => 10,
+		'priority'    => 30,
 	) );
 
 	// Continue Reading Text
@@ -261,7 +273,7 @@ function kilka_customize_register( $wp_customize ) {
 			array(
 				'title'       => __( 'Second Blog', 'kilka' ),
 				'panel'       => 'kilka_theme_options_panel',
-				'priority'    => 30,
+				'priority'    => 50,
 				'description' => __( 'Shown under the site title on Second Blog pages.', 'kilka' ),
 			)
 		);

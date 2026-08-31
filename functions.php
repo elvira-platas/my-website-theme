@@ -109,6 +109,26 @@ endif;
 add_action( 'after_setup_theme', 'kilka_setup' );
 
 /**
+ * Start new Main Blog posts with an unlocked Classic block.
+ *
+ * The block editor remains available, so authors can add More, Image, and
+ * other blocks when a post needs more structure.
+ */
+function kilka_set_main_blog_block_template() {
+	$post_type_object = get_post_type_object( 'post' );
+
+	if ( ! $post_type_object ) {
+		return;
+	}
+
+	$post_type_object->template = array(
+		array( 'core/freeform', array() ),
+	);
+	$post_type_object->template_lock = false;
+}
+add_action( 'init', 'kilka_set_main_blog_block_template', 20 );
+
+/**
  * Set the content width in pixels, based on the theme's design and stylesheet.
  *
  * Priority 0 to make it available to lower priority callbacks.
