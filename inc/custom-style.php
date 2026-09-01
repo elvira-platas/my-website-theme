@@ -156,6 +156,13 @@ function kilka_custom_css() {
             margin: 0 !important;
         }
 
+        /* Follow the wider Main Blog card while retaining the shared rail elsewhere. */
+        @media (min-width: 1200px) {
+            .kilka-main-blog-context.no-sidebar .kilka-responsive-menu {
+                left: calc(50% + 519px);
+            }
+        }
+
         /* Keep right edge alignment on medium screens where columns stack differently */
         @media (max-width: 991px) {
             .kilka-responsive-menu {

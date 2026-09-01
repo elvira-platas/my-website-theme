@@ -1304,7 +1304,7 @@ p.comment-notes {
 /* Keep the sidebar-free Main Blog readable while retaining room for images. */
 .kilka-main-blog-context.no-sidebar .blog-area > .container > .row > [class*="col-"],
 .kilka-main-blog-context.no-sidebar .single-area > .container > .row > [class*="col-"] {
-  max-width: 960px;
+  max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1575,6 +1575,43 @@ p.comment-notes {
   .kilka-second-blog-context article.type-world_note > .entry-content {
     font-size: 18px;
     line-height: 1.75;
+  }
+}
+
+@media (min-width: 992px) {
+  .kilka-main-blog-context article.post > .entry-meta,
+  .kilka-main-blog-context article.post .tags-links {
+    font-size: 16px;
+  }
+
+  .kilka-main-blog-context .blog-area article.post .entry-title {
+    font-size: 22px;
+    line-height: 1.35;
+  }
+
+  .kilka-main-blog-context .blog-area article.post > .entry-content {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 18px;
+    line-height: 1.75;
+    letter-spacing: normal;
+  }
+
+  .kilka-main-blog-context .single-area article.post .entry-title {
+    font-size: 32px;
+  }
+
+  .kilka-main-blog-context .single-area article.post > .entry-content {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 19px;
+    line-height: 1.75;
+  }
+
+  .kilka-main-blog-context .single-area article.post > .entry-content p {
+    margin-bottom: 1.35em;
   }
 }
 
