@@ -71,7 +71,8 @@ if ( ! function_exists( 'kilka_entry_footer' ) ) :
 	 * Prints HTML with meta information for tags and comments.
 	 */
 	function kilka_entry_footer() {
-		$tags_list = '';
+		$tags_list      = '';
+		$is_main_single = 'post' === get_post_type() && is_single();
 
 		if ( 'post' === get_post_type() ) {
 			/* translators: used between list items, there is a space after the comma */
@@ -83,7 +84,14 @@ if ( ! function_exists( 'kilka_entry_footer' ) ) :
 				: get_the_term_list( get_the_ID(), 'world_note_tag', '', esc_html_x( ', ', 'list item separator', 'kilka' ) );
 		}
 
-		if ( $tags_list ) {
+		if ( $is_main_single ) {
+			echo '<div class="main-post-meta-footer">';
+			kilka_posted_on();
+			if ( $tags_list ) {
+				printf( '<span class="post-tags"><span class="tags-links">%s</span></span>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+			echo '</div>';
+		} elseif ( $tags_list ) {
 			printf( '<div class="post-tags text-right"><span class="tags-links">%s</span></div>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
