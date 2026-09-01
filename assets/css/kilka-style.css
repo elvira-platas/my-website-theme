@@ -1579,6 +1579,19 @@ p.comment-notes {
 }
 
 @media (min-width: 992px) {
+  .kilka-main-blog-context .blog-area article.post .post-thumbnail,
+  .kilka-main-blog-context .single-area article.post .post-thumbnail {
+    margin-bottom: 32px;
+  }
+
+  .kilka-main-blog-context article.post .post-thumbnail img {
+    margin-bottom: 0;
+  }
+
+  .kilka-main-blog-context article.post > .entry-meta {
+    margin-bottom: 14px;
+  }
+
   .kilka-main-blog-context article.post > .entry-meta,
   .kilka-main-blog-context article.post .tags-links {
     font-size: 16px;
