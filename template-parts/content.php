@@ -31,19 +31,14 @@
 			?>
 		</div><!-- .entry-meta -->
 	<?php elseif ( 'post' === get_post_type() ) : ?>
-		<div class="entry-meta">
-			<?php
-			$category_links = get_the_category_list( esc_html_x( ', ', 'list item separator', 'kilka' ) );
-
-			kilka_posted_on();
-			echo '<span class="sep"> | </span>';
-			kilka_posted_by();
-
-			if ( $category_links ) {
-				echo '<span class="sep"> | </span><span class="cat-links">' . $category_links . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			}
+		<?php
+		$category_links = get_the_category_list( esc_html_x( ', ', 'list item separator', 'kilka' ) );
+		if ( $category_links ) :
 			?>
-		</div><!-- .entry-meta -->
+			<div class="entry-meta">
+				<span class="cat-links"><?php echo $category_links; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+			</div><!-- .entry-meta -->
+		<?php endif; ?>
 	<?php endif; ?>
 
 	<header class="entry-header">

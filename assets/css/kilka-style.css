@@ -735,6 +735,9 @@ article.type-world_note img {
 .kilka-second-blog-context .world-note-meta .sep {
   font-weight: 700;
 }
+.kilka-second-blog-context .world-note-meta {
+  text-transform: uppercase;
+}
 .kilka-second-blog-context .world-note-meta a:hover,
 .kilka-second-blog-context .world-note-meta a:focus {
   color: var(--kilka-second-blog-accent-hover);
@@ -760,6 +763,10 @@ article.type-world_note img {
 }
 .kilka-main-blog-context article.post > .entry-meta {
   text-align: center;
+}
+.kilka-main-blog-context article.post > .entry-meta .cat-links {
+  font-weight: 600;
+  text-transform: uppercase;
 }
 .entry-title {
   font-size: 20px;
@@ -790,6 +797,21 @@ article.type-world_note img {
 .entry-footer span,
 .entry-meta span{
   margin-right: 15px;
+}
+.kilka-main-blog-context .single-area article.post .main-post-meta-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  color: #999999;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.kilka-main-blog-context .single-area article.post .main-post-meta-footer .posted-on,
+.kilka-main-blog-context .single-area article.post .main-post-meta-footer .post-tags,
+.kilka-main-blog-context .single-area article.post .main-post-meta-footer .tags-links {
+  margin-right: 0;
 }
 p.comment-notes {
   margin-bottom: 30px;
@@ -1581,7 +1603,7 @@ p.comment-notes {
 @media (min-width: 992px) {
   .kilka-main-blog-context .blog-area article.post .post-thumbnail,
   .kilka-main-blog-context .single-area article.post .post-thumbnail {
-    margin-bottom: 32px;
+    margin-bottom: 40px;
   }
 
   .kilka-main-blog-context article.post .post-thumbnail img {
@@ -1589,11 +1611,12 @@ p.comment-notes {
   }
 
   .kilka-main-blog-context article.post > .entry-meta {
-    margin-bottom: 14px;
+    margin-bottom: 8px;
   }
 
   .kilka-main-blog-context article.post > .entry-meta,
-  .kilka-main-blog-context article.post .tags-links {
+  .kilka-main-blog-context article.post .tags-links,
+  .kilka-main-blog-context .single-area article.post .main-post-meta-footer {
     font-size: 16px;
   }
 
@@ -1654,6 +1677,11 @@ p.comment-notes {
 }
 
 @media (max-width: 767px) {
+  .kilka-main-blog-context .single-area article.post .main-post-meta-footer {
+    justify-content: center;
+    text-align: center;
+  }
+
   .single-area article.post > .entry-meta,
   .single-area article.type-world_note > .entry-meta {
     text-align: center;
