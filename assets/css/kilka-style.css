@@ -1712,6 +1712,35 @@ p.comment-notes {
     text-align: center;
   }
 
+  .kilka-second-blog-context article.type-world_note > .world-note-meta {
+    align-items: center;
+    column-gap: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: clamp(12px, 3.5vw, 13px);
+    justify-content: center;
+    letter-spacing: 0;
+    line-height: 1.6;
+  }
+
+  .kilka-second-blog-context .single-area article.type-world_note {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .kilka-second-blog-context .single-area article.type-world_note > .world-note-meta {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+
+  .kilka-second-blog-context article.type-world_note > .world-note-meta > span:not(.sep) {
+    margin-right: 0;
+  }
+
+  .kilka-second-blog-context article.type-world_note > .world-note-meta .sep {
+    display: none;
+  }
+
   .single-area article.post > .entry-meta,
   .single-area article.type-world_note > .entry-meta {
     text-align: center;
