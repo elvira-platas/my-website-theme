@@ -660,9 +660,6 @@ article.type-world_note img {
   border-top: 1px solid #f2f2f2;
   content: "";
 }
-.kilka-second-blog-archive article.type-world_note .entry-title {
-  text-transform: none;
-}
 .kilka-second-blog-archive article.type-world_note .entry-content {
   text-align: left;
 }
@@ -772,6 +769,10 @@ article.type-world_note img {
   font-size: 20px;
   text-transform: uppercase;
   line-height: 26px;
+}
+.kilka-main-blog-context article.post .entry-title,
+.kilka-second-blog-context article.type-world_note .entry-title {
+  text-transform: none;
 }
 .entry-title a {
   color: #666666;
