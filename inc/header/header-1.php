@@ -17,6 +17,7 @@ function kilka_header_style_1(){ ?>
 				<div class="col-lg-12">
 					<div class="header-main-flex">
 						<div class="site-branding text-center">
+							<?php $kilka_second_blog_context = function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context(); ?>
 							<div class="site-branding-main">
 								<div class="site-branding-identity">
 									<?php
@@ -30,12 +31,12 @@ function kilka_header_style_1(){ ?>
 							</div>
 							<?php
 							$kilka_description = get_bloginfo( 'description', 'display' );
-							if ( $kilka_description || is_customize_preview() ) :
+							if ( is_home() && ! $kilka_second_blog_context && ( $kilka_description || is_customize_preview() ) ) :
 								?>
 								<p class="site-description"><?php echo esc_html($kilka_description); ?></p>
 							<?php endif; ?>
 							<?php
-							if ( function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context() ) :
+							if ( $kilka_second_blog_context ) :
 								$second_blog_heading     = trim( (string) get_theme_mod( 'kilka_second_blog_heading', '' ) );
 								$second_blog_description = trim( (string) get_theme_mod( 'kilka_second_blog_description', '' ) );
 								$second_blog_disclosure  = trim( (string) get_theme_mod( 'kilka_second_blog_disclosure', '' ) );
@@ -46,7 +47,10 @@ function kilka_header_style_1(){ ?>
 									$second_blog_archive_url = home_url( '/' . trim( (string) kilka_get_world_note_slug(), '/' ) . '/' );
 								}
 
-								if ( $second_blog_heading || $second_blog_description || $second_blog_disclosure || is_customize_preview() ) :
+								$show_second_blog_intro      = is_post_type_archive( 'world_note' ) || is_customize_preview();
+								$show_second_blog_disclosure = is_singular( 'world_note' ) && $second_blog_disclosure;
+
+								if ( $show_second_blog_intro && ( $second_blog_heading || $second_blog_description || $second_blog_disclosure || is_customize_preview() ) ) :
 									?>
 									<div class="second-blog-intro">
 										<?php if ( $second_blog_heading || is_customize_preview() ) : ?>
@@ -66,13 +70,17 @@ function kilka_header_style_1(){ ?>
 												<?php endif; ?>
 											</p>
 										<?php endif; ?>
-										<?php if ( $second_blog_disclosure || $second_blog_source_note || is_customize_preview() ) : ?>
+										<?php if ( $second_blog_disclosure || is_customize_preview() ) : ?>
 											<p class="second-blog-disclosure">
 												<?php if ( $second_blog_disclosure ) : ?>
 													<?php echo esc_html( $second_blog_disclosure ); ?>
 												<?php endif; ?>
 											</p>
 										<?php endif; ?>
+									</div>
+								<?php elseif ( $show_second_blog_disclosure ) : ?>
+									<div class="second-blog-intro second-blog-intro--single">
+										<p class="second-blog-disclosure"><?php echo esc_html( $second_blog_disclosure ); ?></p>
 									</div>
 								<?php endif; ?>
 							<?php endif; ?>

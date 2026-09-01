@@ -136,7 +136,7 @@ function kilka_customize_register( $wp_customize ) {
 	) );
 
 	$wp_customize->add_setting( 'kilka_site_title_size', array(
-		'default'           => 25,
+		'default'           => 14,
 		'sanitize_callback' => 'absint',
 	) );
 	$wp_customize->add_control( 'kilka_site_title_size', array(

@@ -54,7 +54,7 @@ get_header();
 	</div>
 </section>	
 
-<?php if ( $kilka_second_blog_view ) : ?>
+<?php if ( $kilka_second_blog_view && is_post_type_archive( 'world_note' ) ) : ?>
 	<?php get_template_part( 'template-parts/second-blog-source-note' ); ?>
 <?php endif; ?>
 
