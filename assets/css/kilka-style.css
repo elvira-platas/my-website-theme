@@ -1248,6 +1248,35 @@ p.comment-notes {
   padding: 20px 0;
   text-align: center;
 }
+
+/* Keep the footer at the viewport edge when a single blog post is short. */
+.single-post #page,
+.single-world_note #page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.single-post #content,
+.single-world_note #content {
+  flex: 1 0 auto;
+}
+
+.admin-bar.single-post #page,
+.admin-bar.single-world_note #page {
+  min-height: calc(100vh - 32px);
+  min-height: calc(100svh - 32px);
+}
+
+@media screen and (max-width: 782px) {
+  .admin-bar.single-post #page,
+  .admin-bar.single-world_note #page {
+    min-height: calc(100vh - 46px);
+    min-height: calc(100svh - 46px);
+  }
+}
+
 .back-to-top {
   align-items: center;
   background-color: #ffffff;
@@ -1987,8 +2016,8 @@ p.comment-notes {
 
 /* Site Header Spacing */
 .site-branding {
-    padding-top: 30px !important;
-    padding-bottom: 30px !important;
+    padding-top: 18px !important;
+    padding-bottom: 18px !important;
 }
 .site-title {
     margin: 0;
@@ -2002,9 +2031,13 @@ p.comment-notes {
     max-width: 780px;
 }
 
+.second-blog-intro--single {
+    margin-top: 8px;
+}
+
 .second-blog-title {
     margin: 0;
-    font-size: 28px;
+    font-size: 24px;
     line-height: 1.2;
     font-weight: 700;
 }
@@ -2142,7 +2175,7 @@ p.comment-notes {
 
 @media (max-width: 767px) {
     .second-blog-title {
-        font-size: 22px;
+        font-size: 20px;
     }
 
     .second-blog-description {
@@ -2247,6 +2280,11 @@ p.comment-notes {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.single-kilka_exhibition .site-title a {
+    align-items: center;
+    display: flex;
 }
 
 .single-kilka_exhibition .kilka-responsive-menu {

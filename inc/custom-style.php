@@ -12,7 +12,7 @@ function kilka_custom_css() {
         $site_title_font = kilka_sanitize_site_title_font( $site_title_font );
     }
 
-    $site_title_size = min( 100, max( 14, absint( get_theme_mod( 'kilka_site_title_size', 25 ) ) ) );
+    $site_title_size = min( 100, max( 14, absint( get_theme_mod( 'kilka_site_title_size', 14 ) ) ) );
 
     $continue_reading_color = sanitize_hex_color( get_theme_mod( 'kilka_continue_reading_color', '#000000' ) );
     if ( ! $continue_reading_color ) {
@@ -124,52 +124,54 @@ function kilka_custom_css() {
         .mainmenu-area { display: none !important; }
         .mainmenu { display: none !important; }
         
-        /* Container for single-line alignment */
+        /* Compact site masthead: home link on the left, menu on the right. */
         .header-main-flex {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: block;
             position: relative;
             width: 100%;
             --kilka-site-title-size: '.esc_attr( $site_title_size ).'px;
             overflow: visible;
         }
 
-        /* Center the title */
         .site-branding {
-            flex: 1;
+            width: 100%;
         }
 
-        /*
-         * Align the desktop menu with the right post-navigation control.
-         * A 960px Bootstrap column renders a 930px card; both controls sit
-         * 26px inside its edge, producing a 439px offset from the centre.
-         */
+        .site-branding-main {
+            align-items: center;
+            box-sizing: border-box;
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+            min-height: 48px;
+            width: 100%;
+        }
+
+        .site-branding-main::before {
+            display: none;
+        }
+
+        .site-branding-identity {
+            min-width: 0;
+            text-align: left;
+        }
+
+        .site-title a {
+            align-items: center;
+            display: inline-flex;
+            min-height: 48px;
+        }
+
         .kilka-responsive-menu { 
             display: block !important;
-            position: absolute;
-            left: calc(50% + 439px);
+            flex: 0 0 42px;
+            position: relative;
+            left: auto;
             right: auto;
-            top: calc(30px + (var(--kilka-site-title-size) * 0.55));
-            transform: translate(-50%, -50%);
+            top: auto;
+            transform: none;
             z-index: 11000;
             margin: 0 !important;
-        }
-
-        /* Follow the wider Main Blog card while retaining the shared rail elsewhere. */
-        @media (min-width: 1200px) {
-            .kilka-main-blog-context.no-sidebar .kilka-responsive-menu {
-                left: calc(50% + 519px);
-            }
-        }
-
-        /* Keep right edge alignment on medium screens where columns stack differently */
-        @media (max-width: 991px) {
-            .kilka-responsive-menu {
-                left: auto;
-                right: 0;
-                transform: translateY(-50%);
-            }
         }
 
         /* Reduce header paddings */
@@ -341,29 +343,21 @@ function kilka_custom_css() {
         /* Mobile responsiveness */
         @media (max-width: 767px) {
             .site-branding-main {
-                align-items: center;
-                box-sizing: border-box;
-                display: grid;
-                grid-template-columns: 42px minmax(0, 1fr) 42px;
-                column-gap: 8px;
-                width: 100%;
+                display: flex;
+                gap: 12px;
             }
 
             .site-branding-main::before {
-                content: "";
-                grid-column: 1;
+                display: none;
             }
 
             .site-branding-identity {
-                grid-column: 2;
+                flex: 1 1 auto;
                 min-width: 0;
             }
 
             .kilka-responsive-menu {
-                align-self: center;
                 display: block !important;
-                grid-column: 3;
-                justify-self: end;
                 left: auto;
                 margin: 0 !important;
                 position: relative;

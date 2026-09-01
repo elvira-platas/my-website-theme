@@ -47,8 +47,5 @@ get_header();
 		</div>
 	</div>
 </section>
-<?php if ( function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context() ) : ?>
-	<?php get_template_part( 'template-parts/second-blog-source-note' ); ?>
-<?php endif; ?>
 <?php
 get_footer();
