@@ -1613,6 +1613,31 @@ p.comment-notes {
   .kilka-main-blog-context .single-area article.post > .entry-content p {
     margin-bottom: 1.35em;
   }
+
+  .kilka-second-blog-context article.type-world_note > .entry-meta,
+  .kilka-second-blog-context article.type-world_note > .entry-header,
+  .kilka-second-blog-context article.type-world_note > .entry-content,
+  .kilka-second-blog-context article.type-world_note > .entry-footer {
+    max-width: 1000px;
+  }
+
+  .kilka-second-blog-context article.type-world_note > .entry-meta,
+  .kilka-second-blog-context article.type-world_note .tags-links {
+    font-size: 16px;
+  }
+
+  .kilka-second-blog-context article.type-world_note .entry-title {
+    font-size: 32px;
+  }
+
+  .kilka-second-blog-context article.type-world_note > .entry-content {
+    font-size: 19px;
+    line-height: 1.75;
+  }
+
+  .kilka-second-blog-context article.type-world_note > .entry-content p {
+    margin-bottom: 1.35em;
+  }
 }
 
 @media (max-width: 767px) {
