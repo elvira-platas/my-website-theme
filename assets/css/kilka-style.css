@@ -653,13 +653,6 @@ article.type-world_note img {
 .kilka-second-blog-archive article.type-world_note + article.type-world_note {
   padding-top: 70px;
 }
-.kilka-second-blog-archive article.type-world_note + article.type-world_note::before {
-  display: block;
-  width: min(100%, 760px);
-  margin: 0 auto 28px;
-  border-top: 1px solid #f2f2f2;
-  content: "";
-}
 .kilka-second-blog-archive article.type-world_note .entry-content {
   text-align: left;
 }
