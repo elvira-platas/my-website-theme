@@ -648,7 +648,15 @@ article.type-world_note img {
   background-color: transparent;
   border-radius: 0;
 }
-.kilka-second-blog-archive article.type-world_note::before {
+.kilka-second-blog-context .single-area article.type-world_note {
+  position: relative;
+  padding-top: 42px;
+  padding-bottom: 42px;
+  background-color: transparent;
+  border-radius: 0;
+}
+.kilka-second-blog-archive article.type-world_note::before,
+.kilka-second-blog-context .single-area article.type-world_note::before {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -692,10 +700,12 @@ article.type-world_note img {
 .kilka-second-blog-archive article.type-world_note .entry-content {
   text-align: left;
 }
-.kilka-second-blog-archive article.type-world_note > .entry-header + .entry-content {
+.kilka-second-blog-archive article.type-world_note > .entry-header + .entry-content,
+.kilka-second-blog-context .single-area article.type-world_note > .entry-header + .entry-content {
   padding-top: 28px;
 }
-.kilka-second-blog-archive article.type-world_note .entry-content > .wp-block-separator.is-style-dots:first-child {
+.kilka-second-blog-archive article.type-world_note .entry-content > .wp-block-separator.is-style-dots:first-child,
+.kilka-second-blog-context .single-area article.type-world_note .entry-content > .wp-block-separator.is-style-dots:first-child {
   display: none;
 }
 .kilka-second-blog-archive article.type-world_note .post-thumbnail img,
@@ -722,7 +732,8 @@ article.type-world_note img {
     0 4px 8px -2px rgba(28, 30, 32, 0.28),
     0 38px 52px -10px rgba(28, 30, 32, 0.44);
 }
-.kilka-second-blog-archive .world-note-meta {
+.kilka-second-blog-archive .world-note-meta,
+.kilka-second-blog-context :where(.single-area) .world-note-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -735,7 +746,8 @@ article.type-world_note img {
   line-height: 26px;
   text-align: center;
 }
-.kilka-second-blog-archive .world-note-meta .sep {
+.kilka-second-blog-archive .world-note-meta .sep,
+.kilka-second-blog-context :where(.single-area) .world-note-meta .sep {
   flex: 0 0 22px;
   margin: 0 !important;
   color: #666666;
@@ -743,14 +755,17 @@ article.type-world_note img {
   font-weight: 400;
   text-align: center;
 }
-.kilka-second-blog-archive .world-note-meta > span:not(.sep) {
+.kilka-second-blog-archive .world-note-meta > span:not(.sep),
+.kilka-second-blog-context :where(.single-area) .world-note-meta > span:not(.sep) {
   margin-right: 0;
 }
-.kilka-second-blog-archive .world-note-meta a {
+.kilka-second-blog-archive .world-note-meta a,
+.kilka-second-blog-context :where(.single-area) .world-note-meta a {
   color: inherit;
 }
 @media (max-width: 991px) {
-  .kilka-second-blog-archive .world-note-meta {
+  .kilka-second-blog-archive .world-note-meta,
+  .kilka-second-blog-context :where(.single-area) .world-note-meta {
     font-size: 14px;
   }
 }
