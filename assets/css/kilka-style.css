@@ -643,18 +643,60 @@ article.type-world_note img {
 }
 .kilka-second-blog-archive article.type-world_note {
   margin-bottom: 0;
-  padding: 0;
+  padding: 42px 0;
+  position: relative;
   background-color: transparent;
   border-radius: 0;
+}
+.kilka-second-blog-archive article.type-world_note::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: min(100%, 1040px);
+  background:
+    linear-gradient(var(--kilka-second-blog-boundary), var(--kilka-second-blog-boundary)) top left / 34px 1px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary), var(--kilka-second-blog-boundary)) top left / 1px 20px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary), var(--kilka-second-blog-boundary)) top right / 34px 1px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary), var(--kilka-second-blog-boundary)) top right / 1px 20px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary), var(--kilka-second-blog-boundary)) bottom left / 34px 1px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary), var(--kilka-second-blog-boundary)) bottom left / 1px 20px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary), var(--kilka-second-blog-boundary)) bottom right / 34px 1px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary), var(--kilka-second-blog-boundary)) bottom right / 1px 20px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo), var(--kilka-second-blog-boundary-echo)) top 5px left 5px / 19px 1px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo), var(--kilka-second-blog-boundary-echo)) top 5px left 5px / 1px 12px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo), var(--kilka-second-blog-boundary-echo)) top 5px right 5px / 19px 1px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo), var(--kilka-second-blog-boundary-echo)) top 5px right 5px / 1px 12px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo), var(--kilka-second-blog-boundary-echo)) bottom 5px left 5px / 19px 1px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo), var(--kilka-second-blog-boundary-echo)) bottom 5px left 5px / 1px 12px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo), var(--kilka-second-blog-boundary-echo)) bottom 5px right 5px / 19px 1px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo), var(--kilka-second-blog-boundary-echo)) bottom 5px right 5px / 1px 12px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo-far), var(--kilka-second-blog-boundary-echo-far)) top 10px left 10px / 8px 1px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo-far), var(--kilka-second-blog-boundary-echo-far)) top 10px left 10px / 1px 5px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo-far), var(--kilka-second-blog-boundary-echo-far)) top 10px right 10px / 8px 1px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo-far), var(--kilka-second-blog-boundary-echo-far)) top 10px right 10px / 1px 5px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo-far), var(--kilka-second-blog-boundary-echo-far)) bottom 10px left 10px / 8px 1px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo-far), var(--kilka-second-blog-boundary-echo-far)) bottom 10px left 10px / 1px 5px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo-far), var(--kilka-second-blog-boundary-echo-far)) bottom 10px right 10px / 8px 1px no-repeat,
+    linear-gradient(var(--kilka-second-blog-boundary-echo-far), var(--kilka-second-blog-boundary-echo-far)) bottom 10px right 10px / 1px 5px no-repeat;
+  content: "";
+  pointer-events: none;
+  transform: translateX(-50%);
 }
 .kilka-second-blog-archive article.type-world_note:last-child {
   margin-bottom: 0;
 }
 .kilka-second-blog-archive article.type-world_note + article.type-world_note {
-  padding-top: 70px;
+  margin-top: 30px;
 }
 .kilka-second-blog-archive article.type-world_note .entry-content {
   text-align: left;
+}
+.kilka-second-blog-archive article.type-world_note > .entry-header + .entry-content {
+  padding-top: 28px;
+}
+.kilka-second-blog-archive article.type-world_note .entry-content > .wp-block-separator.is-style-dots:first-child {
+  display: none;
 }
 .kilka-second-blog-archive article.type-world_note .post-thumbnail img,
 .single-area article.type-world_note .post-thumbnail img {
@@ -715,6 +757,9 @@ article.type-world_note img {
 .kilka-second-blog-context {
   --kilka-second-blog-accent: #6c3bd1;
   --kilka-second-blog-accent-hover: #5630b8;
+  --kilka-second-blog-boundary: rgba(108, 59, 209, 0.58);
+  --kilka-second-blog-boundary-echo: rgba(108, 59, 209, 0.28);
+  --kilka-second-blog-boundary-echo-far: rgba(108, 59, 209, 0.12);
 }
 .kilka-second-blog-context .world-note-meta,
 .kilka-second-blog-context .world-note-meta a,
@@ -747,6 +792,13 @@ article.type-world_note img {
 .kilka-second-blog-context .more-link:hover,
 .kilka-second-blog-context .more-link:focus {
   color: var(--kilka-second-blog-accent-hover) !important;
+}
+.kilka-second-blog-archive article.type-world_note .entry-content a.more-link.button {
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
 }
 .entry-meta{
   margin-bottom: 10px;
