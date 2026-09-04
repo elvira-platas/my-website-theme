@@ -684,14 +684,14 @@ article.type-world_note img {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 0;
   margin-bottom: 12px;
   color: #888888;
   font-size: 15px;
   font-weight: 400;
   line-height: 26px;
-  text-align: left;
+  text-align: center;
 }
 .kilka-second-blog-archive .world-note-meta .sep {
   flex: 0 0 22px;
