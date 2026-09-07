@@ -33,6 +33,11 @@ if ! command -v unzip >/dev/null 2>&1; then
 	exit 1
 fi
 
+if ! command -v git >/dev/null 2>&1; then
+	echo "Error: git is required but not installed." >&2
+	exit 1
+fi
+
 for plugin_slug in "${PLUGIN_SLUGS[@]}"; do
 	if [ ! -d "${ROOT_DIR}/plugins/${plugin_slug}" ]; then
 		echo "Error: plugin directory not found: plugins/${plugin_slug}" >&2
@@ -97,11 +102,23 @@ check_package_archive() {
 	done < <(unzip -Z1 "${archive}" | rg '\.(php|js|css|txt)$')
 }
 
+PACKAGE_EXCLUDES_DIR="$(mktemp -d)"
+trap 'rm -rf "${PACKAGE_EXCLUDES_DIR}"' EXIT
+
+# Working drafts must not become release assets merely because they are stored
+# inside the repository directory. Tracked files still come from the working
+# tree, so approved uncommitted changes remain available for preview builds.
+git -C "${ROOT_DIR}" ls-files --others --exclude-standard > "${PACKAGE_EXCLUDES_DIR}/theme-untracked"
+
 rm -rf "${BUILD_DIR}"
 mkdir -p "${THEME_STAGING_DIR}" "${DIST_DIR}"
 
 for plugin_slug in "${PLUGIN_SLUGS[@]}"; do
 	mkdir -p "${BUILD_DIR}/${plugin_slug}"
+	git -C "${ROOT_DIR}" ls-files --others --exclude-standard -- "plugins/${plugin_slug}/" |
+		while IFS= read -r untracked_path; do
+			echo "${untracked_path#plugins/${plugin_slug}/}"
+		done > "${PACKAGE_EXCLUDES_DIR}/${plugin_slug}-untracked"
 done
 
 # Build theme package without repository-only and plugin files.
@@ -131,11 +148,14 @@ rsync -a \
 	--exclude ".gitignore" \
 	--exclude "AGENTS.md" \
 	--exclude "README.md" \
+	--exclude-from "${PACKAGE_EXCLUDES_DIR}/theme-untracked" \
 	"${ROOT_DIR}/" "${THEME_STAGING_DIR}/"
 
 # Build each companion plugin package from its own directory.
 for plugin_slug in "${PLUGIN_SLUGS[@]}"; do
-	rsync -a "${ROOT_DIR}/plugins/${plugin_slug}/" "${BUILD_DIR}/${plugin_slug}/"
+	rsync -a \
+		--exclude-from "${PACKAGE_EXCLUDES_DIR}/${plugin_slug}-untracked" \
+		"${ROOT_DIR}/plugins/${plugin_slug}/" "${BUILD_DIR}/${plugin_slug}/"
 done
 
 check_package_directory "${THEME_STAGING_DIR}"
