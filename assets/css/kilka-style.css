@@ -1768,15 +1768,23 @@ p.comment-notes {
 
 @media (max-width: 767px) {
   .kilka-main-blog-context .single-area article.post .main-post-meta-footer {
-    justify-content: center;
-    text-align: center;
+    justify-content: space-between;
+  }
+
+  .kilka-main-blog-context .single-area article.post .main-post-meta-footer .posted-on {
+    text-align: left;
+  }
+
+  .kilka-main-blog-context .single-area article.post .main-post-meta-footer .post-tags {
+    margin-left: auto;
+    text-align: right;
   }
 
   .kilka-second-blog-context article.type-world_note > .world-note-meta {
     align-items: center;
     column-gap: 8px;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     font-size: clamp(12px, 3.5vw, 13px);
     justify-content: center;
     letter-spacing: 0;
@@ -1798,7 +1806,8 @@ p.comment-notes {
   }
 
   .kilka-second-blog-context article.type-world_note > .world-note-meta .sep {
-    display: none;
+    display: inline;
+    flex: 0 0 auto;
   }
 
   .single-area article.post > .entry-meta,
