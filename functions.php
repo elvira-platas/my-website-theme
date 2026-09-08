@@ -144,6 +144,42 @@ function kilka_content_width() {
 add_action( 'after_setup_theme', 'kilka_content_width', 0 );
 
 /**
+ * Resolve the saved color scheme before styles are painted.
+ *
+ * The preference is intentionally browser-local. An absent value means
+ * "auto", which follows the operating system color scheme.
+ */
+function kilka_print_color_scheme_bootstrap() {
+	?>
+	<script id="kilka-color-scheme-bootstrap">
+		(function () {
+			var preference = 'auto';
+			var root = document.documentElement;
+			var isExhibitionContext = root.getAttribute('data-color-scheme-context') === 'exhibition';
+
+			try {
+				preference = window.localStorage.getItem('kilka-color-scheme') || 'auto';
+			} catch (error) {
+				preference = 'auto';
+			}
+
+			if (preference !== 'light' && preference !== 'dark') {
+				preference = 'auto';
+			}
+
+			var isSystemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			var resolvedScheme = isExhibitionContext ? 'light' : (preference === 'auto' ? (isSystemDark ? 'dark' : 'light') : preference);
+
+			root.setAttribute('data-color-scheme-preference', preference);
+			root.setAttribute('data-color-scheme', resolvedScheme);
+			root.style.colorScheme = resolvedScheme;
+		}());
+	</script>
+	<?php
+}
+add_action( 'wp_head', 'kilka_print_color_scheme_bootstrap', 0 );
+
+/**
  * Register widget area.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
@@ -203,6 +239,22 @@ function kilka_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'kilka_scripts' );
+
+/**
+ * Load the scheme layer after both the static and Customizer-generated CSS.
+ */
+function kilka_color_scheme_styles() {
+	$kilka_color_scheme_version = filemtime( get_template_directory() . '/assets/css/color-schemes.css' );
+
+	wp_enqueue_style(
+		'kilka-color-schemes',
+		get_template_directory_uri() . '/assets/css/color-schemes.css',
+		array( 'kilka-custom' ),
+		$kilka_color_scheme_version,
+		'all'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'kilka_color_scheme_styles', 20 );
 
 /*
  * This theme styles the visual editor to resemble the theme style,

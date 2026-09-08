@@ -34,6 +34,92 @@
 
         $responsiveMenu.find(".slicknav_btn").attr("aria-label", menuLabel);
 
+        var colorSchemeTemplate = $responsiveMenu.find(".kilka-color-scheme-template").get(0);
+        var colorSchemeStorageKey = "kilka-color-scheme";
+        var colorSchemeMedia = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+        var isExhibitionContext = document.documentElement.getAttribute("data-color-scheme-context") === "exhibition";
+
+        if (colorSchemeTemplate && colorSchemeTemplate.content) {
+            $responsiveMenu.find(".slicknav_nav").first().append(colorSchemeTemplate.content.cloneNode(true));
+            colorSchemeTemplate.remove();
+        }
+
+        var $colorSchemeButtons = $responsiveMenu.find("[data-color-scheme-option]");
+
+        var getColorSchemePreference = function () {
+            var preference = document.documentElement.getAttribute("data-color-scheme-preference");
+
+            return preference === "light" || preference === "dark" ? preference : "auto";
+        };
+
+        var resolveColorScheme = function (preference) {
+            if (isExhibitionContext) {
+                return "light";
+            }
+
+            if (preference !== "auto") {
+                return preference;
+            }
+
+            return colorSchemeMedia && colorSchemeMedia.matches ? "dark" : "light";
+        };
+
+        var applyColorScheme = function (preference, persist) {
+            if (preference !== "light" && preference !== "dark") {
+                preference = "auto";
+            }
+
+            var resolvedScheme = resolveColorScheme(preference);
+
+            document.documentElement.setAttribute("data-color-scheme-preference", preference);
+            document.documentElement.setAttribute("data-color-scheme", resolvedScheme);
+            document.documentElement.style.colorScheme = resolvedScheme;
+            $colorSchemeButtons.attr("aria-pressed", "false");
+            $colorSchemeButtons.filter('[data-color-scheme-option="' + preference + '"]').attr("aria-pressed", "true");
+
+            if (persist) {
+                try {
+                    if (preference === "auto") {
+                        window.localStorage.removeItem(colorSchemeStorageKey);
+                    } else {
+                        window.localStorage.setItem(colorSchemeStorageKey, preference);
+                    }
+                } catch (error) {
+                    // The selected scheme still applies for this page when storage is unavailable.
+                }
+            }
+        };
+
+        if ($colorSchemeButtons.length) {
+            applyColorScheme(getColorSchemePreference(), false);
+
+            $colorSchemeButtons.on("click", function () {
+                applyColorScheme($(this).data("color-scheme-option"), true);
+            });
+        }
+
+        if (colorSchemeMedia) {
+            var handleSystemColorSchemeChange = function () {
+                if (getColorSchemePreference() === "auto") {
+                    applyColorScheme("auto", false);
+                }
+            };
+
+            if (colorSchemeMedia.addEventListener) {
+                colorSchemeMedia.addEventListener("change", handleSystemColorSchemeChange);
+            } else if (colorSchemeMedia.addListener) {
+                colorSchemeMedia.addListener(handleSystemColorSchemeChange);
+            }
+        }
+
+        $(window).on("storage.kilkaColorScheme", function (event) {
+            var originalEvent = event.originalEvent;
+
+            if (originalEvent && originalEvent.key === colorSchemeStorageKey) {
+                applyColorScheme(originalEvent.newValue || "auto", false);
+            }
+        });
+
         if ($backToTop.length) {
             var getScrollTop = function () {
                 return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;

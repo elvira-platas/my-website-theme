@@ -26,12 +26,18 @@ function kilka_custom_css() {
 
     $kilka_custom_css = '';
     
-    // Header Text Color
+    // User-selected light-scheme colors. The scheme layer supplies readable
+    // dark defaults until separate dark Customizer colors are introduced.
     $kilka_custom_css .= '
+        :root {
+            --kilka-site-title-color: #'.esc_attr( $header_text_color ).';
+            --kilka-continue-reading-color: '.esc_attr( $continue_reading_color ).';
+        }
+
         .site-title a,
         .site-description,
         .site-title a:hover {
-            color: #'.esc_attr( $header_text_color ).' !important;
+            color: var(--kilka-site-title-color, #'.esc_attr( $header_text_color ).') !important;
         }
     ';
 
@@ -55,7 +61,7 @@ function kilka_custom_css() {
 
     $kilka_custom_css .= '
         .entry-content a.button {
-            color: '.esc_attr( $continue_reading_color ).' !important;
+            color: var(--kilka-continue-reading-color, '.esc_attr( $continue_reading_color ).') !important;
             font-weight: '.esc_attr( $continue_reading_weight ).' !important;
             display: inline-flex;
             align-items: center;
@@ -203,8 +209,8 @@ function kilka_custom_css() {
 
         .slicknav_btn {
             align-items: center;
-            background-color: #fff !important;
-            border: 1px solid #d7d7d7 !important;
+            background-color: var(--kilka-control-background, #fff) !important;
+            border: 1px solid var(--kilka-border, #d7d7d7) !important;
             border-radius: 50%;
             box-sizing: border-box;
             cursor: pointer;
@@ -222,13 +228,13 @@ function kilka_custom_css() {
 
         .slicknav_btn:hover,
         .slicknav_btn:focus-visible {
-            background-color: #f2f2f2 !important;
-            border-color: #aaa !important;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+            background-color: var(--kilka-control-hover, #f2f2f2) !important;
+            border-color: var(--kilka-border-hover, #aaa) !important;
+            box-shadow: var(--kilka-control-shadow-hover, 0 3px 12px rgba(0, 0, 0, 0.1));
         }
 
         .slicknav_btn:focus-visible {
-            outline: 2px solid #444;
+            outline: 2px solid var(--kilka-focus, #444);
             outline-offset: 3px;
         }
 
@@ -248,7 +254,7 @@ function kilka_custom_css() {
         }
 
         .slicknav_menu .slicknav_icon-bar {
-            background-color: #666 !important;
+            background-color: var(--kilka-control-ink, #666) !important;
             border-radius: 2px;
             display: block !important;
             height: 2px !important;
@@ -275,10 +281,10 @@ function kilka_custom_css() {
 
         /* Dropdown menu */
         .slicknav_nav {
-            background: #fff !important;
-            border: 1px solid #e4e4e4;
+            background: var(--kilka-panel-background, #fff) !important;
+            border: 1px solid var(--kilka-panel-border, #e4e4e4);
             border-radius: 10px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+            box-shadow: var(--kilka-panel-shadow, 0 12px 30px rgba(0, 0, 0, 0.12));
             display: none;
             left: auto !important;
             max-width: calc(100vw - 30px);
@@ -304,13 +310,13 @@ function kilka_custom_css() {
         }
 
         .slicknav_nav li + li {
-            border-top: 1px solid #eee;
+            border-top: 1px solid var(--kilka-border-soft, #eee);
         }
 
         .slicknav_nav a {
             border: 0;
             border-radius: 6px;
-            color: #333 !important;
+            color: var(--kilka-panel-ink, #333) !important;
             display: block !important;
             font-size: 14px;
             font-weight: 600;
@@ -322,8 +328,8 @@ function kilka_custom_css() {
 
         .slicknav_nav a:hover,
         .slicknav_nav a:focus {
-            background-color: #f2f2f2 !important;
-            color: #444 !important;
+            background-color: var(--kilka-control-hover, #f2f2f2) !important;
+            color: var(--kilka-control-ink-hover, #444) !important;
             text-decoration: none;
         }
 

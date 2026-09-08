@@ -19,6 +19,18 @@ function kilka_get_contextual_sidebar_id() {
 }
 
 /**
+ * Check whether the current request uses an authored Exhibition canvas.
+ *
+ * Exhibition colors belong to the presentation itself rather than to the
+ * visitor's saved reading preference.
+ *
+ * @return bool
+ */
+function kilka_is_exhibition_context() {
+	return is_singular( 'kilka_exhibition' ) || is_page_template( 'page-templates/exhibition-prototype.php' );
+}
+
+/**
  * Check whether the current blog context has an active widget area.
  *
  * @return bool

@@ -17,7 +17,10 @@ function kilka_header_style_1(){ ?>
 				<div class="col-lg-12">
 					<div class="header-main-flex">
 						<div class="site-branding text-center">
-							<?php $kilka_second_blog_context = function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context(); ?>
+							<?php
+							$kilka_second_blog_context = function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context();
+							$kilka_exhibition_context  = function_exists( 'kilka_is_exhibition_context' ) && kilka_is_exhibition_context();
+							?>
 							<div class="site-branding-main">
 								<div class="site-branding-identity">
 									<?php
@@ -26,7 +29,22 @@ function kilka_header_style_1(){ ?>
 									<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php echo esc_html( get_bloginfo( 'name', 'display' ) ); ?></a></p>
 								</div>
 								<?php if ( has_nav_menu( 'menu-1' ) ) : ?>
-									<div class="kilka-responsive-menu" data-menu-label="<?php esc_attr_e( 'Menu', 'kilka' ); ?>"></div>
+									<div class="kilka-responsive-menu" data-menu-label="<?php esc_attr_e( 'Menu', 'kilka' ); ?>">
+										<?php if ( ! $kilka_exhibition_context ) : ?>
+											<template class="kilka-color-scheme-template">
+												<li class="kilka-color-scheme-item">
+													<fieldset class="kilka-color-scheme-switcher">
+														<legend class="screen-reader-text"><?php esc_html_e( 'Color scheme', 'kilka' ); ?></legend>
+														<div class="kilka-color-scheme-options">
+															<button type="button" data-color-scheme-option="auto" aria-pressed="true"><?php echo esc_html_x( 'Auto', 'color scheme option', 'kilka' ); ?></button>
+															<button type="button" data-color-scheme-option="light" aria-pressed="false"><?php echo esc_html_x( 'Light', 'color scheme option', 'kilka' ); ?></button>
+															<button type="button" data-color-scheme-option="dark" aria-pressed="false"><?php echo esc_html_x( 'Dark', 'color scheme option', 'kilka' ); ?></button>
+														</div>
+													</fieldset>
+												</li>
+											</template>
+										<?php endif; ?>
+									</div>
 								<?php endif; ?>
 							</div>
 							<?php
