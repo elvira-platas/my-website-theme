@@ -6,6 +6,36 @@
  */
 
 /**
+ * Get the announcement eligible for the first page of the Main Blog.
+ *
+ * @return array|false Plain text and optional URL, or false when inactive.
+ */
+function kilka_get_active_announcement() {
+	if ( ! is_home() || is_paged() || ! get_theme_mod( 'kilka_announcement_enabled', false ) ) {
+		return false;
+	}
+
+	$text = sanitize_text_field( get_theme_mod( 'kilka_announcement_text', '' ) );
+	if ( '' === $text ) {
+		return false;
+	}
+
+	$from  = kilka_sanitize_announcement_date( get_theme_mod( 'kilka_announcement_from', '' ) );
+	$until = kilka_sanitize_announcement_date( get_theme_mod( 'kilka_announcement_until', '' ) );
+	$today = current_datetime()->format( 'Y-m-d' );
+
+	// ISO calendar dates sort chronologically without UTC conversion.
+	if ( ( $from && $until && $from > $until ) || ( $from && $today < $from ) || ( $until && $today > $until ) ) {
+		return false;
+	}
+
+	return array(
+		'text' => $text,
+		'url'  => esc_url_raw( get_theme_mod( 'kilka_announcement_url', '' ) ),
+	);
+}
+
+/**
  * Get the widget area for the current blog context.
  *
  * @return string Sidebar ID.

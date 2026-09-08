@@ -2840,3 +2840,50 @@ body.kilka-exhibition-information-open {
     }
 }
 
+
+/* A quiet, independent announcement before the Main Blog loop. */
+.kilka-site-announcement {
+  margin: 0 0 40px;
+  padding: 20px 12px;
+  border-block: 1px solid var(--kilka-border-soft);
+  color: var(--kilka-focus);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.7;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.kilka-site-announcement p {
+  margin: 0;
+}
+
+.kilka-site-announcement a {
+  color: var(--kilka-focus);
+  text-decoration: none;
+  transition: none;
+}
+
+.kilka-site-announcement a:hover,
+.kilka-site-announcement a:focus-visible {
+  color: var(--kilka-focus);
+  text-decoration: none;
+}
+
+.kilka-site-announcement a:hover {
+  opacity: 0.8;
+}
+
+.kilka-site-announcement a:focus-visible {
+  outline: 2px solid var(--kilka-focus);
+  outline-offset: 4px;
+}
+
+@media (max-width: 767px) {
+  .kilka-site-announcement {
+    margin-bottom: 32px;
+    padding: 16px 8px;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+}

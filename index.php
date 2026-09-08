@@ -26,6 +26,10 @@ get_header();
 		<div class="row">
 			<div class="col-lg-<?php echo esc_attr($kilka_column); ?> text-center">
 				<?php
+					if ( is_home() && ! is_paged() ) {
+						get_template_part( 'template-parts/site-announcement' );
+					}
+
 					if ( have_posts() ) :
 
 						if ( is_home() && ! is_front_page() ) :

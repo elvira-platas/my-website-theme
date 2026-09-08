@@ -58,6 +58,20 @@ function kilka_sanitize_continue_reading_weight( $value ) {
 }
 
 /**
+ * Accept only complete, real calendar dates; an empty date is unbounded.
+ *
+ * @param string $value Requested date in YYYY-MM-DD format.
+ * @return string Valid date or an empty string.
+ */
+function kilka_sanitize_announcement_date( $value ) {
+	if ( ! is_string( $value ) || ! preg_match( '/\A([0-9]{4})-([0-9]{2})-([0-9]{2})\z/', $value, $parts ) ) {
+		return '';
+	}
+
+	return checkdate( (int) $parts[2], (int) $parts[3], (int) $parts[1] ) ? $value : '';
+}
+
+/**
  * Add postMessage support for site title and description for the Theme Customizer.
  *
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
@@ -90,6 +104,35 @@ function kilka_customize_register( $wp_customize ) {
 		'description' => __( 'Customize site appearance, post listings, the footer, and Second Blog content.', 'kilka' ),
 		'priority'    => 130,
 	) );
+
+	$wp_customize->add_section( 'kilka_announcement_section', array(
+		'title'       => __( 'Announcement', 'kilka' ),
+		'panel'       => 'kilka_theme_options_panel',
+		'priority'    => 35,
+		'description' => __( 'One short announcement above the first page of the Main Blog. Dates include the whole day in the site timezone. Leave dates empty for no time limit. A start date after the end date hides the announcement.', 'kilka' ),
+	) );
+
+	$announcement_fields = array(
+		'enabled' => array( __( 'Show announcement', 'kilka' ), 'checkbox', 'rest_sanitize_boolean', false ),
+		'text'    => array( __( 'Announcement text', 'kilka' ), 'text', 'sanitize_text_field', '' ),
+		'url'     => array( __( 'Announcement URL', 'kilka' ), 'url', 'esc_url_raw', '' ),
+		'from'    => array( __( 'Show from', 'kilka' ), 'date', 'kilka_sanitize_announcement_date', '' ),
+		'until'   => array( __( 'Show until', 'kilka' ), 'date', 'kilka_sanitize_announcement_date', '' ),
+	);
+	foreach ( $announcement_fields as $name => $field ) {
+		$setting_id = 'kilka_announcement_' . $name;
+		$wp_customize->add_setting( $setting_id, array(
+			'type'              => 'theme_mod',
+			'default'           => $field[3],
+			'sanitize_callback' => $field[2],
+			'transport'         => 'refresh',
+		) );
+		$wp_customize->add_control( $setting_id, array(
+			'label'   => $field[0],
+			'section' => 'kilka_announcement_section',
+			'type'    => $field[1],
+		) );
+	}
 
 	// Keep the header text color with the other site identity controls.
 	$header_text_color_control = $wp_customize->get_control( 'header_textcolor' );
