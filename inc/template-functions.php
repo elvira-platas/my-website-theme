@@ -66,8 +66,8 @@ function kilka_is_exhibition_context() {
  * @return bool
  */
 function kilka_has_contextual_sidebar() {
-	// Exhibitions use the full content width and never inherit blog widgets.
-	if ( is_singular( 'kilka_exhibition' ) ) {
+	// Exhibitions and reading documents never inherit blog widgets.
+	if ( is_singular( 'kilka_exhibition' ) || kilka_is_reading_context() ) {
 		return false;
 	}
 

@@ -89,6 +89,7 @@ if ( ! function_exists( 'kilka_setup' ) ) :
 		// Keep the block editor typography aligned with published posts.
 		add_theme_support( 'editor-styles' );
 		add_editor_style( 'assets/css/default-block.css' );
+		add_editor_style( 'assets/css/reading-blocks.css' );
 
 		/**
 		 * Add support for core custom logo.
@@ -275,6 +276,7 @@ require get_template_directory() . '/inc/template-tags.php';
  * Functions which enhance the theme by hooking into WordPress.
  */
 require get_template_directory() . '/inc/template-functions.php';
+require get_template_directory() . '/inc/reading.php';
 
 /**
  * Customizer additions.
