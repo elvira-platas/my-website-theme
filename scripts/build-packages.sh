@@ -9,6 +9,7 @@ THEME_SLUG="kilka"
 PLUGIN_SLUGS=(
 	"kilka-second-blog"
 	"kilka-exhibitions"
+	"kilka-reader"
 )
 
 THEME_STAGING_DIR="${BUILD_DIR}/${THEME_SLUG}"

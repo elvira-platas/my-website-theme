@@ -5,6 +5,7 @@ This repository stores:
 - the `kilka` theme
 - the companion plugin `kilka-second-blog`
 - the companion plugin `kilka-exhibitions`
+- the companion plugin `kilka-reader`
 
 Experimental exhibition work is currently developed on the
 `feature/exhibitions` branch. The design draft is documented in
@@ -64,14 +65,21 @@ Output:
 - `dist/kilka.zip`
 - `dist/kilka-second-blog.zip`
 - `dist/kilka-exhibitions.zip`
+- `dist/kilka-reader.zip`
 
 ## Install order on WordPress
 
 1. Upload and activate the optional companion plugins that the site needs:
    - `kilka-second-blog.zip`
    - `kilka-exhibitions.zip`
+   - `kilka-reader.zip`
 2. Upload and activate `kilka.zip` (theme).
 
 This keeps the theme and portable content functionality separated. The theme
-works without either companion plugin, and the plugins are independent of each
+works without the companion plugins, and the plugins are independent of each
 other.
+
+Kilka Reader 0.1.0 adds optional text size controls and a related-publication
+link to ordinary Reading pages. It preserves existing content and URLs, and
+supplies a neutral reading template when the active theme has none. See
+[Reading documentation](docs/reading-template.md).

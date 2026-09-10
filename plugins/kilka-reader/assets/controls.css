@@ -1,0 +1,82 @@
+.kilka-reader-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-block: 0 28px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.kilka-reader-size { display: flex; gap: 6px; margin-inline-start: auto; }
+.kilka-reader-size[hidden] { display: none; }
+.kilka-reader-size button,
+.kilka-reader-alignment button {
+  min-width: 48px;
+  min-height: 48px;
+  padding: 6px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.kilka-reader-size button:disabled { opacity: 0.4; cursor: default; }
+.kilka-reader a.kilka-reader-return {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  color: var(--kilka-focus, #175e83);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-decoration: none;
+}
+.kilka-reader-return svg { flex: 0 0 22px; }
+.kilka-reader-size button:focus-visible,
+.kilka-reader-alignment button:focus-visible,
+.kilka-reader a.kilka-reader-return:focus-visible {
+  outline: 2px solid var(--kilka-focus, #175e83);
+  outline-offset: 3px;
+}
+.kilka-reader-end { margin-block-start: 32px; }
+@media print {
+  .kilka-reader-toolbar, .kilka-reader-end { display: none; }
+}
+
+.kilka-reader-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.kilka-reader-alignment { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+.kilka-reader-alignment[hidden] { display: none; }
+.kilka-reader-alignment button { display: inline-flex; align-items: center; justify-content: center; padding: 12px; }
+.kilka-reader-alignment button svg { display: block; flex: 0 0 24px; }
+.kilka-reader-alignment button[aria-pressed="true"] {
+  background: var(--kilka-border-soft, #eeeeee);
+  color: inherit;
+}
+/* Restrict alignment to prose: preserve headings, byline, captions and notes. */
+.kilka-reader[data-reader-align] .kilka-reader-body :is(p, li):not(.is-style-kilka-reading-byline):not(.is-style-kilka-reading-note *):not(figcaption *) {
+  text-align: left;
+  text-align-last: auto;
+  hyphens: manual;
+}
+.kilka-reader[data-reader-align="justify"] .kilka-reader-body :is(p, li):not(.is-style-kilka-reading-byline):not(.is-style-kilka-reading-note *):not(figcaption *) {
+  text-align: justify;
+  text-align-last: left;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+}

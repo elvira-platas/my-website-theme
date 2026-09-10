@@ -2,8 +2,8 @@
 
 ## Decision
 
-Keep the theme and both first-party companion plugins in one Git repository,
-but distribute and install them as three independent ZIP packages.
+Keep the theme and the first-party companion plugins in one Git repository,
+but distribute and install them as four independent ZIP packages.
 
 The repository is the shared development workspace. A GitHub Release is the
 download point for WordPress-ready files.
@@ -15,7 +15,8 @@ my-website-theme/
 ├── theme files at the repository root
 ├── plugins/
 │   ├── kilka-second-blog/
-│   └── kilka-exhibitions/
+│   ├── kilka-exhibitions/
+│   └── kilka-reader/
 ├── docs/
 └── scripts/build-packages.sh
 ```
@@ -31,6 +32,7 @@ Each GitHub Release should attach these WordPress-ready files:
 - `kilka.zip` — the theme;
 - `kilka-second-blog.zip` — the optional Second Blog plugin;
 - `kilka-exhibitions.zip` — the optional Exhibitions plugin;
+- `kilka-reader.zip` — the optional Reader plugin;
 - `SHA256SUMS` — checksums for the attached ZIP files, when release automation
   is added.
 
@@ -63,9 +65,9 @@ Users download only the components they need:
    Theme`.
 3. Activate the selected plugins and theme.
 
-Supported combinations are the theme alone, the theme with either companion
-plugin, or all three components. The theme must continue to work when neither
-plugin is active, and the plugins must remain independent of each other.
+Supported combinations are the theme alone or with any subset of companion
+plugins. The theme must continue to work when no plugin is active, and the
+plugins must remain independent of each other.
 
 ## Release checklist
 
@@ -75,7 +77,7 @@ plugin is active, and the plugins must remain independent of each other.
 3. Update only the versions of components that actually changed.
 4. Align plugin `Stable tag` values and public readme information.
 5. Run `./scripts/build-packages.sh`.
-6. Inspect all three archives and confirm that each has one correctly named
+6. Inspect all four archives and confirm that each has one correctly named
    top-level directory.
 7. Confirm that repository-only files, plugins inside the theme, credentials,
    backups, and experimental drafts are absent.
@@ -83,7 +85,7 @@ plugin is active, and the plugins must remain independent of each other.
    component combinations.
 9. Create the collection tag from the exact tested commit.
 10. Create the GitHub Release, list component versions and compatibility notes,
-    and attach the three ZIP files and checksums.
+    and attach the four ZIP files and checksums.
 
 ## Possible later separation
 

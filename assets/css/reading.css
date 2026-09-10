@@ -51,7 +51,7 @@
   margin-block: 0 1.25em;
 }
 
-.kilka-reading__content > p.is-style-kilka-reading-byline {
+.kilka-reading__content p.is-style-kilka-reading-byline {
   margin-block-end: 2.5em;
   color: var(--kilka-heading);
   font-size: 17px;
@@ -111,7 +111,7 @@
   .kilka-reading { padding: 24px 20px 48px; }
   .kilka-reading article.kilka-reading__document { font-size: 17px; }
   .kilka-reading .kilka-reading__title { font-size: 26px; }
-  .kilka-reading__content > p.is-style-kilka-reading-byline { font-size: 16px; }
+  .kilka-reading__content p.is-style-kilka-reading-byline { font-size: 16px; }
 }
 
 @media print {

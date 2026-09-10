@@ -1,0 +1,73 @@
+/* Reading settings live only in this document; no storage or network calls. */
+(function () {
+  'use strict';
+  document.querySelectorAll('[data-kilka-reader]').forEach(function (reader) {
+    var controls = reader.querySelector('.kilka-reader-size');
+    var body = reader.querySelector('.kilka-reader-body');
+    if (!controls || !body) return;
+    var blocks = Array.from(body.querySelectorAll('p, li, h2, h3, h4, h5, h6, figcaption, blockquote, pre'));
+    var originals = blocks.map(function (element) {
+      return {element: element, value: element.style.getPropertyValue('font-size'), priority: element.style.getPropertyPriority('font-size'), pixels: 0};
+    });
+    var scale = 100;
+    function restore() {
+      originals.forEach(function (item) {
+        if (item.value) item.element.style.setProperty('font-size', item.value, item.priority);
+        else item.element.style.removeProperty('font-size');
+      });
+    }
+    function render() {
+      restore();
+      // Read every baseline before changing parents, so nested lists do not compound.
+      originals.forEach(function (item) { item.pixels = parseFloat(getComputedStyle(item.element).fontSize); });
+      if (scale !== 100) originals.forEach(function (item) {
+        item.element.style.setProperty('font-size', (item.pixels * scale / 100) + 'px', 'important');
+      });
+      controls.querySelector('[data-reader-size="reset"]').textContent = scale + '%';
+      controls.querySelector('[data-reader-size="decrease"]').disabled = scale === 80;
+      controls.querySelector('[data-reader-size="increase"]').disabled = scale === 160;
+    }
+    controls.addEventListener('click', function (event) {
+      var button = event.target.closest('button[data-reader-size]');
+      if (!button) return;
+      var action = button.dataset.readerSize;
+      scale = action === 'reset' ? 100 : Math.max(80, Math.min(160, scale + (action === 'increase' ? 10 : -10)));
+      render();
+      var status = controls.querySelector('.kilka-reader-status');
+      status.textContent = status.dataset.label + ': ' + scale + '%';
+    });
+    var frame;
+    window.addEventListener('resize', function () {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(render);
+    });
+    var alignment = reader.querySelector('.kilka-reader-alignment');
+    if (alignment) {
+      alignment.addEventListener('click', function (event) {
+        var button = event.target.closest('button[data-reader-alignment]');
+        if (!button) return;
+        reader.dataset.readerAlign = button.dataset.readerAlignment;
+        alignment.querySelectorAll('button').forEach(function (item) {
+          item.setAttribute('aria-pressed', String(item === button));
+        });
+      });
+      alignment.hidden = false;
+    }
+    var colors = reader.querySelector('.kilka-reader-colors');
+    var surface = reader.closest('.kilka-reading') || reader;
+    if (colors) {
+      surface.dataset.readerColor = 'cream';
+      colors.addEventListener('click', function (event) {
+        var button = event.target.closest('button[data-reader-color-option]');
+        if (!button) return;
+        surface.dataset.readerColor = button.dataset.readerColorOption;
+        colors.querySelectorAll('button').forEach(function (item) {
+          item.setAttribute('aria-pressed', String(item === button));
+        });
+      });
+      colors.hidden = false;
+    }
+    render();
+    controls.hidden = false;
+  });
+}());

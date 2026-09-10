@@ -3,8 +3,8 @@
 The optional **Reading** template presents an ordinary WordPress Page as a
 continuous document. It uses the shared site header, menu, color scheme and
 footer, with a bounded text column and no blog metadata, sidebar or comments.
-No reader-specific JavaScript, cookies, storage or background requests are
-introduced.
+The template alone introduces no reader-specific JavaScript, cookies, storage
+or background requests.
 
 ## Editing
 
@@ -47,3 +47,65 @@ HTML when switching themes.
 
 Reader assets are loaded only for the page template. Editor styles are scoped
 to the three document block styles so unrelated content retains its typography.
+
+## Optional Reader plugin
+
+Install `kilka-reader.zip` independently from the theme. Version 0.1.0 adds a
+Reader panel to the page editor: select a related published blog post for the
+return links at the beginning and end. Password-protected, private, draft and
+deleted targets are never exposed through these links. The relation is stored
+as the integer `_kilka_reader_publication` page metadata. The editor uses
+WordPress capability and nonce checks; no public write endpoint is added.
+
+The plugin recognizes the existing `page-templates/reading.php` template key;
+activation does not rewrite the page, change its URL or create content. A
+supporting theme supplies the site frame and typography. With another theme,
+the plugin supplies a neutral standalone reading page with a home link. When
+disabled, the document remains ordinary page content; Kilka also retains its
+original continuous-reading template and pattern.
+
+Text-size controls progressively enhance rendered content with a local script.
+They offer 80–160% in 10% steps and a reset. The setting lasts only while the
+page is open. No cookies, storage, identifiers or network requests are used.
+Without JavaScript, the controls stay hidden and the complete document and
+return links remain available. Browser zoom remains available independently.
+Resizing the viewport recalculates text from the theme's original font sizes.
+Controls are not inserted into stored content or exports. Pagination and EPUB
+are not part of this version.
+
+The plugin's fourth ZIP contains only its own runtime and documentation. The
+three existing components retain independent versions and installation paths.
+
+### Alignment and document language
+
+The optional Align left / Justify buttons affect prose paragraphs and list
+items, preserving bylines, headings, captions and source notes. Left alignment
+is the initial state, including without JavaScript. Justification leaves the
+last line left-aligned and requests automatic browser hyphenation. Availability
+of language dictionaries and exact breaks depend on the browser. No external
+hyphenation library or dictionary request is added by the plugin.
+
+Set Text language in the Reader editor panel when the document language differs
+from the site's language. The optional `_kilka_reader_language` metadata holds
+a validated language tag such as `ru` or `en-GB`, rendered as `lang` on the
+document body. Empty values inherit the site language. This also helps assistive
+technology pronounce the document. Alignment selection is kept only in the
+open document and resets on reload; it does not alter stored content.
+
+### Reader colors
+
+The reading surface offers three independent palettes: Cream (`#F5ECD9`),
+Light (`#FAFAF8`) and Graphite (`#18191D`). Cream is the initial palette, including
+without JavaScript. Each palette defines matched text, heading, link, focus and
+control colors. Color swatches are 48px buttons with accessible names and pressed
+states. The site header/footer and the site's color preference are unaffected.
+No automatic mode or persistence is added; reloading starts in Cream again.
+The plugin supplies baseline colors independently of the active theme. Print
+output uses a light surface. These are preview values subject to visual review.
+
+### Interface status
+
+Version 0.1.0 establishes the functional baseline. Palette shades, the initial
+Cream selection, and the placement and visibility of reading controls remain
+provisional. The visibility of the site header, menu and footer during reading
+will be evaluated separately from the document controls and content model.
