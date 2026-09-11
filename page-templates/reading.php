@@ -8,7 +8,23 @@
  * @package Kilka
  */
 
-get_header();
+$reader_active = function_exists( 'kilka_reader_is_reading' );
+if ( ! $reader_active ) {
+	get_header();
+} else {
+	?>
+<!doctype html>
+<html <?php language_attributes(); ?>>
+<head>
+<meta charset="<?php echo esc_attr( get_bloginfo( 'charset' ) ); ?>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<?php wp_head(); ?>
+</head>
+<body <?php body_class(); ?>>
+<?php wp_body_open(); ?>
+<div id="page" class="site">
+	<?php
+}
 ?>
 <main id="content" class="kilka-reading" tabindex="-1">
 	<?php while ( have_posts() ) : ?>
@@ -30,4 +46,9 @@ get_header();
 		</article>
 	<?php endwhile; ?>
 </main>
-<?php get_footer(); ?>
+<?php if ( ! $reader_active ) { get_footer(); } else { ?>
+</div>
+<?php wp_footer(); ?>
+</body>
+</html>
+<?php } ?>

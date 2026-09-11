@@ -67,6 +67,33 @@
       });
       colors.hidden = false;
     }
+    var toggle = reader.querySelector('.kilka-reader-settings-toggle');
+    var panel = reader.querySelector('#kilka-reader-settings');
+    if (toggle && panel) {
+      function closeSettings(restoreFocus) {
+        panel.hidden = true;
+        toggle.setAttribute('aria-expanded', 'false');
+        if (restoreFocus) toggle.focus({preventScroll: true});
+      }
+      toggle.addEventListener('click', function () {
+        var opening = panel.hidden;
+        panel.hidden = !opening;
+        toggle.setAttribute('aria-expanded', String(opening));
+        if (opening) panel.querySelector('button:not(:disabled)').focus({preventScroll: true});
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && !panel.hidden) { event.preventDefault(); closeSettings(true); }
+      });
+      document.addEventListener('pointerdown', function (event) {
+        if (!panel.hidden && !panel.contains(event.target) && !toggle.contains(event.target)) {
+          closeSettings(panel.contains(document.activeElement));
+        }
+      });
+      document.addEventListener('focusin', function (event) {
+        if (!panel.hidden && !panel.contains(event.target) && !toggle.contains(event.target)) closeSettings(false);
+      });
+      toggle.hidden = false;
+    }
     render();
     controls.hidden = false;
   });

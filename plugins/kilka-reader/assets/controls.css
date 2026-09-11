@@ -80,3 +80,92 @@
   hyphens: auto;
   hyphenate-limit-chars: 6 3 3;
 }
+
+/* The document scrolls below a separate, palette-matched control strip. */
+body.kilka-reader-active { --reader-admin-offset: 0px; overflow: hidden; }
+body.kilka-reader-active.admin-bar { --reader-admin-offset: 32px; }
+.kilka-reader-active main#content.kilka-reading {
+  position: fixed;
+  top: calc(64px + env(safe-area-inset-top, 0px) + var(--reader-admin-offset));
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  box-sizing: border-box;
+  padding-top: 24px !important;
+  padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px));
+}
+.kilka-reader-dock {
+  position: fixed;
+  z-index: 1000;
+  top: var(--reader-admin-offset, 0px);
+  left: 0;
+  right: 0;
+  height: calc(64px + env(safe-area-inset-top, 0px));
+  padding: calc(8px + env(safe-area-inset-top, 0px)) calc(12px + env(safe-area-inset-right, 0px)) 8px calc(12px + env(safe-area-inset-left, 0px));
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--reader-background, #f5ecd9);
+  gap: 8px;
+}
+.kilka-reader-dock a.kilka-reader-return,
+.kilka-reader-settings-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  color: var(--reader-ink, #40382e);
+  cursor: pointer;
+  text-decoration: none;
+}
+.kilka-reader-settings-toggle[hidden],
+.kilka-reader-toolbar[hidden] { display: none; }
+.kilka-reader-settings-toggle:focus-visible {
+  outline: 2px solid var(--reader-link, #34617b);
+  outline-offset: 3px;
+}
+.kilka-reader-toolbar {
+  position: fixed;
+  z-index: 1001;
+  top: calc(72px + env(safe-area-inset-top, 0px) + var(--reader-admin-offset, 0px));
+  right: calc(12px + env(safe-area-inset-right, 0px));
+  width: 244px;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 96px - env(safe-area-inset-top, 0px) - var(--reader-admin-offset, 0px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  box-sizing: border-box;
+  padding: 16px;
+  margin: 0;
+  border: 1px solid var(--reader-border, #d2c4a8);
+  border-radius: 8px;
+  background: var(--reader-background, #f5ecd9);
+  color: var(--reader-ink, #40382e);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.16);
+}
+.kilka-reader-toolbar .kilka-reader-size { margin: 0; }
+@media (max-width: 782px) {
+  body.kilka-reader-active.admin-bar { --reader-admin-offset: 46px; }
+}
+.kilka-reader-dock a.kilka-reader-return { transition: none; }
+@media print {
+  body.kilka-reader-active { overflow: visible; }
+  .kilka-reader-dock { display: none; }
+  .kilka-reader-active main#content.kilka-reading {
+    position: static;
+    overflow: visible;
+    min-height: 0;
+    padding: 0 !important;
+  }
+}

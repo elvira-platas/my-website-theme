@@ -137,20 +137,21 @@ add_action( 'wp_enqueue_scripts', function () {
 }, 40 );
 
 function kilka_reader_return_link( $publication ) {
-	if ( ! $publication ) {
-		return '';
-	}
-	return '<a class="kilka-reader-return" href="' . esc_url( get_permalink( $publication ) ) . '"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7 7-7-7 7-7"/></svg><span>' . esc_html__( 'Back to publication', 'kilka-reader' ) . '</span></a>';
+	$url = $publication ? get_permalink( $publication ) : home_url( '/' );
+	return '<a class="kilka-reader-return" href="' . esc_url( $url ) . '" aria-label="' . esc_attr__( 'Close reader', 'kilka-reader' ) . '"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></a>';
 }
 
 /** Enhance rendered content only; never write controls into post_content. */
 add_filter( 'the_content', function ( $content ) {
-	if ( ! kilka_reader_is_reading() || ! in_the_loop() || ! is_main_query() || get_the_ID() !== get_queried_object_id() || is_feed() || post_password_required() ) {
+	if ( ! kilka_reader_is_reading() || ! in_the_loop() || ! is_main_query() || get_the_ID() !== get_queried_object_id() || is_feed() ) {
 		return $content;
 	}
 	$publication = kilka_reader_publication( get_post_meta( get_the_ID(), '_kilka_reader_publication', true ) );
 	$link = kilka_reader_return_link( $publication );
-	$toolbar = '<div class="kilka-reader-toolbar">' . $link . '<div class="kilka-reader-size" role="group" aria-label="' . esc_attr__( 'Text size', 'kilka-reader' ) . '" hidden>';
+	$dock = '<div class="kilka-reader-dock">' . $link;
+	if ( post_password_required() ) { return $dock . '</div>' . $content; }
+	$dock .= '<button type="button" class="kilka-reader-settings-toggle" aria-label="' . esc_attr__( 'Reading settings', 'kilka-reader' ) . '" aria-expanded="false" aria-controls="kilka-reader-settings" hidden><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16M9 3v6M15 9v6M8 15v6"/></svg></button></div>';
+	$toolbar = $dock . '<div id="kilka-reader-settings" class="kilka-reader-toolbar" role="region" aria-label="' . esc_attr__( 'Reading settings', 'kilka-reader' ) . '" hidden><div class="kilka-reader-size" role="group" aria-label="' . esc_attr__( 'Text size', 'kilka-reader' ) . '" hidden>';
 	foreach ( array( 'decrease' => array( 'A−', __( 'Decrease text size', 'kilka-reader' ) ), 'reset' => array( '100%', __( 'Reset text size', 'kilka-reader' ) ), 'increase' => array( 'A+', __( 'Increase text size', 'kilka-reader' ) ) ) as $action => $button ) {
 		$toolbar .= '<button type="button" data-reader-size="' . esc_attr( $action ) . '" aria-label="' . esc_attr( $button[1] ) . '">' . esc_html( $button[0] ) . '</button>';
 	}
@@ -166,5 +167,5 @@ add_filter( 'the_content', function ( $content ) {
 	}
 	$toolbar .= '</div></div>';
 	$language = kilka_reader_language( get_post_meta( get_the_ID(), '_kilka_reader_language', true ) );
-	return '<div class="kilka-reader" data-kilka-reader data-reader-align="left">' . $toolbar . '<div class="kilka-reader-body"' . ( $language ? ' lang="' . esc_attr( $language ) . '"' : '' ) . '>' . $content . '</div>' . ( $link ? '<div class="kilka-reader-end">' . $link . '</div>' : '' ) . '</div>';
+	return '<div class="kilka-reader" data-kilka-reader data-reader-align="left">' . $toolbar . '<div class="kilka-reader-body"' . ( $language ? ' lang="' . esc_attr( $language ) . '"' : '' ) . '>' . $content . '</div>' . '</div>';
 }, 20 );

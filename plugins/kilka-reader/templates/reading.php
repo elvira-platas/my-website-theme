@@ -13,7 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <body <?php body_class( 'kilka-reader-fallback' ); ?>>
 <?php wp_body_open(); ?>
 <a class="screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'kilka-reader' ); ?></a>
-<header class="kilka-reader-site"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a></header>
 <main id="content" class="kilka-reading" tabindex="-1">
 <?php while ( have_posts() ) : the_post(); ?>
 <article class="kilka-reading__document">

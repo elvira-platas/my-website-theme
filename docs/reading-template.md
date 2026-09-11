@@ -109,3 +109,26 @@ Version 0.1.0 establishes the functional baseline. Palette shades, the initial
 Cream selection, and the placement and visibility of reading controls remain
 provisional. The visibility of the site header, menu and footer during reading
 will be evaluated separately from the document controls and content model.
+
+### Focused reading preview
+
+With Kilka Reader active, the Kilka Reading template omits the site header,
+footer, menu and back-to-top button. The browser interface remains unchanged;
+this is not the Fullscreen API. Two 48px targets stay available: Close reader
+and Reading settings. Close reader links to the related public publication or,
+when none is available, the site's home page. It never closes the browser tab
+or relies on browser history. The neutral plugin fallback follows the same rule.
+
+Settings use a non-modal disclosure panel, initially hidden, containing size,
+alignment and palettes. Toggle, Escape and outside pointer interaction close
+it; Escape returns focus to the settings button. Keyboard focus may leave the
+panel normally, closing it. Without JS the exit remains available and settings
+stay hidden. Controls remain runtime HTML, never stored document content.
+Disabling the plugin restores the theme's original shared site frame.
+
+The focused preview uses a separate 64px top control strip (plus device safe
+area), with Close reader on the left and settings on the right. Icons retain
+48px targets without circular backgrounds or shadows. The document scrolls in
+the region below the strip, so text cannot pass under the persistent controls.
+The strip follows the reader palette. This layout is independent of browser
+fullscreen, which is not implemented in this pass. Print restores normal flow.
