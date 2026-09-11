@@ -177,8 +177,11 @@ mechanisms remain unchanged. Page-turn animation is a separate future stage.
 
 ### Optional paginated reading preview
 
-Continuous scrolling remains the initial mode. Two icon buttons in Reading
-settings choose scrolling or pages. The pages mode uses native CSS columns on
+Reading opens on the first page when JavaScript and pagination support are
+available. Two icon buttons in Reading settings choose scrolling or pages.
+Without JavaScript, without pagination support, or with insufficient viewport
+height, the document retains continuous scrolling. The 3D effect stays off
+initially. Reloading starts on the first page; no preference is stored. The pages mode uses native CSS columns on
 the original document, with a single column visible at a time. The existing
 heading moves into the first column and returns to its original position when
 scrolling is restored. Content is neither cloned nor written back to WordPress.

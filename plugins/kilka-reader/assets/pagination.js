@@ -205,6 +205,8 @@
     body.addEventListener('load', function () { reflow(); }, true);
     if (document.fonts) document.fonts.ready.then(function () { reflow(); });
     mode.hidden = false;
+    setMode(true);
+    if (enabled) go(0);
     return {capture: function () { cancelTurn(true); return enabled ? place || capture() : capture(); }, reflow: reflow, active: function () { return enabled; }};
   };
 }());
