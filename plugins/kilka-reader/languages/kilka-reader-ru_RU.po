@@ -96,3 +96,6 @@ msgstr "Размер текста"
 
 msgid "Use the Reading page template. Optionally choose the publication readers can return to."
 msgstr "Выберите шаблон страницы «Чтение». При желании укажите публикацию, к которой сможет вернуться читатель."
+
+msgid "Tap the text to show reading controls."
+msgstr "Нажмите на текст, чтобы показать управление."

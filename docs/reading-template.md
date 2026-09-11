@@ -159,3 +159,17 @@ area the plugin uses standard WordPress translation loading and the admin
 locale. Public translation catalogs are loaded locally and reused within the
 request; English uses the source strings. No browser language detection,
 network requests, storage, or new user preference is introduced.
+
+### Immersive fullscreen preview
+
+Entering fullscreen now closes settings and hides the reader strip, reclaiming
+its height. The first entry in an open document shows a translated hint for
+six seconds: tap the text to show reading controls. A single click/tap on prose
+reveals the strip; another hides it. There is no automatic hiding timer for
+controls. Links, interactive content, selected text, double clicks and scrolling
+gestures do not toggle the strip. Tab reveals controls for keyboard navigation.
+Leaving fullscreen restores the ordinary strip, including exits initiated by
+the browser. The visible text fragment is anchored relative to the reading
+viewport when the strip changes height. Hint state is in memory only; reloading
+allows the hint again. The document, fullscreen support checks and browser exit
+mechanisms remain unchanged. Pagination and page-turn animation are separate.

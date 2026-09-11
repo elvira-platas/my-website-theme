@@ -101,8 +101,80 @@
     var fullscreenStatus = reader.querySelector('.kilka-reader-fullscreen-status');
     var root = document.documentElement;
     if (fullscreen && document.fullscreenEnabled && root.requestFullscreen && document.exitFullscreen) {
+      var dock = reader.querySelector('.kilka-reader-dock');
+      var hint = reader.querySelector('.kilka-reader-hint');
+      var hintTimer;
+      var hintShown = false;
+      var wasFullscreen = false;
+      var anchorFrame;
+      function dismissHint() {
+        clearTimeout(hintTimer);
+        if (hint) hint.textContent = '';
+      }
+      function setChrome(hidden) {
+        // Preserve the visible fragment relative to the reading viewport.
+        var top = surface.getBoundingClientRect().top;
+        var anchor = blocks.find(function (item) { return item.getBoundingClientRect().bottom > top + 1; });
+        var offset = anchor ? anchor.getBoundingClientRect().top - top : 0;
+        cancelAnimationFrame(anchorFrame);
+        root.dataset.readerChrome = hidden ? 'hidden' : 'shown';
+        dock.hidden = hidden;
+        if (hidden) {
+          panel.hidden = true;
+          toggle.setAttribute('aria-expanded', 'false');
+          if (dock.contains(document.activeElement) || panel.contains(document.activeElement)) surface.focus({preventScroll: true});
+        } else dismissHint();
+        anchorFrame = requestAnimationFrame(function () {
+          if (anchor) surface.scrollTop += anchor.getBoundingClientRect().top - surface.getBoundingClientRect().top - offset;
+        });
+      }
+      var pointer = null;
+      var tapTimer;
+      function hasSelection() {
+        var selection = window.getSelection();
+        return selection && !selection.isCollapsed;
+      }
+      body.addEventListener('pointerdown', function (event) {
+        clearTimeout(tapTimer);
+        pointer = {x: event.clientX, y: event.clientY, scroll: surface.scrollTop, time: Date.now(), moved: false, selected: hasSelection()};
+      });
+      body.addEventListener('pointermove', function (event) {
+        if (pointer && Math.hypot(event.clientX - pointer.x, event.clientY - pointer.y) > 8) pointer.moved = true;
+      });
+      body.addEventListener('pointercancel', function () { if (pointer) pointer.moved = true; });
+      body.addEventListener('dblclick', function () { clearTimeout(tapTimer); });
+      surface.addEventListener('scroll', function () { clearTimeout(tapTimer); }, {passive: true});
+      body.addEventListener('click', function (event) {
+        if (document.fullscreenElement !== root || event.detail > 1 || hasSelection()) return;
+        if (event.target.closest('a, button, input, textarea, select, summary, [role="button"], [contenteditable="true"]')) return;
+        var gesture = pointer;
+        pointer = null;
+        if (gesture && (gesture.moved || gesture.selected || Date.now() - gesture.time > 600 || Math.abs(surface.scrollTop - gesture.scroll) > 4)) return;
+        clearTimeout(tapTimer);
+        tapTimer = setTimeout(function () {
+          if (document.fullscreenElement === root && !hasSelection()) setChrome(root.dataset.readerChrome !== 'hidden');
+        }, 280);
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Tab' && document.fullscreenElement === root && root.dataset.readerChrome === 'hidden') {
+          event.preventDefault();
+          setChrome(false);
+          toggle.focus({preventScroll: true});
+        }
+      });
       function syncFullscreen() {
         var active = document.fullscreenElement === root;
+        if (active !== wasFullscreen) {
+          wasFullscreen = active;
+          clearTimeout(tapTimer);
+          setChrome(active);
+          if (active && !hintShown && hint) {
+            hintShown = true;
+            hint.textContent = hint.dataset.message;
+            hintTimer = setTimeout(dismissHint, 6000);
+          }
+          if (!active) { dismissHint(); delete root.dataset.readerChrome; }
+        }
         fullscreen.setAttribute('aria-pressed', String(active));
         fullscreen.setAttribute('aria-label', active ? fullscreen.dataset.exitLabel : fullscreen.dataset.enterLabel);
         fullscreen.querySelector('path').setAttribute('d', active

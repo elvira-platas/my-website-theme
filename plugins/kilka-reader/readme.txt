@@ -18,7 +18,7 @@ Choose a related published blog post in the page editor's Reader panel. A Close 
 
 No analytics, telemetry, cookies, browser storage or background requests are added. Text size lasts only while the page is open. Separate plugins, embedded content and server logs are outside this plugin's control. Use locally hosted media for a reading experience without third-party requests.
 
-Deactivation preserves content and metadata. An optional fullscreen button is available inside settings on browsers supporting the standard Fullscreen API. It only activates on request, follows browser exit events, and handles denial without interrupting reading. No automatic pagination or EPUB generation is included in version 0.1.0.
+Deactivation preserves content and metadata. An optional fullscreen button is available inside settings on browsers supporting the standard Fullscreen API. It only activates on request, follows browser exit events, and handles denial without interrupting reading. In fullscreen the reader strip hides and a one-time translated hint explains how to reveal it by tapping text. A second tap hides it; scrolling, selection and links do not toggle controls. Tab restores keyboard access. Leaving fullscreen restores the strip. No automatic pagination or EPUB generation is included in version 0.1.0.
 
 == Installation ==
 

@@ -96,3 +96,6 @@ msgstr "Textgröße"
 
 msgid "Use the Reading page template. Optionally choose the publication readers can return to."
 msgstr "Verwenden Sie die Seitenvorlage „Lesen“. Wählen Sie bei Bedarf den Beitrag, zu dem die Lesenden zurückkehren können."
+
+msgid "Tap the text to show reading controls."
+msgstr "Tippen Sie auf den Text, um die Lesesteuerung einzublenden."
