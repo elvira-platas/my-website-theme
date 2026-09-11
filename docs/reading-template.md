@@ -70,8 +70,8 @@ page is open. No cookies, storage, identifiers or network requests are used.
 Without JavaScript, the controls stay hidden and the complete document and
 return links remain available. Browser zoom remains available independently.
 Resizing the viewport recalculates text from the theme's original font sizes.
-Controls are not inserted into stored content or exports. Pagination and EPUB
-are not part of this version.
+Controls are not inserted into stored content or exports. Optional pagination
+is described below; EPUB export is not included.
 
 The plugin's fourth ZIP contains only its own runtime and documentation. The
 three existing components retain independent versions and installation paths.
@@ -172,4 +172,33 @@ Leaving fullscreen restores the ordinary strip, including exits initiated by
 the browser. The visible text fragment is anchored relative to the reading
 viewport when the strip changes height. Hint state is in memory only; reloading
 allows the hint again. The document, fullscreen support checks and browser exit
-mechanisms remain unchanged. Pagination and page-turn animation are separate.
+mechanisms remain unchanged. Page-turn animation is a separate future stage.
+
+
+### Optional paginated reading preview
+
+Continuous scrolling remains the initial mode. Two icon buttons in Reading
+settings choose scrolling or pages. The pages mode uses native CSS columns on
+the original document, with a single column visible at a time. The existing
+heading moves into the first column and returns to its original position when
+scrolling is restored. Content is neither cloned nor written back to WordPress.
+This first pass targets horizontal, left-to-right prose; complex publication
+layouts and page-turn animation are separate work.
+
+Previous/next buttons and a translated page count occupy a separate bottom
+strip. Arrow Left/Right and Page Up/Down turn pages outside settings and
+interactive content; horizontal touch swipes also turn pages. Selection,
+vertical gestures, links and multi-touch are excluded. Fullscreen hides the buttons and keeps a centered page count in a reserved
+bottom area, clear of text and the initial hint. A text tap or Tab restores
+controls using the same interaction
+as scrolling mode. Browser zoom and native fullscreen exit remain available.
+
+Page count depends on viewport, font size and alignment. The reading anchor is
+a text node and character offset, retained across consecutive setting changes,
+resizing and fullscreen transitions. Turning a page establishes a new anchor.
+Column width uses whole pixels to prevent accumulated horizontal drift. Font
+and media loading trigger recalculation, with viewport changes coalesced into
+animation frames. Recalculation is suspended for print media; print and no-JS
+reading retain continuous document flow. All mode, page and anchor state stays
+in memory and disappears on reload. No libraries, network requests, cookies or
+browser storage are introduced.

@@ -99,3 +99,25 @@ msgstr "Verwenden Sie die Seitenvorlage „Lesen“. Wählen Sie bei Bedarf den 
 
 msgid "Tap the text to show reading controls."
 msgstr "Tippen Sie auf den Text, um die Lesesteuerung einzublenden."
+
+msgid "Reading mode"
+msgstr "Lesemodus"
+
+msgid "Continuous scrolling"
+msgstr "Fortlaufendes Scrollen"
+
+msgid "Paginated reading"
+msgstr "Seitenweise lesen"
+
+msgid "Reading pages"
+msgstr "Leseseiten"
+
+msgid "Previous page"
+msgstr "Vorherige Seite"
+
+msgid "Next page"
+msgstr "Nächste Seite"
+
+#, php-format
+msgid "Page %1$s of %2$s"
+msgstr "Seite %1$s von %2$s"

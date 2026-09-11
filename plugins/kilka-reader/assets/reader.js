@@ -32,21 +32,25 @@
       if (!button) return;
       var action = button.dataset.readerSize;
       scale = action === 'reset' ? 100 : Math.max(80, Math.min(160, scale + (action === 'increase' ? 10 : -10)));
+      var place = pagination && pagination.capture();
       render();
+      if (pagination) pagination.reflow(place);
       var status = controls.querySelector('.kilka-reader-status');
       status.textContent = status.dataset.label + ': ' + scale + '%';
     });
     var frame;
     window.addEventListener('resize', function () {
       cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(render);
+      frame = requestAnimationFrame(function () { render(); if (pagination) pagination.reflow(); });
     });
     var alignment = reader.querySelector('.kilka-reader-alignment');
     if (alignment) {
       alignment.addEventListener('click', function (event) {
         var button = event.target.closest('button[data-reader-alignment]');
         if (!button) return;
+        var place = pagination && pagination.capture();
         reader.dataset.readerAlign = button.dataset.readerAlignment;
+        if (pagination) pagination.reflow(place);
         alignment.querySelectorAll('button').forEach(function (item) {
           item.setAttribute('aria-pressed', String(item === button));
         });
@@ -55,6 +59,7 @@
     }
     var colors = reader.querySelector('.kilka-reader-colors');
     var surface = reader.closest('.kilka-reading') || reader;
+    var pagination = window.kilkaReaderPagination ? window.kilkaReaderPagination(reader, surface, body) : null;
     if (colors) {
       surface.dataset.readerColor = 'cream';
       colors.addEventListener('click', function (event) {
@@ -125,6 +130,7 @@
           if (dock.contains(document.activeElement) || panel.contains(document.activeElement)) surface.focus({preventScroll: true});
         } else dismissHint();
         anchorFrame = requestAnimationFrame(function () {
+          if (pagination && pagination.active()) { pagination.reflow(); return; }
           if (anchor) surface.scrollTop += anchor.getBoundingClientRect().top - surface.getBoundingClientRect().top - offset;
         });
       }
