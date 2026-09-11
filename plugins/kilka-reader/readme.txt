@@ -18,7 +18,7 @@ Choose a related published blog post in the page editor's Reader panel. A Close 
 
 No analytics, telemetry, cookies, browser storage or background requests are added. Text size lasts only while the page is open. Separate plugins, embedded content and server logs are outside this plugin's control. Use locally hosted media for a reading experience without third-party requests.
 
-Deactivation preserves content and metadata. No automatic pagination or EPUB generation is included in version 0.1.0.
+Deactivation preserves content and metadata. An optional fullscreen button is available inside settings on browsers supporting the standard Fullscreen API. It only activates on request, follows browser exit events, and handles denial without interrupting reading. No automatic pagination or EPUB generation is included in version 0.1.0.
 
 == Installation ==
 
@@ -37,3 +37,7 @@ OpenAI Codex substantially assisted code generation, review, documentation and t
 * Preserve existing Reading pages and offer a neutral theme fallback.
 * Add a protected editor field for the related publication.
 * Add optional text size controls without storing reader activity.
+
+== Translations ==
+
+English, Russian and German reader controls are included. The public controls follow the document's Text language when a supported translation exists; otherwise they use the supported site language and then English. The rest of the site's language is unchanged. Admin labels follow the standard WordPress admin locale. Russian and German PO and compiled MO files are bundled locally.

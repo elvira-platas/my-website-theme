@@ -169,3 +169,23 @@ body.kilka-reader-active.admin-bar { --reader-admin-offset: 32px; }
     padding: 0 !important;
   }
 }
+
+.kilka-reader-fullscreen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.kilka-reader-fullscreen[hidden] { display: none; }
+.kilka-reader-fullscreen[aria-pressed="true"] { background: var(--reader-control, #e3d7bd); }
+.kilka-reader-fullscreen:focus-visible { outline: 2px solid var(--reader-link, #34617b); outline-offset: 3px; }
+.kilka-reader-fullscreen:disabled { opacity: 0.5; cursor: default; }
+.kilka-reader-fullscreen-status { width: 100%; font-size: 14px; line-height: 1.5; margin: 0; }
+.kilka-reader-fullscreen-status:empty { display: none; }

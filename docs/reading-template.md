@@ -132,3 +132,30 @@ area), with Close reader on the left and settings on the right. Icons retain
 the region below the strip, so text cannot pass under the persistent controls.
 The strip follows the reader palette. This layout is independent of browser
 fullscreen, which is not implemented in this pass. Print restores normal flow.
+
+### Optional browser fullscreen
+
+The settings panel offers an icon button for fullscreen when the standard
+Fullscreen API is available and permitted. Entry only follows a user action;
+there is no automatic entry, keyboard lock, or orientation lock. The document
+root enters fullscreen so the exit and settings controls remain available.
+The same button leaves fullscreen. Its accessible name, icon and pressed state
+follow `fullscreenchange`, including exits initiated by the browser. Escape is
+not cancelled while fullscreen is active. A rejected request leaves reading
+available and displays a short status message. Unsupported browsers keep the
+existing focused reading layout without the button. No cookies, persistence
+or network calls are added. Actual mobile and headset behavior requires device
+review in addition to desktop browser tests.
+
+### Interface translations
+
+English source strings and bundled Russian and German PO/MO catalogs are supplied.
+Public reader controls use the document's Text language when supported (`ru`, `en` and `de`, including regional tags), otherwise the supported site language,
+otherwise English. The dock and settings panel declare their UI language for
+assistive technology separately from the prose language. Selecting the UI
+language does not change the WordPress locale, site settings, or content.
+Only the `kilka-reader` text domain is affected on reading pages. In the admin
+area the plugin uses standard WordPress translation loading and the admin
+locale. Public translation catalogs are loaded locally and reused within the
+request; English uses the source strings. No browser language detection,
+network requests, storage, or new user preference is introduced.

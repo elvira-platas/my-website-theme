@@ -82,7 +82,10 @@
         if (opening) panel.querySelector('button:not(:disabled)').focus({preventScroll: true});
       });
       document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape' && !panel.hidden) { event.preventDefault(); closeSettings(true); }
+        if (event.key === 'Escape' && !panel.hidden) {
+          if (!document.fullscreenElement) event.preventDefault();
+          closeSettings(true);
+        }
       });
       document.addEventListener('pointerdown', function (event) {
         if (!panel.hidden && !panel.contains(event.target) && !toggle.contains(event.target)) {
@@ -93,6 +96,35 @@
         if (!panel.hidden && !panel.contains(event.target) && !toggle.contains(event.target)) closeSettings(false);
       });
       toggle.hidden = false;
+    }
+    var fullscreen = reader.querySelector('.kilka-reader-fullscreen');
+    var fullscreenStatus = reader.querySelector('.kilka-reader-fullscreen-status');
+    var root = document.documentElement;
+    if (fullscreen && document.fullscreenEnabled && root.requestFullscreen && document.exitFullscreen) {
+      function syncFullscreen() {
+        var active = document.fullscreenElement === root;
+        fullscreen.setAttribute('aria-pressed', String(active));
+        fullscreen.setAttribute('aria-label', active ? fullscreen.dataset.exitLabel : fullscreen.dataset.enterLabel);
+        fullscreen.querySelector('path').setAttribute('d', active
+          ? 'M4 9h5V4m6 0v5h5M9 20v-5H4m16 0h-5v5'
+          : 'M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5');
+      }
+      fullscreen.addEventListener('click', async function () {
+        fullscreen.disabled = true;
+        fullscreenStatus.textContent = '';
+        try {
+          if (document.fullscreenElement === root) await document.exitFullscreen();
+          else await root.requestFullscreen();
+        } catch (error) {
+          fullscreenStatus.textContent = fullscreen.dataset.error;
+        } finally {
+          fullscreen.disabled = false;
+          syncFullscreen();
+        }
+      });
+      document.addEventListener('fullscreenchange', syncFullscreen);
+      syncFullscreen();
+      fullscreen.hidden = false;
     }
     render();
     controls.hidden = false;

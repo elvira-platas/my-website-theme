@@ -7,6 +7,7 @@
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: kilka-reader
+ * Domain Path: /languages
  * Requires at least: 6.6
  * Requires PHP: 7.4
  *
@@ -19,6 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'KILKA_READER_VERSION', '0.1.0' );
 define( 'KILKA_READER_TEMPLATE', 'page-templates/reading.php' );
+require_once __DIR__ . '/languages.php';
 
 /** Keep existing reading pages and URLs; no content migration is required. */
 function kilka_reader_is_reading() {
@@ -148,10 +150,11 @@ add_filter( 'the_content', function ( $content ) {
 	}
 	$publication = kilka_reader_publication( get_post_meta( get_the_ID(), '_kilka_reader_publication', true ) );
 	$link = kilka_reader_return_link( $publication );
-	$dock = '<div class="kilka-reader-dock">' . $link;
+	$ui_language = kilka_reader_ui_language();
+	$dock = '<div class="kilka-reader-dock" lang="' . esc_attr( $ui_language ) . '">' . $link;
 	if ( post_password_required() ) { return $dock . '</div>' . $content; }
 	$dock .= '<button type="button" class="kilka-reader-settings-toggle" aria-label="' . esc_attr__( 'Reading settings', 'kilka-reader' ) . '" aria-expanded="false" aria-controls="kilka-reader-settings" hidden><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16M9 3v6M15 9v6M8 15v6"/></svg></button></div>';
-	$toolbar = $dock . '<div id="kilka-reader-settings" class="kilka-reader-toolbar" role="region" aria-label="' . esc_attr__( 'Reading settings', 'kilka-reader' ) . '" hidden><div class="kilka-reader-size" role="group" aria-label="' . esc_attr__( 'Text size', 'kilka-reader' ) . '" hidden>';
+	$toolbar = $dock . '<div id="kilka-reader-settings" lang="' . esc_attr( $ui_language ) . '" class="kilka-reader-toolbar" role="region" aria-label="' . esc_attr__( 'Reading settings', 'kilka-reader' ) . '" hidden><div class="kilka-reader-size" role="group" aria-label="' . esc_attr__( 'Text size', 'kilka-reader' ) . '" hidden>';
 	foreach ( array( 'decrease' => array( 'A−', __( 'Decrease text size', 'kilka-reader' ) ), 'reset' => array( '100%', __( 'Reset text size', 'kilka-reader' ) ), 'increase' => array( 'A+', __( 'Increase text size', 'kilka-reader' ) ) ) as $action => $button ) {
 		$toolbar .= '<button type="button" data-reader-size="' . esc_attr( $action ) . '" aria-label="' . esc_attr( $button[1] ) . '">' . esc_html( $button[0] ) . '</button>';
 	}
@@ -165,7 +168,7 @@ add_filter( 'the_content', function ( $content ) {
 	foreach ( array( 'cream' => __( 'Cream', 'kilka-reader' ), 'light' => __( 'Light', 'kilka-reader' ), 'graphite' => __( 'Graphite', 'kilka-reader' ) ) as $color => $label ) {
 		$toolbar .= '<button type="button" data-reader-color-option="' . esc_attr( $color ) . '" aria-label="' . esc_attr( $label ) . '" aria-pressed="' . ( 'cream' === $color ? 'true' : 'false' ) . '"><span class="kilka-reader-swatch" aria-hidden="true"></span></button>';
 	}
-	$toolbar .= '</div></div>';
+	$toolbar .= '</div><button type="button" class="kilka-reader-fullscreen" aria-label="' . esc_attr__( 'Enter fullscreen', 'kilka-reader' ) . '" aria-pressed="false" data-enter-label="' . esc_attr__( 'Enter fullscreen', 'kilka-reader' ) . '" data-exit-label="' . esc_attr__( 'Exit fullscreen', 'kilka-reader' ) . '" data-error="' . esc_attr__( 'Fullscreen could not be changed. You can continue reading here.', 'kilka-reader' ) . '" hidden><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg></button><p class="kilka-reader-fullscreen-status" role="status" aria-live="polite"></p></div>';
 	$language = kilka_reader_language( get_post_meta( get_the_ID(), '_kilka_reader_language', true ) );
 	return '<div class="kilka-reader" data-kilka-reader data-reader-align="left">' . $toolbar . '<div class="kilka-reader-body"' . ( $language ? ' lang="' . esc_attr( $language ) . '"' : '' ) . '>' . $content . '</div>' . '</div>';
 }, 20 );
