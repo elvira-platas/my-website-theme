@@ -17,6 +17,64 @@
     var next = nav.querySelector('[data-reader-turn="next"]');
     var number = nav.querySelector('.kilka-reader-page-number');
     var interactive = 'a, button, input, textarea, select, summary, [role="button"], [contenteditable]';
+    var effect = reader.querySelector('.kilka-reader-animation');
+    var effectNote = reader.querySelector('.kilka-reader-animation-note');
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var animated = false, turnAnimation = null, turnTarget = null, turnSerial = 0;
+    function cancelTurn(commit) {
+      var target = turnTarget;
+      turnTarget = null;
+      turnSerial++;
+      if (turnAnimation) { turnAnimation.cancel(); turnAnimation = null; }
+      if (commit && target !== null) go(target);
+    }
+    function effectState() {
+      if (!effect) return;
+      effect.hidden = !enabled || !viewport.animate;
+      effect.disabled = reduced.matches;
+      effect.setAttribute('aria-pressed', String(animated && !reduced.matches));
+      effectNote.hidden = !enabled || !reduced.matches;
+    }
+    if (effect) effect.addEventListener('click', function () {
+      cancelTurn(true);
+      animated = !animated;
+      effectState();
+    });
+    reduced.addEventListener('change', function () { cancelTurn(true); effectState(); });
+    window.addEventListener('beforeprint', function () { cancelTurn(true); });
+    document.addEventListener('visibilitychange', function () { if (document.hidden) cancelTurn(true); });
+    async function turn(delta) {
+      // A rapid second turn completes the first destination before continuing.
+      cancelTurn(true);
+      var target = Math.max(0, Math.min(count - 1, page + delta));
+      if (target === page) return;
+      if (!animated || reduced.matches || !viewport.animate) { go(target); return; }
+      var direction = delta > 0 ? -1 : 1;
+      var origin = delta > 0 ? 'left center' : 'right center';
+      var serial = ++turnSerial;
+      turnTarget = target;
+      try {
+        turnAnimation = viewport.animate([
+          {transform: 'perspective(1400px) rotateY(0deg)', transformOrigin: origin},
+          {transform: 'perspective(1400px) rotateY(' + (direction * 90) + 'deg)', transformOrigin: origin}
+        ], {duration: 140, easing: 'ease-in', fill: 'forwards'});
+        await turnAnimation.finished;
+        if (serial !== turnSerial) return;
+        // Remove transforms before measuring the new text anchor.
+        cancelTurn(false);
+        go(target);
+        serial = ++turnSerial;
+        turnAnimation = viewport.animate([
+          {transform: 'perspective(1400px) rotateY(' + (-direction * 90) + 'deg)', transformOrigin: origin},
+          {transform: 'perspective(1400px) rotateY(0deg)', transformOrigin: origin}
+        ], {duration: 180, easing: 'ease-out', fill: 'forwards'});
+        await turnAnimation.finished;
+        if (serial === turnSerial) cancelTurn(false);
+      } catch (error) {
+        // Cancellation is expected on resize, mode changes and repeated input.
+        if (serial === turnSerial) { cancelTurn(false); go(target); }
+      }
+    }
     function selected() { var s = getSelection(); return s && !s.isCollapsed; }
     function rangeAt(mark) {
       if (!mark || !mark.node.isConnected) return null;
@@ -56,6 +114,7 @@
       number.setAttribute('aria-label', number.dataset.label.replace('%1$s', page + 1).replace('%2$s', count));
     }
     function go(target, remember) {
+      cancelTurn(false);
       page = Math.max(0, Math.min(count - 1, target));
       viewport.scrollLeft = page * stride;
       viewport.scrollTop = 0;
@@ -65,6 +124,7 @@
     }
     function reflow(mark) {
       if (!enabled || window.matchMedia('print').matches) return;
+      cancelTurn(true);
       if (mark) place = mark;
       var css = getComputedStyle(surface);
       var height = Math.floor(surface.clientHeight - parseFloat(css.paddingTop) - parseFloat(css.paddingBottom));
@@ -78,6 +138,7 @@
       go(target, false);
     }
     function setMode(paged) {
+      cancelTurn(true);
       var mark = enabled ? place || capture() : capture();
       if (paged === enabled) return;
       enabled = paged;
@@ -85,7 +146,8 @@
       if (!enabled && headingMarker.isConnected) { headingMarker.replaceWith(heading); }
       surface.dataset.readerMode = enabled ? 'pages' : 'scroll';
       nav.hidden = !enabled;
-      mode.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String((b.dataset.readerMode === 'pages') === enabled)); });
+      effectState();
+      mode.querySelectorAll('button[data-reader-mode]').forEach(function (b) { b.setAttribute('aria-pressed', String((b.dataset.readerMode === 'pages') === enabled)); });
       if (enabled) {
         place = mark;
         reflow();
@@ -98,19 +160,19 @@
       }
     }
     mode.addEventListener('click', function (e) {
-      var button = e.target.closest('[data-reader-mode]');
+      var button = e.target.closest('button[data-reader-mode]');
       if (button) setMode(button.dataset.readerMode === 'pages');
     });
     nav.addEventListener('click', function (e) {
       var button = e.target.closest('[data-reader-turn]');
-      if (button) go(page + (button.dataset.readerTurn === 'next' ? 1 : -1));
+      if (button) turn(button.dataset.readerTurn === 'next' ? 1 : -1);
     });
     document.addEventListener('keydown', function (e) {
       if (!enabled || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || selected()) return;
       if ((e.target.closest(interactive) && !nav.contains(e.target)) || !reader.querySelector('#kilka-reader-settings').hidden) return;
       var delta = {ArrowRight: 1, PageDown: 1, ArrowLeft: -1, PageUp: -1}[e.key];
       if (!delta) return;
-      e.preventDefault(); go(page + delta);
+      e.preventDefault(); turn(delta);
     });
     var touch = null;
     viewport.addEventListener('touchstart', function (e) {
@@ -122,7 +184,7 @@
       if (!touch || e.touches.length || selected()) { touch = null; return; }
       var dx = e.changedTouches[0].clientX - touch.x, dy = e.changedTouches[0].clientY - touch.y;
       if (Date.now() - touch.time < 800 && Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-        e.preventDefault(); go(page + (dx < 0 ? 1 : -1));
+        e.preventDefault(); turn(dx < 0 ? 1 : -1);
       }
       touch = null;
     }, {passive: false});
@@ -143,6 +205,6 @@
     body.addEventListener('load', function () { reflow(); }, true);
     if (document.fonts) document.fonts.ready.then(function () { reflow(); });
     mode.hidden = false;
-    return {capture: function () { return enabled ? place || capture() : capture(); }, reflow: reflow, active: function () { return enabled; }};
+    return {capture: function () { cancelTurn(true); return enabled ? place || capture() : capture(); }, reflow: reflow, active: function () { return enabled; }};
   };
 }());

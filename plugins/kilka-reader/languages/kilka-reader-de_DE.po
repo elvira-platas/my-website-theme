@@ -121,3 +121,9 @@ msgstr "Nächste Seite"
 #, php-format
 msgid "Page %1$s of %2$s"
 msgstr "Seite %1$s von %2$s"
+
+msgid "Page-turn animation"
+msgstr "Animation beim Umblättern"
+
+msgid "Animation is disabled by your reduced motion setting."
+msgstr "Die Animation ist durch Ihre Einstellung für reduzierte Bewegung deaktiviert."

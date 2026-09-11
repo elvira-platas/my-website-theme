@@ -183,7 +183,7 @@ the original document, with a single column visible at a time. The existing
 heading moves into the first column and returns to its original position when
 scrolling is restored. Content is neither cloned nor written back to WordPress.
 This first pass targets horizontal, left-to-right prose; complex publication
-layouts and page-turn animation are separate work.
+layouts are separate work. An optional animation preview is described below.
 
 Previous/next buttons and a translated page count occupy a separate bottom
 strip. Arrow Left/Right and Page Up/Down turn pages outside settings and
@@ -202,3 +202,31 @@ animation frames. Recalculation is suspended for print media; print and no-JS
 reading retain continuous document flow. All mode, page and anchor state stays
 in memory and disappears on reload. No libraries, network requests, cookies or
 browser storage are introduced.
+
+
+### Optional 3D page-turn preview
+
+The folded-page icon in paginated reading settings enables a short perspective
+rotation. It is off initially, lasts 320 ms, and uses the original clipped
+reading viewport rather than screenshots or duplicate text. This is a rigid
+page rotation preview, not a simulated paper curl. Forward and backward turns
+use opposite directions. Page measurement and anchor capture happen with all
+transforms removed between the outgoing and incoming halves.
+
+Repeated input completes the pending destination before starting the next turn.
+Resizing, changing mode or settings, printing, backgrounding the document and
+reduced-motion changes cancel the visual effect without leaving transforms or
+blocking reading. A device preference for reduced motion overrides the effect;
+the control is disabled with a translated explanation. The effect is also
+skipped when Web Animations is unavailable. The choice lasts only in memory.
+
+
+### Mouse navigation on wide screens
+
+At viewport widths of at least 1024 CSS pixels, when a hovering fine pointer is
+available, the existing previous/next controls sit at the left and right edges
+of the screen, outside the text column. Their 22px icons retain 48px targets,
+keyboard focus and disabled boundary states. They remain visible in fullscreen;
+the page count stays centered below the text. Narrow or touch-only screens keep
+the bottom controls and their existing fullscreen behavior. No duplicate buttons,
+text-click navigation, reading-width changes or animation changes are introduced.
