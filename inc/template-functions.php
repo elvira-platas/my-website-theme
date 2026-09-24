@@ -71,7 +71,13 @@ function kilka_has_contextual_sidebar() {
 		return false;
 	}
 
-	return is_active_sidebar( kilka_get_contextual_sidebar_id() );
+	$sidebar_id = kilka_get_contextual_sidebar_id();
+
+	if ( 'sidebar-1' === $sidebar_id && ! get_theme_mod( 'kilka_show_main_blog_sidebar', false ) ) {
+		return false;
+	}
+
+	return is_active_sidebar( $sidebar_id );
 }
 
 /**

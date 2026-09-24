@@ -1309,29 +1309,25 @@ p.comment-notes {
   text-align: center;
 }
 
-/* Keep the footer at the viewport edge when a single blog post is short. */
-.single-post #page,
-.single-world_note #page {
+/* Keep the footer at the viewport edge when the page has little content. */
+body:not(.single-kilka_exhibition):not(.page-template-exhibition-prototype) #page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   min-height: 100svh;
 }
 
-.single-post #content,
-.single-world_note #content {
+body:not(.single-kilka_exhibition):not(.page-template-exhibition-prototype) #content {
   flex: 1 0 auto;
 }
 
-.admin-bar.single-post #page,
-.admin-bar.single-world_note #page {
+body.admin-bar:not(.single-kilka_exhibition):not(.page-template-exhibition-prototype) #page {
   min-height: calc(100vh - 32px);
   min-height: calc(100svh - 32px);
 }
 
 @media screen and (max-width: 782px) {
-  .admin-bar.single-post #page,
-  .admin-bar.single-world_note #page {
+  body.admin-bar:not(.single-kilka_exhibition):not(.page-template-exhibition-prototype) #page {
     min-height: calc(100vh - 46px);
     min-height: calc(100svh - 46px);
   }

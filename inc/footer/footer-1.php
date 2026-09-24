@@ -10,8 +10,14 @@ function kilka_footer_style_1(){ ?>
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="copyright">
-					&copy; <?php echo date('Y'); ?> ❤️ Elvira.
-					<span class="sep"> | </span>
+					<?php
+					$footer_copyright_owner = trim( (string) get_theme_mod( 'kilka_footer_copyright_owner', get_bloginfo( 'name' ) ) );
+
+					if ( '' !== $footer_copyright_owner ) :
+						?>
+						&copy; <?php echo esc_html( date( 'Y' ) ); ?> ❤️ <?php echo esc_html( $footer_copyright_owner ); ?>
+						<span class="sep"> | </span>
+					<?php endif; ?>
 					<a href="<?php echo esc_url( 'https://wordpress.org/' ); ?>" target="_blank" rel="noopener"><?php echo esc_html__( 'Powered by WordPress', 'kilka' ); ?></a>
 					<?php
 					$footer_link_text = get_theme_mod( 'kilka_footer_link_text' );

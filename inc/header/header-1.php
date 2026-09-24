@@ -20,6 +20,8 @@ function kilka_header_style_1(){ ?>
 							<?php
 							$kilka_second_blog_context = function_exists( 'kilka_is_second_blog_context' ) && kilka_is_second_blog_context();
 							$kilka_exhibition_context  = function_exists( 'kilka_is_exhibition_context' ) && kilka_is_exhibition_context();
+							$kilka_has_primary_menu   = has_nav_menu( 'menu-1' );
+							$kilka_show_responsive_menu = $kilka_has_primary_menu || ! $kilka_exhibition_context;
 							?>
 							<div class="site-branding-main">
 								<div class="site-branding-identity">
@@ -28,8 +30,13 @@ function kilka_header_style_1(){ ?>
 									?>
 									<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php echo esc_html( get_bloginfo( 'name', 'display' ) ); ?></a></p>
 								</div>
-								<?php if ( has_nav_menu( 'menu-1' ) ) : ?>
+								<?php if ( $kilka_show_responsive_menu ) : ?>
 									<div class="kilka-responsive-menu" data-menu-label="<?php esc_attr_e( 'Menu', 'kilka' ); ?>">
+										<?php if ( ! $kilka_has_primary_menu && ! $kilka_exhibition_context ) : ?>
+											<template class="kilka-menu-utilities-template">
+												<li class="menu-item menu-item-search kilka-menu-search"><?php get_search_form(); ?></li>
+											</template>
+										<?php endif; ?>
 										<?php if ( ! $kilka_exhibition_context ) : ?>
 											<template class="kilka-color-scheme-template">
 												<li class="kilka-color-scheme-item">
@@ -114,10 +121,14 @@ function kilka_header_style_1(){ ?>
 				<div class="col-lg-12">
 					<div class="mainmenu">
 						<?php
-							wp_nav_menu( array(
-								'theme_location' => 'menu-1',
-								'menu_id'        => 'primary-menu',
-							) );
+							if ( $kilka_has_primary_menu ) {
+								wp_nav_menu( array(
+									'theme_location' => 'menu-1',
+									'menu_id'        => 'primary-menu',
+								) );
+							} else {
+								echo '<ul id="primary-menu" class="menu"></ul>';
+							}
 						?>
 					</div>
 				</div>

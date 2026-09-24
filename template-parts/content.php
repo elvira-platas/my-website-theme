@@ -80,7 +80,7 @@
 		}else{
 			the_excerpt();
 			$continue_reading_text   = get_theme_mod( 'kilka_continue_reading_text', esc_html__('Continue Reading','kilka') );
-			$continue_reading_format = get_theme_mod( 'kilka_continue_reading_format', 'text' );
+			$continue_reading_format = get_theme_mod( 'kilka_continue_reading_format', 'arrow' );
 			
 			$button_content     = '';
 			$arrow_html        = kilka_get_button_arrow();

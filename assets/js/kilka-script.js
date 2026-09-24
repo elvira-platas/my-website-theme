@@ -34,10 +34,16 @@
 
         $responsiveMenu.find(".slicknav_btn").attr("aria-label", menuLabel);
 
+        var menuUtilitiesTemplate = $responsiveMenu.find(".kilka-menu-utilities-template").get(0);
         var colorSchemeTemplate = $responsiveMenu.find(".kilka-color-scheme-template").get(0);
         var colorSchemeStorageKey = "kilka-color-scheme";
         var colorSchemeMedia = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
         var isExhibitionContext = document.documentElement.getAttribute("data-color-scheme-context") === "exhibition";
+
+        if (menuUtilitiesTemplate && menuUtilitiesTemplate.content) {
+            $responsiveMenu.find(".slicknav_nav").first().append(menuUtilitiesTemplate.content.cloneNode(true));
+            menuUtilitiesTemplate.remove();
+        }
 
         if (colorSchemeTemplate && colorSchemeTemplate.content) {
             $responsiveMenu.find(".slicknav_nav").first().append(colorSchemeTemplate.content.cloneNode(true));

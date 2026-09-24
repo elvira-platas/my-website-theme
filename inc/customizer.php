@@ -42,7 +42,7 @@ function kilka_sanitize_site_title_font( $value ) {
 function kilka_sanitize_continue_reading_format( $value ) {
 	$allowed_formats = array( 'text', 'arrow', 'text_arrow' );
 
-	return in_array( $value, $allowed_formats, true ) ? $value : 'text';
+	return in_array( $value, $allowed_formats, true ) ? $value : 'arrow';
 }
 
 /**
@@ -103,6 +103,23 @@ function kilka_customize_register( $wp_customize ) {
 		'title'       => __( 'Kilka Theme Options', 'kilka' ),
 		'description' => __( 'Customize site appearance, post listings, the footer, and Second Blog content.', 'kilka' ),
 		'priority'    => 130,
+	) );
+
+	$wp_customize->add_section( 'kilka_sidebar_section', array(
+		'title'       => __( 'Main Blog Layout', 'kilka' ),
+		'description' => __( 'The Main Blog sidebar is hidden by default. Enable it here, then add widgets under Appearance → Widgets.', 'kilka' ),
+		'panel'       => 'kilka_theme_options_panel',
+		'priority'    => 25,
+	) );
+
+	$wp_customize->add_setting( 'kilka_show_main_blog_sidebar', array(
+		'default'           => false,
+		'sanitize_callback' => 'rest_sanitize_boolean',
+	) );
+	$wp_customize->add_control( 'kilka_show_main_blog_sidebar', array(
+		'label'   => __( 'Show Main Blog Sidebar', 'kilka' ),
+		'section' => 'kilka_sidebar_section',
+		'type'    => 'checkbox',
 	) );
 
 	$wp_customize->add_section( 'kilka_announcement_section', array(
@@ -201,6 +218,18 @@ function kilka_customize_register( $wp_customize ) {
 		'priority' => 40,
 	) );
 
+	// Add Footer Copyright Owner Setting
+	$wp_customize->add_setting( 'kilka_footer_copyright_owner', array(
+		'default'           => get_bloginfo( 'name' ),
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
+	$wp_customize->add_control( 'kilka_footer_copyright_owner', array(
+		'label'       => __( 'Copyright Name', 'kilka' ),
+		'description' => __( 'Leave blank to hide the copyright line.', 'kilka' ),
+		'section'     => 'kilka_footer_section',
+		'type'        => 'text',
+	) );
+
 	// Add Footer Link Text Setting
 	$wp_customize->add_setting( 'kilka_footer_link_text', array(
 		'default'           => '',
@@ -266,7 +295,7 @@ function kilka_customize_register( $wp_customize ) {
 
 	// Continue Reading Format
 	$wp_customize->add_setting( 'kilka_continue_reading_format', array(
-		'default'           => 'text',
+		'default'           => 'arrow',
 		'sanitize_callback' => 'kilka_sanitize_continue_reading_format',
 	) );
 	$wp_customize->add_control( 'kilka_continue_reading_format', array(
