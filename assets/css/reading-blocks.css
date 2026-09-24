@@ -1,7 +1,7 @@
 /* Portable core-block document parts, shared with the editor. */
 .is-style-kilka-reading-text {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 19px;
+  font-size: 20px;
   line-height: 1.75;
   font-weight: 400;
   letter-spacing: normal;
@@ -65,7 +65,7 @@ p.is-style-kilka-reading-byline {
 }
 
 @media (max-width: 767px) {
-  .is-style-kilka-reading-text { font-size: 17px; }
+  .is-style-kilka-reading-text { font-size: 19px; }
   p.is-style-kilka-reading-byline { font-size: 16px; }
   .is-style-kilka-reading-note { font-size: 14px; }
 }

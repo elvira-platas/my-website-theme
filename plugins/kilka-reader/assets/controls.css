@@ -206,14 +206,21 @@ html[data-reader-chrome="hidden"] body.kilka-reader-active main#content.kilka-re
   padding: 12px 16px;
   margin: 0;
   border-radius: 6px;
-  background: var(--reader-control, #e3d7bd);
-  color: var(--reader-ink, #40382e);
+  background: #263746;
+  color: #ffffff;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.28);
   font-size: 14px;
   line-height: 1.5;
   text-align: center;
   pointer-events: none;
 }
 .kilka-reader .kilka-reader-hint:empty { display: none; }
+@media (max-width: 767px) {
+  .kilka-reader .kilka-reader-hint {
+    top: calc(20px + env(safe-area-inset-top, 0px));
+    bottom: auto;
+  }
+}
 @media print { .kilka-reader .kilka-reader-hint { display: none; } }
 html[data-reader-chrome] body.kilka-reader-active.admin-bar { --reader-admin-offset: 0px; }
 html[data-reader-chrome] #wpadminbar { display: none; }

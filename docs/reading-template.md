@@ -184,7 +184,9 @@ height, the document retains continuous scrolling. The 3D effect stays off
 initially. Reloading starts on the first page; no preference is stored. The pages mode uses native CSS columns on
 the original document, with a single column visible at a time. The existing
 heading moves into the first column and returns to its original position when
-scrolling is restored. Content is neither cloned nor written back to WordPress.
+scrolling is restored. Canonical content is never rewritten or copied back to
+WordPress. The optional interactive turn creates only short-lived, hidden-from-
+accessibility-tree presentation copies during a gesture.
 This first pass targets horizontal, left-to-right prose; complex publication
 layouts are separate work. An optional animation preview is described below.
 
@@ -207,29 +209,28 @@ in memory and disappears on reload. No libraries, network requests, cookies or
 browser storage are introduced.
 
 
-### Optional 3D page-turn preview
+### Two-dimensional page transitions
 
-The folded-page icon in paginated reading settings enables a short perspective
-rotation. It is off initially, lasts 320 ms, and uses the original clipped
-reading viewport rather than screenshots or duplicate text. This is a rigid
-page rotation preview, not a simulated paper curl. Forward and backward turns
-use opposite directions. Page measurement and anchor capture happen with all
-transforms removed between the outgoing and incoming halves.
+Paginated reading uses a short, flat slide by default. There is no animation
+switch or 3D renderer in the release interface. Buttons and keyboard commands
+complete the slide automatically. A pointer starting in a side gutter, on a
+side arrow, or near a text viewport edge can drag, hold and return the page.
+Mouse capture extends 64px from each edge. Touch capture extends up to 96px,
+capped at 28% of the viewport width, to make the gesture easier to start on
+phones. Ordinary text selection remains available in the middle of the text.
+A short arrow press still turns a page. Sufficient distance or a fresh flick
+completes a drag; otherwise the page returns to its starting position.
 
-Repeated input completes the pending destination before starting the next turn.
-Resizing, changing mode or settings, printing, backgrounding the document and
-reduced-motion changes cancel the visual effect without leaving transforms or
-blocking reading. A device preference for reduced motion overrides the effect;
-the control is disabled with a translated explanation. The effect is also
-skipped when Web Animations is unavailable. The choice lasts only in memory.
+The screen-sized sheet includes the blank margins and does not bend or scale
+letters. Forward turns move the current page left over the next page; backward
+turns bring the previous page in from the left. Two temporary visual copies are
+clipped to screen-sized windows. They are inert, hidden from assistive technology
+and removed after completion or cancellation. The original text remains the
+source of pagination and accessibility. Long documents still require device
+performance checks because preparing two DOM copies has a cost.
 
-
-### Mouse navigation on wide screens
-
-At viewport widths of at least 1024 CSS pixels, when a hovering fine pointer is
-available, the existing previous/next controls sit at the left and right edges
-of the screen, outside the text column. Their 22px icons retain 48px targets,
-keyboard focus and disabled boundary states. They remain visible in fullscreen;
-the page count stays centered below the text. Narrow or touch-only screens keep
-the bottom controls and their existing fullscreen behavior. No duplicate buttons,
-text-click navigation, reading-width changes or animation changes are introduced.
+Pointer movement is coalesced into animation frames. Resize, mode/settings
+changes, printing, backgrounding, lost capture and secondary pointers clean up
+active gestures. Reduced motion uses immediate page changes, with buttons,
+keyboard and ordinary touch swipes retained. No network requests, telemetry,
+cookies or browser storage are added.

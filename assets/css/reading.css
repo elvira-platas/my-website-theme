@@ -20,7 +20,7 @@
   border: 0;
   border-radius: 0;
   box-shadow: none;
-  font-size: 19px;
+  font-size: 20px;
   line-height: 1.75;
   letter-spacing: normal;
 }
@@ -109,7 +109,7 @@
 
 @media (max-width: 767px) {
   .kilka-reading { padding: 24px 20px 48px; }
-  .kilka-reading article.kilka-reading__document { font-size: 17px; }
+  .kilka-reading article.kilka-reading__document { font-size: 19px; }
   .kilka-reading .kilka-reading__title { font-size: 26px; }
   .kilka-reading__content p.is-style-kilka-reading-byline { font-size: 16px; }
 }

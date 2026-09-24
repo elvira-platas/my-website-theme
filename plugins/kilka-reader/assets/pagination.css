@@ -41,12 +41,20 @@
     padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
   }
   [data-reader-mode="pages"] .kilka-reader-viewport {
+    position: relative;
     overflow: hidden;
     width: 100%;
     height: var(--reader-page-height);
     scroll-behavior: auto;
     overflow-anchor: none;
     touch-action: pan-y pinch-zoom;
+  }
+  [data-reader-mode="pages"] .kilka-reader-viewport[data-reader-effect] {
+    cursor: default;
+  }
+  [data-reader-mode="pages"] .kilka-reader-viewport[data-reader-dragging] {
+    cursor: grabbing;
+    user-select: none;
   }
   [data-reader-mode="pages"] .kilka-reader-body {
     height: var(--reader-page-height);
@@ -60,6 +68,51 @@
   [data-reader-mode="pages"] .kilka-reader-body :is(h1, h2, h3, h4, h5, h6) { break-after: avoid; }
   [data-reader-mode="pages"] .kilka-reader-body img { max-height: calc(var(--reader-page-height) * 0.6); width: auto; object-fit: contain; }
   [data-reader-mode="pages"] .kilka-reader-body figure { break-inside: avoid; }
+  .kilka-reader-turn-stage,
+  .kilka-reader-turn-under,
+  .kilka-reader-turn-sheet {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .kilka-reader-turn-stage { position: fixed; top: 0; left: 0; z-index: 2; }
+  .kilka-reader-turn-window {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    contain: layout paint;
+    background: var(--reader-background, #f5ecd9);
+  }
+  .kilka-reader-turn-under,
+  .kilka-reader-turn-sheet {
+    inset-inline: 0;
+    background: var(--reader-background, #f5ecd9);
+  }
+  .kilka-reader-turn-under { z-index: 1; contain: layout paint; }
+  .kilka-reader-turn-sheet {
+    z-index: 2;
+    background: transparent;
+    overflow: visible;
+    will-change: transform;
+  }
+  .kilka-reader-turn-page {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    contain: layout paint;
+    background: var(--reader-background, #f5ecd9);
+  }
+  .kilka-reader-turn-stage .kilka-reader-body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    pointer-events: none;
+    user-select: none;
+  }
   html[data-reader-chrome="hidden"] .kilka-reader-pages {
     justify-content: center;
     height: calc(36px + env(safe-area-inset-bottom, 0px));
@@ -68,15 +121,18 @@
   html[data-reader-chrome="hidden"] [data-reader-mode="pages"] .kilka-reader-hint {
     bottom: calc(52px + env(safe-area-inset-bottom, 0px));
   }
+  @media (max-width: 767px) {
+    html[data-reader-chrome="hidden"] [data-reader-mode="pages"] .kilka-reader-hint {
+      top: calc(20px + env(safe-area-inset-top, 0px));
+      bottom: auto;
+    }
+  }
   html[data-reader-chrome="hidden"] body.kilka-reader-active main#content.kilka-reading[data-reader-mode="pages"] {
     padding-bottom: calc(52px + env(safe-area-inset-bottom, 0px));
   }
 }
 @media print { .kilka-reader-mode, .kilka-reader-pages { display: none; } }
 
-.kilka-reader-animation[hidden], .kilka-reader-animation-note[hidden] { display: none; }
-.kilka-reader-animation:disabled { opacity: 0.4; cursor: default; }
-.kilka-reader-animation-note { width: 100%; font-size: 13px; line-height: 1.5; }
 @media screen {
   [data-reader-mode="pages"] .kilka-reader-viewport { background: var(--reader-background, #f5ecd9); }
 }

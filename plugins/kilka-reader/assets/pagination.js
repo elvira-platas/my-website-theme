@@ -1,4 +1,4 @@
-/* Optional pagination of the original DOM. No copies, storage or requests. */
+/* Pagination of the original DOM with temporary visual layers during page turns. */
 (function () {
   'use strict';
   window.kilkaReaderPagination = function (reader, surface, body) {
@@ -17,63 +17,134 @@
     var next = nav.querySelector('[data-reader-turn="next"]');
     var number = nav.querySelector('.kilka-reader-page-number');
     var interactive = 'a, button, input, textarea, select, summary, [role="button"], [contenteditable]';
-    var effect = reader.querySelector('.kilka-reader-animation');
-    var effectNote = reader.querySelector('.kilka-reader-animation-note');
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var animated = false, turnAnimation = null, turnTarget = null, turnSerial = 0;
+    var animated = !!window.requestAnimationFrame, turnFrame = null, turnTarget = null, turnSerial = 0;
+    var turnWidth = 0, turnTravel = 0, turnHeight = 0, turnLeft = 0, turnTop = 0, dragFrame = null, clickTimer = null;
+    var turnStage = null, turnSheet = null, drag = null, suppressClick = false;
+    function cancelDragFrame() {
+      if (dragFrame !== null) cancelAnimationFrame(dragFrame);
+      dragFrame = null;
+    }
+    function clearClickSuppression() {
+      clearTimeout(clickTimer);
+      clickTimer = setTimeout(function () { suppressClick = false; }, 0);
+    }
+    function removeStage() {
+      cancelDragFrame();
+      clearClickSuppression();
+      body.style.removeProperty('visibility');
+      viewport.removeAttribute('data-reader-dragging');
+      if (turnStage) turnStage.remove();
+      turnStage = turnSheet = null;
+    }
     function cancelTurn(commit) {
       var target = turnTarget;
       turnTarget = null;
       turnSerial++;
-      if (turnAnimation) { turnAnimation.cancel(); turnAnimation = null; }
+      cancelAnimationFrame(turnFrame);
+      turnFrame = null;
+      var pointer = drag && drag.id;
+      drag = null;
+      if (pointer !== null && viewport.hasPointerCapture(pointer)) viewport.releasePointerCapture(pointer);
+      removeStage();
       if (commit && target !== null) go(target);
     }
-    function effectState() {
-      if (!effect) return;
-      effect.hidden = !enabled || !viewport.animate;
-      effect.disabled = reduced.matches;
-      effect.setAttribute('aria-pressed', String(animated && !reduced.matches));
-      effectNote.hidden = !enabled || !reduced.matches;
+    function pageLayer(index, className) {
+      var layer = document.createElement('div');
+      var clone = body.cloneNode(true);
+      layer.className = className;
+      clone.removeAttribute('style');
+      clone.setAttribute('aria-hidden', 'true');
+      clone.inert = true;
+      clone.querySelectorAll('[id]').forEach(function (item) { item.removeAttribute('id'); });
+      clone.querySelectorAll(interactive).forEach(function (item) { item.setAttribute('tabindex', '-1'); });
+      clone.style.width = viewport.clientWidth + 'px';
+      // Do not promote an entire multi-column book into a GPU texture.
+      clone.style.left = (-index * stride) + 'px';
+      var textWindow = document.createElement('div');
+      textWindow.className = 'kilka-reader-turn-text';
+      textWindow.style.cssText = 'position:absolute;overflow:hidden;left:' + turnLeft + 'px;top:' + turnTop + 'px;width:' + viewport.clientWidth + 'px;height:' + viewport.clientHeight + 'px';
+      textWindow.append(clone);
+      var windowLayer = document.createElement('div');
+      windowLayer.className = 'kilka-reader-turn-window';
+      windowLayer.style.width = turnWidth + 'px';
+      windowLayer.style.height = turnHeight + 'px';
+      windowLayer.append(textWindow);
+      layer.append(windowLayer);
+      return layer;
     }
-    if (effect) effect.addEventListener('click', function () {
-      cancelTurn(true);
-      animated = !animated;
-      effectState();
-    });
+    function startSlide(delta) {
+      var target = Math.max(0, Math.min(count - 1, page + delta));
+      if (target === page) return false;
+      clearTimeout(clickTimer);
+      turnTarget = target;
+      var bounds = viewport.getBoundingClientRect();
+      turnWidth = document.documentElement.clientWidth;
+      turnTravel = viewport.clientWidth;
+      turnHeight = window.innerHeight;
+      turnLeft = bounds.left;
+      turnTop = bounds.top;
+      turnStage = document.createElement('div');
+      turnStage.className = 'kilka-reader-turn-stage';
+      turnStage.setAttribute('aria-hidden', 'true');
+      turnStage.inert = true;
+      turnStage.dataset.direction = delta > 0 ? 'next' : 'previous';
+      turnStage.style.width = turnWidth + 'px';
+      turnStage.style.height = turnHeight + 'px';
+      // Going back slides the previous page in over the stationary current page.
+      var movingPage = delta > 0 ? page : target;
+      turnStage.append(pageLayer(delta > 0 ? target : page, 'kilka-reader-turn-under'));
+      turnSheet = document.createElement('div');
+      turnSheet.className = 'kilka-reader-turn-sheet';
+      turnSheet.append(pageLayer(movingPage, 'kilka-reader-turn-page'));
+      turnStage.append(turnSheet);
+      viewport.append(turnStage);
+      body.style.visibility = 'hidden';
+      setSlide(0, viewport.clientHeight / 2);
+      return true;
+    }
+    function setSlide(progress, pointerY) {
+      if (!turnStage) return;
+      progress = Math.max(0, Math.min(1, progress));
+      var width = turnWidth;
+      var nextPage = turnStage.dataset.direction === 'next';
+      var offset = -width * (nextPage ? progress : 1 - progress);
+      turnSheet.style.transform = 'translate3d(' + offset + 'px,0,0)';
+    }
+
+    function settleSlide(from, destination, pointerY, commit) {
+      var serial = ++turnSerial;
+      var start = null;
+      var duration = 110 + Math.abs(destination - from) * 230;
+      function step(now) {
+        if (serial !== turnSerial) return;
+        // Start the clock when the first frame is actually ready to paint.
+        if (start === null) start = now;
+        var elapsed = Math.min(1, (now - start) / duration);
+        var eased = destination ? 1 - Math.pow(1 - elapsed, 3) : Math.pow(elapsed, 3);
+        setSlide(from + (destination - from) * eased, pointerY);
+        if (elapsed < 1) { turnFrame = requestAnimationFrame(step); return; }
+        var target = turnTarget;
+        turnTarget = null;
+        turnFrame = null;
+        removeStage();
+        if (commit && target !== null) go(target);
+      }
+      turnFrame = requestAnimationFrame(step);
+    }
+    function effectState() {
+      viewport.toggleAttribute('data-reader-effect', animated && !reduced.matches);
+    }
     reduced.addEventListener('change', function () { cancelTurn(true); effectState(); });
     window.addEventListener('beforeprint', function () { cancelTurn(true); });
     document.addEventListener('visibilitychange', function () { if (document.hidden) cancelTurn(true); });
-    async function turn(delta) {
+    function turn(delta) {
       // A rapid second turn completes the first destination before continuing.
       cancelTurn(true);
       var target = Math.max(0, Math.min(count - 1, page + delta));
       if (target === page) return;
-      if (!animated || reduced.matches || !viewport.animate) { go(target); return; }
-      var direction = delta > 0 ? -1 : 1;
-      var origin = delta > 0 ? 'left center' : 'right center';
-      var serial = ++turnSerial;
-      turnTarget = target;
-      try {
-        turnAnimation = viewport.animate([
-          {transform: 'perspective(1400px) rotateY(0deg)', transformOrigin: origin},
-          {transform: 'perspective(1400px) rotateY(' + (direction * 90) + 'deg)', transformOrigin: origin}
-        ], {duration: 140, easing: 'ease-in', fill: 'forwards'});
-        await turnAnimation.finished;
-        if (serial !== turnSerial) return;
-        // Remove transforms before measuring the new text anchor.
-        cancelTurn(false);
-        go(target);
-        serial = ++turnSerial;
-        turnAnimation = viewport.animate([
-          {transform: 'perspective(1400px) rotateY(' + (-direction * 90) + 'deg)', transformOrigin: origin},
-          {transform: 'perspective(1400px) rotateY(0deg)', transformOrigin: origin}
-        ], {duration: 180, easing: 'ease-out', fill: 'forwards'});
-        await turnAnimation.finished;
-        if (serial === turnSerial) cancelTurn(false);
-      } catch (error) {
-        // Cancellation is expected on resize, mode changes and repeated input.
-        if (serial === turnSerial) { cancelTurn(false); go(target); }
-      }
+      if (!animated || reduced.matches || !startSlide(delta)) { go(target); return; }
+      settleSlide(0, 1, viewport.clientHeight / 2, true);
     }
     function selected() { var s = getSelection(); return s && !s.isCollapsed; }
     function rangeAt(mark) {
@@ -174,9 +245,76 @@
       if (!delta) return;
       e.preventDefault(); turn(delta);
     });
+    document.addEventListener('pointerdown', function (e) {
+      if (e.isPrimary === false) { if (drag) cancelTurn(false); return; }
+      var turnControl = e.target.closest('[data-reader-turn]');
+      if (!enabled || !animated || reduced.matches || (e.target.closest(interactive) && !turnControl)) return;
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      var box = viewport.getBoundingClientRect();
+      if (e.clientY < box.top || e.clientY > box.bottom) return;
+      var x = e.clientX - box.left;
+      var edgeZone = e.pointerType === 'touch' ? Math.min(96, Math.round(box.width * 0.28)) : 64;
+      var delta = turnControl
+        ? (turnControl.dataset.readerTurn === 'next' ? 1 : -1)
+        : (x >= box.width - edgeZone ? 1 : (x <= edgeZone ? -1 : 0));
+      if (!delta || (delta < 0 && page === 0) || (delta > 0 && page >= count - 1)) return;
+      cancelTurn(true);
+      if (!startSlide(delta)) return;
+      var selection = getSelection();
+      if (selection) selection.removeAllRanges();
+      drag = {id: e.pointerId, delta: delta, startX: e.clientX, lastX: e.clientX, lastTime: performance.now(), velocity: 0, progress: 0, top: box.top, y: e.clientY - box.top, control: !!turnControl, moved: false};
+      suppressClick = true;
+      try { viewport.setPointerCapture(e.pointerId); } catch (error) {}
+      viewport.setAttribute('data-reader-dragging', '');
+      e.preventDefault();
+    });
+    document.addEventListener('pointermove', function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var now = performance.now();
+      var distance = drag.delta > 0 ? drag.startX - e.clientX : e.clientX - drag.startX;
+      var progress = Math.max(0, Math.min(1, distance / Math.max(1, turnTravel * 0.82)));
+      drag.velocity = (progress - drag.progress) / Math.max(1, now - drag.lastTime);
+      drag.progress = progress;
+      drag.moved = drag.moved || Math.abs(e.clientX - drag.startX) > 6;
+      drag.lastX = e.clientX;
+      drag.lastTime = now;
+      drag.y = e.clientY - drag.top;
+      // Keep only the latest input; never queue a render for every pointer event.
+      // Geometry is captured on pointerdown to avoid layout reads after writes.
+      if (dragFrame === null) dragFrame = requestAnimationFrame(function () {
+        dragFrame = null;
+        if (drag) setSlide(drag.progress, drag.y);
+      });
+      e.preventDefault();
+    });
+    function releaseDrag(e, cancelled) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var state = drag;
+      cancelDragFrame();
+      // Flush the final position before settling; no stale drag frame can follow it.
+      setSlide(state.progress, state.y);
+      drag = null;
+      if (viewport.hasPointerCapture(e.pointerId)) viewport.releasePointerCapture(e.pointerId);
+      var freshFlick = performance.now() - state.lastTime < 120 && state.velocity > 0.0012;
+      var commit = !cancelled && ((state.control && !state.moved) || state.progress >= 0.46 || freshFlick);
+      settleSlide(state.progress, commit ? 1 : 0, state.y, commit);
+      clearClickSuppression();
+      e.preventDefault();
+    }
+    document.addEventListener('pointerup', function (e) { releaseDrag(e, false); });
+    document.addEventListener('pointercancel', function (e) { releaseDrag(e, true); });
+    viewport.addEventListener('lostpointercapture', function (e) {
+      if (drag && drag.id === e.pointerId) cancelTurn(false);
+    });
+    window.addEventListener('blur', function () { if (drag) cancelTurn(false); });
+    document.addEventListener('click', function (e) {
+      if (!suppressClick) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }, true);
     var touch = null;
     viewport.addEventListener('touchstart', function (e) {
-      touch = enabled && e.touches.length === 1 && !selected() && !e.target.closest(interactive)
+      touch = (!animated || reduced.matches) && enabled && e.touches.length === 1 && !selected() && !e.target.closest(interactive)
         ? {x: e.touches[0].clientX, y: e.touches[0].clientY, time: Date.now()} : null;
     }, {passive: true});
     viewport.addEventListener('touchcancel', function () { touch = null; }, {passive: true});
