@@ -83,6 +83,7 @@
 			el( ToggleControl, {
 				label: __( 'Show information panel', 'kilka-exhibitions' ),
 				checked: false !== meta.kilka_exhibition_information_panel,
+				help: __( 'On the public exhibition, the ⓘ button appears when the information panel is enabled and contains something to show: a heading, description, creator or rights details, or image captions assigned to the panel.', 'kilka-exhibitions' ),
 				onChange: function ( value ) {
 					updateMeta( 'kilka_exhibition_information_panel', value );
 				}
