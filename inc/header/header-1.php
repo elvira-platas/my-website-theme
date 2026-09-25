@@ -32,11 +32,7 @@ function kilka_header_style_1(){ ?>
 								</div>
 								<?php if ( $kilka_show_responsive_menu ) : ?>
 									<div class="kilka-responsive-menu" data-menu-label="<?php esc_attr_e( 'Menu', 'kilka' ); ?>">
-										<?php if ( ! $kilka_has_primary_menu && ! $kilka_exhibition_context ) : ?>
-											<template class="kilka-menu-utilities-template">
-												<li class="menu-item menu-item-search kilka-menu-search"><?php get_search_form(); ?></li>
-											</template>
-										<?php endif; ?>
+
 										<?php if ( ! $kilka_exhibition_context ) : ?>
 											<template class="kilka-color-scheme-template">
 												<li class="kilka-color-scheme-item">
@@ -115,7 +111,8 @@ function kilka_header_style_1(){ ?>
 			</div>
 		</div>
 	</header><!-- #masthead -->
-	<section class="mainmenu-area" style="display:none;">
+	<?php if ( $kilka_show_responsive_menu ) : ?>
+	<nav class="mainmenu-area" aria-label="<?php esc_attr_e( 'Menu', 'kilka' ); ?>">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
@@ -127,13 +124,14 @@ function kilka_header_style_1(){ ?>
 									'menu_id'        => 'primary-menu',
 								) );
 							} else {
-								echo '<ul id="primary-menu" class="menu"></ul>';
+								echo '<ul id="primary-menu" class="menu"><li class="kilka-menu-search">' . get_search_form( false ) . '</li></ul>';
 							}
 						?>
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
+	</nav>
+	<?php endif; ?>
 <?php }
 add_action('kilka_header_style','kilka_header_style_1');

@@ -2196,20 +2196,20 @@ body.admin-bar:not(.single-kilka_exhibition):not(.page-template-exhibition-proto
     text-decoration: none;
 }
 
-.slicknav_nav .kilka-menu-search {
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search {
     padding: 12px 10px !important;
 }
-.slicknav_nav .kilka-menu-search .search-form {
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .search-form {
     display: block;
 }
-.slicknav_nav .kilka-menu-search .kilka-icon-search-form {
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-icon-search-form {
     position: relative;
 }
-.slicknav_nav .kilka-menu-search label {
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search label {
     display: block;
     margin: 0;
 }
-.slicknav_nav .kilka-menu-search .search-field {
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .search-field {
     box-sizing: border-box;
     width: 100%;
     min-height: 48px;
@@ -2220,10 +2220,10 @@ body.admin-bar:not(.single-kilka_exhibition):not(.page-template-exhibition-proto
     color: #252525;
     background: #ffffff;
 }
-.slicknav_nav .kilka-menu-search input.search-submit {
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search input.search-submit {
     display: none;
 }
-.slicknav_nav .kilka-menu-search .kilka-search-icon-button {
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button {
     position: absolute;
     top: 0;
     right: 0;
@@ -2240,16 +2240,16 @@ body.admin-bar:not(.single-kilka_exhibition):not(.page-template-exhibition-proto
     cursor: pointer;
     transition: color 0.2s ease, background-color 0.2s ease;
 }
-.slicknav_nav .kilka-menu-search .kilka-search-icon-button:hover,
-.slicknav_nav .kilka-menu-search .kilka-search-icon-button:focus {
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button:hover,
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button:focus {
     color: #444444;
     background-color: rgba(37, 37, 37, 0.06);
 }
-.slicknav_nav .kilka-menu-search .kilka-search-icon-button:focus-visible {
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 2px;
 }
-.slicknav_nav .kilka-menu-search .kilka-search-icon-button svg {
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button svg {
     width: 21px;
     height: 21px;
     fill: none;
@@ -2258,11 +2258,11 @@ body.admin-bar:not(.single-kilka_exhibition):not(.page-template-exhibition-proto
     stroke-linecap: round;
     stroke-linejoin: round;
 }
-.kilka-second-blog-context .slicknav_nav .kilka-menu-search .kilka-search-icon-button {
+.kilka-second-blog-context :is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button {
     color: var(--kilka-second-blog-accent);
 }
-.kilka-second-blog-context .slicknav_nav .kilka-menu-search .kilka-search-icon-button:hover,
-.kilka-second-blog-context .slicknav_nav .kilka-menu-search .kilka-search-icon-button:focus {
+.kilka-second-blog-context :is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button:hover,
+.kilka-second-blog-context :is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button:focus {
     color: var(--kilka-second-blog-accent-hover);
     background-color: rgba(108, 59, 209, 0.08);
 }
@@ -2914,4 +2914,27 @@ body.kilka-exhibition-information-open {
   /* Match the shared forward arrow, while keeping editable core-block HTML. */
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M12 5l7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M12 5l7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* Keep navigation usable until its interactive replacement is ready. */
+.mainmenu-area.kilka-menu-enhanced { display: none; }
+.mainmenu-area:not(.kilka-menu-enhanced) { display: block; background: var(--kilka-panel-background, #fff); color: var(--kilka-panel-ink, #333); }
+.mainmenu-area:not(.kilka-menu-enhanced) .mainmenu { display: block; }
+.mainmenu-area:not(.kilka-menu-enhanced) .mainmenu ul,
+.mainmenu-area:not(.kilka-menu-enhanced) #primary-menu ul {
+  display: flex; flex-wrap: wrap; gap: 12px 24px;
+  position: static; visibility: visible; opacity: 1;
+  width: auto; height: auto; transform: none;
+  margin: 0; padding: 12px 0; float: none;
+}
+.mainmenu-area:not(.kilka-menu-enhanced) .mainmenu li {
+  display: block; float: none; width: auto; margin: 0;
+}
+.mainmenu-area:not(.kilka-menu-enhanced) .mainmenu a {
+  display: inline-block; padding: 8px; color: inherit;
+}
+.mainmenu-area:not(.kilka-menu-enhanced) .menu-item-has-children::after { content: none; }
+@media (prefers-reduced-motion: reduce) {
+  .kilka-responsive-menu *, .kilka-responsive-menu *::before,
+  .kilka-responsive-menu *::after { transition: none !important; animation: none !important; }
 }

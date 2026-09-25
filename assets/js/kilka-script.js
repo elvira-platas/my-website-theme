@@ -23,8 +23,10 @@
         var $exhibition = $(".kilka-exhibition");
         var menuLabel = $responsiveMenu.data("menu-label") || "Menu";
 
+        var menuMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
         $primaryMenu.kilkaAccessibleDropDown();
         $primaryMenu.slicknav({
+            duration: menuMotion.matches ? 0 : 200,
             allowParentLinks: true,
             label: menuLabel,
             prependTo: ".kilka-responsive-menu",
@@ -32,7 +34,27 @@
             closeOnClick: true
         });
 
-        $responsiveMenu.find(".slicknav_btn").attr("aria-label", menuLabel);
+        var $menuButton = $responsiveMenu.find(".slicknav_btn");
+        $menuButton.attr("aria-label", menuLabel);
+        if ($menuButton.length) {
+            $primaryMenu.closest(".mainmenu-area").addClass("kilka-menu-enhanced");
+        }
+        var updateMenuMotion = function () {
+            var menu = $primaryMenu.data("plugin_slicknav");
+            if (menu) menu.settings.duration = menuMotion.matches ? 0 : 200;
+            if (menuMotion.matches) $responsiveMenu.find("ul").finish();
+        };
+        if (menuMotion.addEventListener) menuMotion.addEventListener("change", updateMenuMotion);
+        else if (menuMotion.addListener) menuMotion.addListener(updateMenuMotion);
+        // Handle Escape before SlickNav's own link handler to avoid toggling twice.
+        document.addEventListener("keydown", function (event) {
+            if (event.key !== "Escape" || !$menuButton.hasClass("slicknav_open") ||
+                !$responsiveMenu.get(0) || !$responsiveMenu.get(0).contains(event.target)) return;
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            $primaryMenu.slicknav("close");
+            $menuButton.trigger("focus");
+        }, true);
 
         var menuUtilitiesTemplate = $responsiveMenu.find(".kilka-menu-utilities-template").get(0);
         var colorSchemeTemplate = $responsiveMenu.find(".kilka-color-scheme-template").get(0);

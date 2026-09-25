@@ -595,18 +595,18 @@ pre {
   background-color: var(--kilka-control-hover) !important;
 }
 
-.slicknav_nav .kilka-menu-search .search-field {
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .search-field {
   border-color: var(--kilka-border);
   color: var(--kilka-field-ink);
   background: var(--kilka-field-background);
 }
 
-.slicknav_nav .kilka-menu-search .kilka-search-icon-button {
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button {
   color: var(--kilka-control-ink);
 }
 
-.slicknav_nav .kilka-menu-search .kilka-search-icon-button:hover,
-.slicknav_nav .kilka-menu-search .kilka-search-icon-button:focus {
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button:hover,
+:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button:focus {
   color: var(--kilka-control-ink-hover);
   background-color: var(--kilka-control-hover);
 }
@@ -643,7 +643,7 @@ pre {
   padding: 6px 8px;
   border: 0;
   border-radius: 6px;
-  color: var(--kilka-muted);
+  color: var(--kilka-panel-ink);
   background: transparent;
   cursor: pointer;
   font: inherit;

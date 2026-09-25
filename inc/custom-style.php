@@ -126,9 +126,7 @@ function kilka_custom_css() {
     ';
 
     $kilka_custom_css .= '
-        /* Hide standard menu and area */
-        .mainmenu-area { display: none !important; }
-        .mainmenu { display: none !important; }
+        /* Navigation visibility is managed after progressive enhancement. */
         
         /* Compact site masthead: home link on the left, menu on the right. */
         .header-main-flex {
