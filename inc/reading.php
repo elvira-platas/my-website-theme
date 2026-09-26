@@ -17,19 +17,20 @@ function kilka_is_reading_context() {
 }
 
 /**
- * Load reading styles only for the Reading template.
+ * Load portable block styles wherever their editor options are available.
+ * Keep the full reading layout limited to the Reading template.
  */
 function kilka_reading_assets() {
-	if ( ! kilka_is_reading_context() ) {
-		return;
-	}
-
 	wp_enqueue_style(
 		'kilka-reading-blocks',
 		get_template_directory_uri() . '/assets/css/reading-blocks.css',
 		array( 'kilka-color-schemes' ),
 		filemtime( get_template_directory() . '/assets/css/reading-blocks.css' )
 	);
+	if ( ! kilka_is_reading_context() ) {
+		return;
+	}
+
 	wp_enqueue_style(
 		'kilka-reading',
 		get_template_directory_uri() . '/assets/css/reading.css',

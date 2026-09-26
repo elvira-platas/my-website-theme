@@ -17,6 +17,41 @@
     });
 
     $(document).ready(function () {
+        // Keep table semantics intact: scroll a wrapper, not a display:block table.
+        var tableScrollers = [];
+        $(".kilka-main-blog-context .entry-content table").each(function () {
+            var table = this;
+            var scroller = table.parentElement;
+            if (!scroller.classList.contains("wp-block-table")) {
+                scroller = document.createElement("div");
+                scroller.className = "kilka-table-scroll";
+                table.before(scroller);
+                scroller.appendChild(table);
+            }
+            var originalTabindex = scroller.getAttribute("tabindex");
+            var updateTableScroll = function () {
+                if (scroller.scrollWidth > scroller.clientWidth + 1) {
+                    if (originalTabindex === null) scroller.setAttribute("tabindex", "0");
+                } else if (originalTabindex === null) {
+                    scroller.removeAttribute("tabindex");
+                }
+            };
+            tableScrollers.push(updateTableScroll);
+            if (window.ResizeObserver) {
+                var observer = new ResizeObserver(updateTableScroll);
+                observer.observe(scroller);
+                observer.observe(table);
+            }
+            updateTableScroll();
+        });
+        if (tableScrollers.length && !window.ResizeObserver) {
+            $(window).on("resize.kilkaTables load.kilkaTables", function () {
+                tableScrollers.forEach(function (update) { update(); });
+            });
+
+        }
+        $(".kilka-main-blog-context .entry-content").addClass("kilka-tables-ready");
+
         var $primaryMenu = $("#primary-menu");
         var $responsiveMenu = $(".kilka-responsive-menu");
         var $backToTop = $(".back-to-top");

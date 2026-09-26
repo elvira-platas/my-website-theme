@@ -38,6 +38,7 @@
 .is-style-kilka-reading-text h5,
 .is-style-kilka-reading-text h6 { font-size: 1em; }
 
+.entry-content p.is-style-kilka-reading-byline,
 p.is-style-kilka-reading-byline {
   margin-block: 0 2.5em;
   font-size: 17px;
@@ -66,6 +67,7 @@ p.is-style-kilka-reading-byline {
 
 @media (max-width: 767px) {
   .is-style-kilka-reading-text { font-size: 19px; }
+  .entry-content p.is-style-kilka-reading-byline,
   p.is-style-kilka-reading-byline { font-size: 16px; }
   .is-style-kilka-reading-note { font-size: 14px; }
 }

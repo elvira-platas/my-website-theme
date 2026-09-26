@@ -183,3 +183,34 @@ function kilka_disable_pingbacks( $methods ) {
 	return $methods;
 }
 add_filter( 'xmlrpc_methods', 'kilka_disable_pingbacks' );
+
+/**
+ * Describe the Main Blog content column when WordPress builds responsive images.
+ * Explicit sizes in saved markup remain under the author's control.
+ *
+ * @param string       $sizes Default source sizes.
+ * @param string|int[] $size  Requested image size.
+ * @return string Source sizes for this layout.
+ */
+function kilka_main_content_image_sizes( $sizes, $size ) {
+	if ( is_admin() || is_feed() || ! is_singular( 'post' ) || ! in_the_loop()
+		|| ! is_main_query() || ! doing_filter( 'the_content' )
+		|| ( defined( 'REST_REQUEST' ) && REST_REQUEST )
+		|| ! is_array( $size ) || empty( $size[0] ) ) {
+		return $sizes;
+	}
+
+	// Match article padding, grid breakpoints and the 1000px content limit.
+	$width_limit = min( 1000, absint( $size[0] ) );
+	$desktop     = kilka_has_contextual_sidebar()
+		? 'min(calc(66.667vw - 90px), 763.34px, %1$dpx)'
+		: 'min(calc(100vw - 90px), %1$dpx)';
+
+	return sprintf(
+		'(max-width: 575px) min(calc(100vw - 90px), %1$dpx), (max-width: 767px) %2$dpx, (max-width: 991px) %3$dpx, ' . $desktop,
+		$width_limit,
+		min( 450, $width_limit ),
+		min( 630, $width_limit )
+	);
+}
+add_filter( 'wp_calculate_image_sizes', 'kilka_main_content_image_sizes', 10, 2 );

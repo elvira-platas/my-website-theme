@@ -145,27 +145,43 @@ if ( ! function_exists( 'kilka_post_thumbnail' ) ) :
 			return;
 		}
 
+		$thumbnail_attributes = array();
+		if ( 'post' === get_post_type() ) {
+			$image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'post-thumbnail' );
+			if ( $image && $image[1] > 0 && $image[2] > 0 ) {
+				// Match the 600px height limit and the Main Blog's padded grid.
+				$width_limit = min( $image[1], (int) ceil( 600 * $image[1] / $image[2] ) );
+				$desktop = kilka_has_contextual_sidebar()
+					? 'min(calc(66.667vw - 90px), 763.34px, %1$dpx)'
+					: 'min(calc(100vw - 90px), 1030px, %1$dpx)';
+				$thumbnail_attributes['sizes'] = sprintf(
+					'(max-width: 575px) min(calc(100vw - 90px), %1$dpx), (max-width: 767px) %2$dpx, (max-width: 991px) %3$dpx, ' . $desktop,
+					$width_limit,
+					min( 450, $width_limit ),
+					min( 630, $width_limit )
+				);
+			}
+
+			// Keep the leading cover eligible for WordPress's priority heuristics.
+			global $wp_query;
+			if ( ! is_singular() && in_the_loop() && $wp_query->current_post > 0 ) {
+				$thumbnail_attributes['loading'] = 'lazy';
+			}
+		}
+
 		if ( is_singular() ) :
 			?>
 
 			<div class="post-thumbnail">
-				<?php the_post_thumbnail(); ?>
+				<?php the_post_thumbnail( 'post-thumbnail', $thumbnail_attributes ); ?>
 			</div><!-- .post-thumbnail -->
 
 		<?php else : ?>
 
 			<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
 				<?php
-					the_post_thumbnail(
-						'post-thumbnail',
-						array(
-							'alt' => the_title_attribute(
-								array(
-									'echo' => false,
-								)
-							),
-						)
-					);
+					$thumbnail_attributes['alt'] = the_title_attribute( array( 'echo' => false ) );
+					the_post_thumbnail( 'post-thumbnail', $thumbnail_attributes );
 				?>
 			</a>
 

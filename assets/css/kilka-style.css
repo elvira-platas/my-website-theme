@@ -272,9 +272,6 @@ object {
 .gallery-caption {
   display: block;
 }
-.wp-block-quote p{
-  margin-left: 15px;
-}
 /* Default CSS */
 body {
   font-size: 15px;
@@ -1190,11 +1187,28 @@ p.comment-notes {
   padding-left: 10px;
   transition: 0.5s;
 }
-.comment-form input[type="checkbox"]{
-  width: 2%;
-  border:1px solid #bbb;
-  margin-top: 0px;
-  margin-right: 5px;
+.comment-form input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  margin: .2em 0 0;
+  cursor: pointer;
+}
+.comment-form .comment-form-cookies-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.comment-form-cookies-consent label {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  margin: 0;
+  cursor: pointer;
+}
+.comment-form input[type="checkbox"]:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
 }
 .comment-form textarea{
   width: 100%;
@@ -1732,7 +1746,7 @@ body.admin-bar:not(.single-kilka_exhibition):not(.page-template-exhibition-proto
     line-height: 1.75;
   }
 
-  .kilka-main-blog-context .single-area article.post > .entry-content p {
+  .kilka-main-blog-context .single-area article.post > .entry-content p:not(.is-style-kilka-reading-byline) {
     margin-bottom: 1.35em;
   }
 
@@ -1757,7 +1771,7 @@ body.admin-bar:not(.single-kilka_exhibition):not(.page-template-exhibition-proto
     line-height: 1.75;
   }
 
-  .kilka-second-blog-context article.type-world_note > .entry-content p {
+  .kilka-second-blog-context article.type-world_note > .entry-content p:not(.is-style-kilka-reading-byline) {
     margin-bottom: 1.35em;
   }
 }
@@ -2202,14 +2216,14 @@ body.admin-bar:not(.single-kilka_exhibition):not(.page-template-exhibition-proto
 :is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .search-form {
     display: block;
 }
-:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-icon-search-form {
+.kilka-icon-search-form {
     position: relative;
 }
-:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search label {
+.kilka-icon-search-form label {
     display: block;
     margin: 0;
 }
-:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .search-field {
+.kilka-icon-search-form input.search-field {
     box-sizing: border-box;
     width: 100%;
     min-height: 48px;
@@ -2220,10 +2234,10 @@ body.admin-bar:not(.single-kilka_exhibition):not(.page-template-exhibition-proto
     color: #252525;
     background: #ffffff;
 }
-:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search input.search-submit {
+.kilka-icon-search-form input.search-submit {
     display: none;
 }
-:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button {
+.kilka-icon-search-form .kilka-search-icon-button {
     position: absolute;
     top: 0;
     right: 0;
@@ -2240,16 +2254,16 @@ body.admin-bar:not(.single-kilka_exhibition):not(.page-template-exhibition-proto
     cursor: pointer;
     transition: color 0.2s ease, background-color 0.2s ease;
 }
-:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button:hover,
-:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button:focus {
+.kilka-icon-search-form .kilka-search-icon-button:hover,
+.kilka-icon-search-form .kilka-search-icon-button:focus {
     color: #444444;
     background-color: rgba(37, 37, 37, 0.06);
 }
-:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button:focus-visible {
+.kilka-icon-search-form .kilka-search-icon-button:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 2px;
 }
-:is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button svg {
+.kilka-icon-search-form .kilka-search-icon-button svg {
     width: 21px;
     height: 21px;
     fill: none;
@@ -2258,11 +2272,11 @@ body.admin-bar:not(.single-kilka_exhibition):not(.page-template-exhibition-proto
     stroke-linecap: round;
     stroke-linejoin: round;
 }
-.kilka-second-blog-context :is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button {
+.kilka-second-blog-context .kilka-icon-search-form .kilka-search-icon-button {
     color: var(--kilka-second-blog-accent);
 }
-.kilka-second-blog-context :is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button:hover,
-.kilka-second-blog-context :is(.slicknav_nav, .mainmenu-area) .kilka-menu-search .kilka-search-icon-button:focus {
+.kilka-second-blog-context .kilka-icon-search-form .kilka-search-icon-button:hover,
+.kilka-second-blog-context .kilka-icon-search-form .kilka-search-icon-button:focus {
     color: var(--kilka-second-blog-accent-hover);
     background-color: rgba(108, 59, 209, 0.08);
 }
@@ -2938,3 +2952,30 @@ body.kilka-exhibition-information-open {
   .kilka-responsive-menu *, .kilka-responsive-menu *::before,
   .kilka-responsive-menu *::after { transition: none !important; animation: none !important; }
 }
+
+/* Long content must not widen the main blog or its cards. */
+.kilka-main-blog-context .entry-title,
+.kilka-main-blog-context .entry-content,
+.kilka-main-blog-context .post-navigation .nav-title {
+  overflow-wrap: anywhere;
+}
+.kilka-main-blog-context .entry-content pre {
+  overflow-wrap: normal;
+  overflow-x: auto;
+}
+.kilka-main-blog-context .kilka-table-scroll,
+.kilka-main-blog-context .entry-content .wp-block-table {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.kilka-main-blog-context .kilka-table-scroll { margin-bottom: 30px; }
+.kilka-main-blog-context .kilka-table-scroll > table { margin-bottom: 0; }
+.kilka-main-blog-context .entry-content table { overflow-wrap: normal; }
+.kilka-main-blog-context .kilka-table-scroll:focus-visible,
+.kilka-main-blog-context .entry-content .wp-block-table:focus-visible {
+  outline: 2px solid var(--kilka-focus, #21759b);
+  outline-offset: 2px;
+}
+
+/* Without script enhancement, contain wide content within the article. */
+.kilka-main-blog-context .entry-content:not(.kilka-tables-ready) { overflow-x: auto; }
